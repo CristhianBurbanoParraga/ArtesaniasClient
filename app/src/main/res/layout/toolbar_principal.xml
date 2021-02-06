@@ -11,9 +11,11 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="150dp"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
+        android:padding="5dp"
         android:translationX="-16dp"
+        app:srcCompat="@drawable/logo_temp"
         tools:layout_editor_absoluteX="16dp" />
 
 </androidx.appcompat.widget.Toolbar>
