@@ -3,29 +3,33 @@ package com.artesaniasclient;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.FirebaseFirestore;
+public class activity_contacts extends AppCompatActivity {
 
-public class activity_principal extends AppCompatActivity {
-
-    FirebaseFirestore refFireStore;
-    CollectionReference refCollection;
+    RecyclerView rcvContacts;
     Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_principal);
+        setContentView(R.layout.activity_contacts);
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
+
+        rcvContacts = findViewById(R.id.rcvContacts);
+        LinearLayoutManager linear = new LinearLayoutManager(getApplicationContext());
+        linear.setOrientation(LinearLayoutManager.VERTICAL);
+        rcvContacts.setLayoutManager(linear);
+        rcvContacts.hasFixedSize();
     }
 
     @Override
