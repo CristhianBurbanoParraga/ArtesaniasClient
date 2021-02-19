@@ -11,10 +11,16 @@
     <include
         android:id="@+id/toolbarl"
         layout="@layout/toolbar_principal" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="60dp"
+        android:background="@color/black" />
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="350dp"
+        android:layout_height="310dp"
+        android:layout_marginTop="61dp"
         android:background="@drawable/fondo">
 
         <ImageView
