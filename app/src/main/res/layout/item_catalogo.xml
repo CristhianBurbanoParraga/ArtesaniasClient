@@ -23,8 +23,8 @@
 
             <ImageView
                 android:id="@+id/imgCraft"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_width="135dp"
+                android:layout_height="150dp"
                 android:scaleType="fitCenter"
                 android:src="@drawable/icon_photo"
                 app:layout_constraintDimensionRatio="H,16:9"
@@ -35,11 +35,11 @@
             <TextView
                 android:id="@+id/lblNameCraft"
                 style="@style/TextAppearance.AppCompat.Body1"
-                android:layout_width="150dp"
+                android:layout_width="80dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/imgCraft"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
+                android:layout_toEndOf="@+id/imgCraft"
                 android:text="Name Craft:"
                 android:textStyle="bold" />
 
@@ -48,7 +48,6 @@
                 style="@style/TextAppearance.AppCompat.Body1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/imgCraft"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_toEndOf="@+id/lblNameCraft"
@@ -57,11 +56,11 @@
             <TextView
                 android:id="@+id/lblDescription"
                 style="@style/TextAppearance.AppCompat.Body1"
-                android:layout_width="150dp"
+                android:layout_width="80dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/lblNameCraft"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="35dp"
+                android:layout_toEndOf="@+id/imgCraft"
                 android:text="Description:"
                 android:textStyle="bold" />
 
@@ -70,20 +69,19 @@
                 style="@style/TextAppearance.AppCompat.Body1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/txtNameCraft"
-                android:layout_toEndOf="@+id/lblDescription"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="35dp"
+                android:layout_toEndOf="@+id/lblDescription"
                 android:text="Description" />
 
             <TextView
                 android:id="@+id/lblPrice"
                 style="@style/TextAppearance.AppCompat.Body1"
-                android:layout_width="150dp"
+                android:layout_width="80dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/lblDescription"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="60dp"
+                android:layout_toEndOf="@+id/imgCraft"
                 android:text="Price:"
                 android:textStyle="bold" />
 
@@ -92,20 +90,19 @@
                 style="@style/TextAppearance.AppCompat.Body1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/txtDescription"
-                android:layout_toEndOf="@+id/lblPrice"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="60dp"
+                android:layout_toEndOf="@+id/lblPrice"
                 android:text="Price" />
 
             <TextView
                 android:id="@+id/lblCompany"
                 style="@style/TextAppearance.AppCompat.Body1"
-                android:layout_width="150dp"
+                android:layout_width="80dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/lblPrice"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="85dp"
+                android:layout_toEndOf="@+id/imgCraft"
                 android:text="Company:"
                 android:textStyle="bold" />
 
@@ -114,10 +111,9 @@
                 style="@style/TextAppearance.AppCompat.Body1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/txtPrice"
-                android:layout_toEndOf="@+id/lblCompany"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="85dp"
+                android:layout_toEndOf="@+id/lblCompany"
                 android:text="Company" />
 
         </RelativeLayout>

@@ -5,7 +5,7 @@
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="60dp"
-    android:background="@drawable/side_nav_bar"
+    android:background="#0669b2"
     android:theme="?attr/actionBarTheme"
     app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:padding="5dp"
         android:translationX="-16dp"
-        app:srcCompat="@drawable/logo_temp"
+        app:srcCompat="@drawable/logo"
         tools:layout_editor_absoluteX="16dp" />
 
 </androidx.appcompat.widget.Toolbar>
