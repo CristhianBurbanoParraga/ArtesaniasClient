@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="60dp"
-        android:background="@color/white">
+        android:background="#D8D5D5">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cvInfo"
