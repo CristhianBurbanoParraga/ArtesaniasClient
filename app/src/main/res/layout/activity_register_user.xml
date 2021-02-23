@@ -33,7 +33,7 @@
                     android:layout_marginBottom="0dp"
                     android:paddingTop="50dp"
                     android:paddingBottom="80dp"
-                    app:srcCompat="@drawable/logo"
+                    app:srcCompat="@drawable/iconarte2"
                     android:contentDescription="@string/descr" />
             </RelativeLayout>
 
@@ -71,11 +71,59 @@
                     android:textSize="18sp" />
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/mainusername"
+                    android:id="@+id/mainfirstname"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/textView2"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginEnd="24dp"
+                    android:hint="@string/nombres"
+                    tools:ignore="MissingConstraints">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/firstname"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/border3"
+                        android:drawableStart="@drawable/icon_email"
+                        android:drawablePadding="10dp"
+                        android:drawableTint="#0669b2"
+                        android:inputType="text"
+                        android:selectAllOnFocus="true" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/mainlastname"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/mainfirstname"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginEnd="24dp"
+                    android:hint="@string/apellidos"
+                    tools:ignore="MissingConstraints">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/lastname"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/border3"
+                        android:drawableStart="@drawable/icon_email"
+                        android:drawablePadding="10dp"
+                        android:drawableTint="#0669b2"
+                        android:inputType="text"
+                        android:selectAllOnFocus="true" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/mainusername"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/mainlastname"
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="30dp"
                     android:layout_marginEnd="24dp"
@@ -123,15 +171,38 @@
                         android:inputType="textPassword" />
                 </com.google.android.material.textfield.TextInputLayout>
 
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/mainphone"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/mainpassword"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginEnd="24dp"
+                    android:hint="@string/telefono"
+                    tools:ignore="MissingConstraints">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/phone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/border3"
+                        android:drawableStart="@drawable/icon_cellphone"
+                        android:drawablePadding="10dp"
+                        android:drawableTint="#0669b2"
+                        android:inputType="text"
+                        android:selectAllOnFocus="true" />
+                </com.google.android.material.textfield.TextInputLayout>
+
                 <Button
-                    android:id="@+id/login"
+                    android:id="@+id/register"
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
-                    android:layout_below="@+id/mainpassword"
+                    android:layout_below="@+id/mainphone"
                     android:layout_centerInParent="false"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="40dp"
-                    android:layout_marginBottom="20dp"
                     android:backgroundTint="#0669b2"
                     android:enabled="false"
                     android:fontFamily="@font/alfa_slab_one"
@@ -139,13 +210,13 @@
                     android:textColor="@color/white"
                     android:textSize="14sp" />
                 <Button
-                    android:id="@+id/register_user"
+                    android:id="@+id/cancel"
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
-                    android:layout_below="@+id/mainpassword"
+                    android:layout_below="@+id/register"
                     android:layout_centerInParent="false"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="90dp"
+                    android:layout_marginTop="20dp"
                     android:layout_marginBottom="20dp"
                     android:backgroundTint="#0669b2"
                     android:enabled="false"

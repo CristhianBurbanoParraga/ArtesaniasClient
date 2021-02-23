@@ -37,4 +37,7 @@
     <string name="ingrese_sus_datos_de_registro">Ingrese sus datos de registro</string>
     <string name="registrar">Registrar</string>
     <string name="cancelar">Cancelar</string>
+    <string name="nombres">Nombres</string>
+    <string name="apellidos">Apellidos</string>
+    <string name="telefono">Telefono</string>
 </resources>

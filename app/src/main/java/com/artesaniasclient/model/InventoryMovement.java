@@ -8,6 +8,7 @@ public class InventoryMovement {
     private String movementtype;
     private Integer quantity;
     private String user;
+    private String direcction;
 
     public InventoryMovement() {
     }
