@@ -30,6 +30,9 @@ import com.artesaniasclient.MainActivity;
 import com.artesaniasclient.R;
 import com.artesaniasclient.activity_contacts;
 import com.artesaniasclient.activity_principal;
+import com.artesaniasclient.controller.UserController;
+import com.artesaniasclient.interfaces.IUserComunication;
+import com.artesaniasclient.model.User;
 import com.artesaniasclient.ui.login.LoginViewModel;
 import com.artesaniasclient.ui.login.LoginViewModelFactory;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -39,7 +42,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class LoginActivity extends AppCompatActivity {
+import java.util.ArrayList;
+
+public class LoginActivity extends AppCompatActivity implements IUserComunication {
 
     private LoginViewModel loginViewModel;
     private Toolbar toolbar;
@@ -56,6 +61,8 @@ public class LoginActivity extends AppCompatActivity {
 
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
+
+        UserController.iUserComunication = this;
 
         toolbar = findViewById(R.id.toolbarl);
         setSupportActionBar(toolbar);
@@ -162,7 +169,8 @@ public class LoginActivity extends AppCompatActivity {
                         // Sign in success, update UI with the signed-in user's information
                         //Log.d(TAG, "signInWithEmail:success");
                         FirebaseUser user = mAuth.getCurrentUser();
-                        redirectActivity(user);
+
+                        UserController.getUserForEmail(db, user.getEmail());
                         //updateUI(user);
                     } else {
                         Toast.makeText(LoginActivity.this, "Authentication failed.",
@@ -213,5 +221,17 @@ public class LoginActivity extends AppCompatActivity {
 
     private void showLoginFailed(@StringRes Integer errorString) {
         Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void login(User user) {
+        Intent intent = new Intent(LoginActivity.this, activity_principal.class);
+        intent.putExtra("user", user);
+        startActivity(intent);
+    }
+
+    @Override
+    public void get_users(ArrayList<User> users) {
+
     }
 }
