@@ -37,12 +37,14 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class LoginActivity extends AppCompatActivity {
 
     private LoginViewModel loginViewModel;
     private Toolbar toolbar;
 
+    FirebaseFirestore db;
     private FirebaseAuth mAuth;
 
     @Override
@@ -52,6 +54,7 @@ public class LoginActivity extends AppCompatActivity {
         loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory())
                 .get(LoginViewModel.class);
 
+        db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
 
         toolbar = findViewById(R.id.toolbarl);

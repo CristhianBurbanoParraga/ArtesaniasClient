@@ -6,11 +6,18 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.artesaniasclient.ui.login.LoginActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class activity_principal extends AppCompatActivity {
@@ -18,6 +25,8 @@ public class activity_principal extends AppCompatActivity {
     FirebaseFirestore refFireStore;
     CollectionReference refCollection;
     Toolbar toolbar;
+    FirebaseFirestore db;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +36,38 @@ public class activity_principal extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
+
+        db = FirebaseFirestore.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        String email = "";
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser != null) {
+            email = currentUser.getEmail();
+        }
+        DocumentReference docRef = db.collection("user").document("SF");
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        //Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+                    } else {
+                        //Log.d(TAG, "No such document");
+                    }
+                } else {
+                    //Log.d(TAG, "get failed with ", task.getException());
+                }
+            }
+        });
+        //redirectActivity(currentUser);
+        //updateUI(currentUser);
     }
 
     @Override
