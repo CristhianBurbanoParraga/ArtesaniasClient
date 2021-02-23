@@ -9,7 +9,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
+import com.artesaniasclient.controller.UserController;
+import com.artesaniasclient.interfaces.IUserComunication;
+import com.artesaniasclient.model.User;
 import com.artesaniasclient.ui.login.LoginActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -20,22 +24,25 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class activity_principal extends AppCompatActivity {
+public class activity_principal extends AppCompatActivity implements IUserComunication {
 
     FirebaseFirestore refFireStore;
     CollectionReference refCollection;
     Toolbar toolbar;
     FirebaseFirestore db;
     private FirebaseAuth mAuth;
+    TextView txtusername;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_principal);
-
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
+
+        UserController.iUserComunication = this;
+        txtusername = findViewById(R.id.lblUsername);
 
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
@@ -50,22 +57,7 @@ public class activity_principal extends AppCompatActivity {
         if(currentUser != null) {
             email = currentUser.getEmail();
         }
-        DocumentReference docRef = db.collection("user").document("SF");
-        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        //Log.d(TAG, "DocumentSnapshot data: " + document.getData());
-                    } else {
-                        //Log.d(TAG, "No such document");
-                    }
-                } else {
-                    //Log.d(TAG, "get failed with ", task.getException());
-                }
-            }
-        });
+
         //redirectActivity(currentUser);
         //updateUI(currentUser);
     }
@@ -75,6 +67,7 @@ public class activity_principal extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_toolbar,menu);
         return true;
     }
+
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -88,5 +81,13 @@ public class activity_principal extends AppCompatActivity {
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void login(User user) {
+        txtusername.setText(user.getUsername());
+        Log.d(
+                "activity_principal", "User" + " => " + user.getUsername());
+
     }
 }

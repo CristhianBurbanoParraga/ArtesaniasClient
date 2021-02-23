@@ -3,14 +3,19 @@ package com.artesaniasclient.controller;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
+import com.artesaniasclient.interfaces.IUserComunication;
 import com.artesaniasclient.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -23,6 +28,7 @@ public class UserController {
 
     private static final String TAG = "UserController";
     private static ArrayList<User> users;
+    public static IUserComunication iUserComunication;
 
     public static void setup(FirebaseFirestore db) {
         // [START get_firestore_instance]
@@ -53,6 +59,26 @@ public class UserController {
                         Log.w(TAG, "Error adding document", e);
                     }
                 });
+    }
+
+    public void getUserForEmail(FirebaseFirestore db, String email) {
+        // [START listen_for_users]
+        // Listen for users born before 1900.
+        //
+        // You will get a first snapshot with the initial results and a new
+        // snapshot each time there is a change in the results.
+        db.collection("user")
+                .whereEqualTo("email", email)
+                .limit(1)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        QuerySnapshot result = task.getResult();
+                        User user = result.getDocuments().get(0).toObject(User.class);
+                        iUserComunication.login(user);
+                    }
+                });
+        // [END listen_for_users]
     }
 
     public static void getAllUsers(FirebaseFirestore db) {
