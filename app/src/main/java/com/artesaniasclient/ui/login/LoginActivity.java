@@ -28,6 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.artesaniasclient.R;
+import com.artesaniasclient.RegisterUserActivity;
 import com.artesaniasclient.activity_principal;
 import com.artesaniasclient.controller.UserController;
 import com.artesaniasclient.interfaces.IUserComunication;
@@ -203,6 +204,15 @@ public class LoginActivity extends AppCompatActivity implements IUserComunicatio
 
     private void showLoginFailed(@StringRes Integer errorString) {
         Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
+    }
+
+    public void newUserOnClick(View v) {
+        Intent intent = new Intent(LoginActivity.this, RegisterUserActivity.class);
+        startActivity(intent);
+    }
+
+    public void newBussinesOnClick(View v) {
+
     }
 
     @Override
