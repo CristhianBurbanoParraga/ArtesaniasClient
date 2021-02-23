@@ -4,8 +4,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,6 +26,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
@@ -34,8 +38,8 @@ public class activity_principal extends AppCompatActivity implements IUserComuni
     FirebaseFirestore db;
     private FirebaseAuth mAuth;
     TextView txtusername;
-    String username="";
-    User user=null;
+    String username = "";
+    User user = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +47,7 @@ public class activity_principal extends AppCompatActivity implements IUserComuni
         setContentView(R.layout.activity_principal);
 
         Intent i = getIntent();
-        user = (User) i.getSerializableExtra("user");
+        //user = (User) i.getSerializableExtra("user");
 
 
         toolbar = findViewById(R.id.toolbar);
@@ -63,9 +67,12 @@ public class activity_principal extends AppCompatActivity implements IUserComuni
         String email = "";
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser != null) {
+        if (currentUser != null) {
             email = currentUser.getEmail();
-            UserController.getUserForEmail(db, email);
+            Gson gson = new Gson();
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+            String userJSON = sharedPreferences.getString(getString(R.string.CURRENT_USER_KEY_STORE), gson.toJson(new User()));
+            user = gson.fromJson(userJSON, User.class);
         }
 
         //redirectActivity(currentUser);
@@ -74,14 +81,13 @@ public class activity_principal extends AppCompatActivity implements IUserComuni
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_toolbar,menu);
+        getMenuInflater().inflate(R.menu.menu_toolbar, menu);
         MenuItem m = menu.findItem(R.id.btnUser);
         MenuItem ml = menu.findItem(R.id.btnLogIn);
-        if(user!=null) {
+        if (user != null && user.getId() != null && user.getId().length() > 0) {
             m.setTitle(user.getUsername());
             ml.setIcon(R.drawable.icon_logout);
-        }
-        else {
+        } else {
             m.setTitle("");
             ml.setIcon(R.drawable.icon_login);
         }
@@ -91,19 +97,21 @@ public class activity_principal extends AppCompatActivity implements IUserComuni
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-        if(id == R.id.btnLogIn) {
-            if(user!=null) {
+        if (id == R.id.btnLogIn) {
+            if (user != null && user.getId() != null && user.getId().length() > 0) {
+                mAuth.signOut();
+                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.remove(getString(R.string.CURRENT_USER_KEY_STORE));
+                editor.apply();
                 Intent intent = new Intent(this, activity_principal.class);
                 startActivity(intent);
-            }
-            else {
-                mAuth.getInstance().signOut();
-                Intent intent = new Intent(this, LoginActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            } else {
+                Intent intent = new Intent(this, LoginActivity.class);
                 startActivity(intent);
-
             }
         }
-        if(id == R.id.btnContacts) {
+        if (id == R.id.btnContacts) {
             Intent intent = new Intent(this, activity_contacts.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(intent);
         }

@@ -11,11 +11,13 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="vertical">
+        android:scrollbars="vertical"
+        android:fillViewport="true"
+        tools:ignore="UselessParent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <RelativeLayout
@@ -31,14 +33,13 @@
                     android:layout_marginBottom="0dp"
                     android:paddingTop="50dp"
                     android:paddingBottom="80dp"
-                    app:srcCompat="@drawable/logo" />
+                    app:srcCompat="@drawable/logo"
+                    android:contentDescription="@string/descr" />
             </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="-50dp"
                 android:layout_marginEnd="20dp"
@@ -51,7 +52,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:fontFamily="@font/alfa_slab_one"
-                    android:text="Welcome"
+                    android:text="@string/welcome"
                     android:textAlignment="center"
                     android:textColor="#525966"
                     android:textSize="40sp"
@@ -65,7 +66,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/title"
                     android:layout_centerInParent="true"
-                    android:text="Sign in to continue"
+                    android:text="@string/sign_in_to_continue"
                     android:textColor="#525966"
                     android:textSize="18sp" />
 
@@ -134,27 +135,20 @@
                     android:backgroundTint="#0669b2"
                     android:enabled="false"
                     android:fontFamily="@font/alfa_slab_one"
-                    android:text="SIGN IN"
+                    android:text="@string/sign_in"
                     android:textColor="@color/white"
                     android:textSize="18sp" />
 
             </RelativeLayout>
 
-            <ProgressBar
-                android:id="@+id/loading"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="64dp"
-                android:layout_marginEnd="32dp"
-                android:layout_marginBottom="64dp"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/mainpassword"
-                app:layout_constraintStart_toStartOf="@+id/mainpassword"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.3" />
         </LinearLayout>
+
     </ScrollView>
+    <ProgressBar
+        android:id="@+id/loading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|center_vertical|center_horizontal"
+        android:indeterminate="true"
+        android:visibility="gone" />
 </RelativeLayout>

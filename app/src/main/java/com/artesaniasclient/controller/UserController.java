@@ -74,7 +74,9 @@ public class UserController {
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         QuerySnapshot result = task.getResult();
-                        User user = result.getDocuments().get(0).toObject(User.class);
+                        DocumentSnapshot docSnap = result.getDocuments().get(0);
+                        User user = docSnap.toObject(User.class);
+                        user.setId(docSnap.getId());
                         iUserComunication.login(user);
                     }
                 });

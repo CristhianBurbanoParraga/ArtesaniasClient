@@ -1,24 +1,25 @@
-package  com.artesaniasclient.ui.login;
+package com.artesaniasclient.ui.login;
 
 import android.app.Activity;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.KeyEvent;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,21 +27,18 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.artesaniasclient.MainActivity;
 import com.artesaniasclient.R;
-import com.artesaniasclient.activity_contacts;
 import com.artesaniasclient.activity_principal;
 import com.artesaniasclient.controller.UserController;
 import com.artesaniasclient.interfaces.IUserComunication;
 import com.artesaniasclient.model.User;
-import com.artesaniasclient.ui.login.LoginViewModel;
-import com.artesaniasclient.ui.login.LoginViewModelFactory;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
@@ -50,6 +48,8 @@ public class LoginActivity extends AppCompatActivity implements IUserComunicatio
 
     FirebaseFirestore db;
     private FirebaseAuth mAuth;
+
+    private ProgressBar loadingProgressBar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -66,7 +66,7 @@ public class LoginActivity extends AppCompatActivity implements IUserComunicatio
         final EditText usernameEditText = findViewById(R.id.username);
         final EditText passwordEditText = findViewById(R.id.password);
         final Button loginButton = findViewById(R.id.login);
-        final ProgressBar loadingProgressBar = findViewById(R.id.loading);
+        loadingProgressBar = findViewById(R.id.loading);
 
         loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
             @Override
@@ -141,7 +141,7 @@ public class LoginActivity extends AppCompatActivity implements IUserComunicatio
                 signIn(usernameEditText.getText().toString(), passwordEditText.getText().toString());
                 //loadingProgressBar.setVisibility(View.VISIBLE);
                 //loginViewModel.login(usernameEditText.getText().toString(),
-                  //      passwordEditText.getText().toString());
+                //      passwordEditText.getText().toString());
             }
         });
     }
@@ -156,30 +156,38 @@ public class LoginActivity extends AppCompatActivity implements IUserComunicatio
     }
 
     private void signIn(String email, String password) {
+        loadingProgressBar.setVisibility(View.VISIBLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         mAuth.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    if (task.isSuccessful()) {
-                        // Sign in success, update UI with the signed-in user's information
-                        //Log.d(TAG, "signInWithEmail:success");
-                        FirebaseUser user = mAuth.getCurrentUser();
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            //Log.d(TAG, "signInWithEmail:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            assert user != null;
+                            String email = user.getEmail();
+                            if (email != null) {
+                                UserController.getUserForEmail(db, email);
+                            }
 
-                        UserController.getUserForEmail(db, user.getEmail());
-                        //updateUI(user);
-                    } else {
-                        Toast.makeText(LoginActivity.this, "Authentication failed.",
-                                Toast.LENGTH_SHORT).show();
-                    }
+                            //updateUI(user);
+                        } else {
+                            Toast.makeText(LoginActivity.this, "Authentication failed.\nEmail or password incorrect",
+                                    Toast.LENGTH_SHORT).show();
+                            loadingProgressBar.setVisibility(View.GONE);
+                            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                        }
 
-                    // [START_EXCLUDE]
-                    if (!task.isSuccessful()) {
-                        //mBinding.status.setText(R.string.auth_failed);
+                        // [START_EXCLUDE]
+                        if (!task.isSuccessful()) {
+                            //mBinding.status.setText(R.string.auth_failed);
+                        }
+                        //hideProgressBar();
+                        // [END_EXCLUDE]
                     }
-                    //hideProgressBar();
-                    // [END_EXCLUDE]
-                }
-            });
+                });
     }
 
     private void redirectActivity(FirebaseUser user) {
@@ -200,8 +208,18 @@ public class LoginActivity extends AppCompatActivity implements IUserComunicatio
     @Override
     public void login(User user) {
         Intent intent = new Intent(LoginActivity.this, activity_principal.class);
-        intent.putExtra("user", user);
-        startActivity(intent);
+        //intent.putExtra("user", user);
+        Gson gson = new Gson();
+        String userJson = gson.toJson(user);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(getString(R.string.CURRENT_USER_KEY_STORE), userJson);
+        boolean commit = editor.commit();
+        if (commit) {
+            loadingProgressBar.setVisibility(View.GONE);
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+            startActivity(intent);
+        }
     }
 
     @Override
