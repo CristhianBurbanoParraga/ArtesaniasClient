@@ -24,6 +24,8 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
+
 public class activity_principal extends AppCompatActivity implements IUserComunication {
 
     FirebaseFirestore refFireStore;
@@ -56,6 +58,7 @@ public class activity_principal extends AppCompatActivity implements IUserComuni
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null) {
             email = currentUser.getEmail();
+            UserController.getUserForEmail(db, email);
         }
 
         //redirectActivity(currentUser);
@@ -88,6 +91,11 @@ public class activity_principal extends AppCompatActivity implements IUserComuni
         txtusername.setText(user.getUsername());
         Log.d(
                 "activity_principal", "User" + " => " + user.getUsername());
+
+    }
+
+    @Override
+    public void get_users(ArrayList<User> users) {
 
     }
 }

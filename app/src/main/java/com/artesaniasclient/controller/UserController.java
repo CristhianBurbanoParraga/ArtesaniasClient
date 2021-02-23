@@ -61,7 +61,7 @@ public class UserController {
                 });
     }
 
-    public void getUserForEmail(FirebaseFirestore db, String email) {
+    public static void getUserForEmail(FirebaseFirestore db, String email) {
         // [START listen_for_users]
         // Listen for users born before 1900.
         //
@@ -97,6 +97,7 @@ public class UserController {
                                 u.setId(document.getId());
                                 Log.d(TAG, document.getId() + " => " + document.getData());
                                 users.add(u);
+                                iUserComunication.get_users(users);
                             }
                         } else {
                             Log.w(TAG, "Error getting documents.", task.getException());
