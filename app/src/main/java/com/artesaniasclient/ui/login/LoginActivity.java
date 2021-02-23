@@ -1,19 +1,9 @@
 package com.artesaniasclient.ui.login;
 
 import android.app.Activity;
-
-import androidx.annotation.NonNull;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -26,6 +16,13 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.artesaniasclient.R;
 import com.artesaniasclient.RegisterUserActivity;

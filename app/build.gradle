@@ -46,7 +46,6 @@ dependencies {
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'com.google.code.gson:gson:2.8.4'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.wear:wear:1.0.0'
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
@@ -54,5 +53,4 @@ dependencies {
     implementation 'com.codesgood:justifiedtextview:1.1.0'
     implementation 'com.facebook.shimmer:shimmer:0.4.0'
     implementation 'com.firebaseui:firebase-ui-auth:6.4.0'
-    compileOnly 'com.google.android.wearable:wearable:2.6.0'
 }
