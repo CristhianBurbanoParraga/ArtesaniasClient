@@ -8,8 +8,8 @@
         android:id="@+id/imgBackground"
         android:layout_width="match_parent"
         android:layout_height="175dp"
-        android:background="#C3DDF0"
+        android:background="#0669b2"
         android:scaleType="fitXY"
-        android:src="@drawable/logo_temp" />
+        android:src="@drawable/logo" />
 
 </FrameLayout>

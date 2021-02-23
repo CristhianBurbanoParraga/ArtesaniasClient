@@ -2,6 +2,7 @@ package com.artesaniasclient;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -10,6 +11,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.artesaniasclient.adapter.adpCrafts;
+import com.artesaniasclient.model.Craft;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link fragment_crafts#newInstance} factory method to
@@ -17,7 +28,10 @@ import android.view.ViewGroup;
  */
 public class fragment_crafts extends Fragment {
 
+    private FirebaseFirestore refFireStore;
+    private adpCrafts mAdapter;
     RecyclerView rcvCrafts;
+    private ArrayList<Craft> craftList = new ArrayList<>();
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -69,5 +83,37 @@ public class fragment_crafts extends Fragment {
         rcvCrafts.setLayoutManager(new LinearLayoutManager(getContext()));
         // Inflate the layout for this fragment
         return view;
+    }
+
+    private void getDispositivesFromFireStore(){
+        refFireStore.collection("dispositivos")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            craftList.clear();
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                String id = document.getString("id");
+                                String company = document.getString("company");
+                                String datedisabled = document.getString("datedisabled");
+                                String dateregistry = document.getString("dateregistry");
+                                String description = document.getString("description");
+                                String imageurl = document.getString("imageurl");
+                                boolean isactive = Boolean.parseBoolean(document.getString("isactive"));
+                                String namecraft = document.getString("namecraft");
+                                float price = Float.parseFloat(document.getString("price"));
+                                Integer quantity = Integer.parseInt(document.getString("quantity"));
+                                craftList.add(new Craft(company, datedisabled, dateregistry,description,imageurl,
+                                        isactive,namecraft,price,quantity));
+                                //Log.d(TAG, document.getId() + " => " + document.getData());
+                            }
+                            mAdapter = new adpCrafts(craftList, R.layout.item_catalogo);
+                            rcvCrafts.setAdapter(mAdapter);
+                        } else {
+                            //Log.w(TAG, "Error getting documents.", task.getException());
+                        }
+                    }
+                });
     }
 }

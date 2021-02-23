@@ -9,13 +9,13 @@
     android:theme="?attr/actionBarTheme"
     app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
-    <ImageView
+    <!--<ImageView
         android:id="@+id/imageView"
         android:layout_width="80dp"
         android:layout_height="wrap_content"
         android:padding="5dp"
         android:translationX="-16dp"
         app:srcCompat="@drawable/logo"
-        tools:layout_editor_absoluteX="16dp" />
+        tools:layout_editor_absoluteX="16dp" /> -->
 
 </androidx.appcompat.widget.Toolbar>
