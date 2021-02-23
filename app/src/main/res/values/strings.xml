@@ -29,6 +29,13 @@
     <string name="new_user">REGISTRAR USUARIO</string>
     <string name="new_bussines">REGISTRAR EMPRESA</string>
     <string name="title_activity_register_user">RegisterUserActivity</string>
+    <string name="prompt_emailuserbussiness">Email del propietario</string>
+    <string name="prompt_namebussines">Nombre de la empresa</string>
+    <string name="prompt_city">Ciudad</string>
+    <string name="prompt_ruc">RUC de la empresa</string>
+    <string name="prompt_addressbussines">Dirección de la empresa</string>
+    <string name="datos_bussines">Ingrese los datos de la empresa</string>
+
     <!--
     This string is used for square devices and overridden by hello_world in
     values-round/strings.xml for round devices.
