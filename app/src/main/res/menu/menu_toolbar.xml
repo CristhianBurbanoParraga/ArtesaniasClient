@@ -4,9 +4,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto" >
 
     <item
+        android:id="@+id/btnUser"
+        android:title=""
+        app:showAsAction="ifRoom" />
+    <item
         android:id="@+id/btnLogIn"
         android:icon="@drawable/icon_login"
-        android:title="Information"
+        android:title="Login-out"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/btnContacts"

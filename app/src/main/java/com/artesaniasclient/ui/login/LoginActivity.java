@@ -47,7 +47,6 @@ import java.util.ArrayList;
 public class LoginActivity extends AppCompatActivity implements IUserComunication {
 
     private LoginViewModel loginViewModel;
-    private Toolbar toolbar;
 
     FirebaseFirestore db;
     private FirebaseAuth mAuth;
@@ -63,10 +62,6 @@ public class LoginActivity extends AppCompatActivity implements IUserComunicatio
         mAuth = FirebaseAuth.getInstance();
 
         UserController.iUserComunication = this;
-
-        toolbar = findViewById(R.id.toolbarl);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("");
 
         final EditText usernameEditText = findViewById(R.id.username);
         final EditText passwordEditText = findViewById(R.id.password);
@@ -190,27 +185,6 @@ public class LoginActivity extends AppCompatActivity implements IUserComunicatio
     private void redirectActivity(FirebaseUser user) {
         Intent intent = new Intent(LoginActivity.this, activity_principal.class);
         startActivity(intent);
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_toolbar,menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        int id = item.getItemId();
-        if(id == R.id.btnLogIn) {
-            Intent intent = new Intent(this, LoginActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            startActivity(intent);
-        }
-        if(id == R.id.btnContacts) {
-            Intent intent = new Intent(this, activity_contacts.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            startActivity(intent);
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     private void updateUiWithUser(LoggedInUserView model) {

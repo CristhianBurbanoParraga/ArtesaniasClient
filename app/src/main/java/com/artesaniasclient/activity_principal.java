@@ -34,17 +34,24 @@ public class activity_principal extends AppCompatActivity implements IUserComuni
     FirebaseFirestore db;
     private FirebaseAuth mAuth;
     TextView txtusername;
+    String username="";
+    User user=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_principal);
+
+        Intent i = getIntent();
+        user = (User) i.getSerializableExtra("user");
+
+
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
 
         UserController.iUserComunication = this;
-        txtusername = findViewById(R.id.lblUsername);
+        //txtusername = findViewById(R.id.lblUsername);
 
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
@@ -68,16 +75,33 @@ public class activity_principal extends AppCompatActivity implements IUserComuni
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_toolbar,menu);
+        MenuItem m = menu.findItem(R.id.btnUser);
+        MenuItem ml = menu.findItem(R.id.btnLogIn);
+        if(user!=null) {
+            m.setTitle(user.getUsername());
+            ml.setIcon(R.drawable.icon_logout);
+        }
+        else {
+            m.setTitle("");
+            ml.setIcon(R.drawable.icon_login);
+        }
         return true;
     }
-
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         if(id == R.id.btnLogIn) {
-            Intent intent = new Intent(this, LoginActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            startActivity(intent);
+            if(user!=null) {
+                Intent intent = new Intent(this, activity_principal.class);
+                startActivity(intent);
+            }
+            else {
+                mAuth.getInstance().signOut();
+                Intent intent = new Intent(this, LoginActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
+
+            }
         }
         if(id == R.id.btnContacts) {
             Intent intent = new Intent(this, activity_contacts.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -88,9 +112,9 @@ public class activity_principal extends AppCompatActivity implements IUserComuni
 
     @Override
     public void login(User user) {
-        txtusername.setText(user.getUsername());
+        /*txtusername.setText(user.getUsername());
         Log.d(
-                "activity_principal", "User" + " => " + user.getUsername());
+                "activity_principal", "User" + " => " + user.getUsername());*/
 
     }
 
