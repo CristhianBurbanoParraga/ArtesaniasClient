@@ -34,8 +34,7 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
-public class activity_principal extends AppCompatActivity implements IUserComunication,
-        NavigationView.OnNavigationItemSelectedListener {
+public class activity_principal extends AppCompatActivity implements         NavigationView.OnNavigationItemSelectedListener {
 
     FirebaseFirestore refFireStore;
     CollectionReference refCollection;
@@ -65,7 +64,7 @@ public class activity_principal extends AppCompatActivity implements IUserComuni
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.icon_menu);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        UserController.iUserComunication = this;
+
         //txtusername = findViewById(R.id.lblUsername);
 
         db = FirebaseFirestore.getInstance();
@@ -170,16 +169,4 @@ public class activity_principal extends AppCompatActivity implements IUserComuni
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void login(User user) {
-        /*txtusername.setText(user.getUsername());
-        Log.d(
-                "activity_principal", "User" + " => " + user.getUsername());*/
-
-    }
-
-    @Override
-    public void get_users(ArrayList<User> users) {
-
-    }
 }

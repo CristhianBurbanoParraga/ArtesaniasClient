@@ -28,6 +28,7 @@ import com.artesaniasclient.R;
 import com.artesaniasclient.RegisterUserActivity;
 import com.artesaniasclient.activity_principal;
 import com.artesaniasclient.controller.UserController;
+import com.artesaniasclient.interfaces.ILogin;
 import com.artesaniasclient.interfaces.IUserComunication;
 import com.artesaniasclient.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -40,14 +41,16 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
-public class LoginActivity extends AppCompatActivity implements IUserComunication {
+public class LoginActivity extends AppCompatActivity implements ILogin {
 
     private LoginViewModel loginViewModel;
 
-    FirebaseFirestore db;
+
     private FirebaseAuth mAuth;
 
     private ProgressBar loadingProgressBar;
+
+    private UserController userController;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -56,10 +59,9 @@ public class LoginActivity extends AppCompatActivity implements IUserComunicatio
         loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory())
                 .get(LoginViewModel.class);
 
-        db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
 
-        UserController.iUserComunication = this;
+        userController = new UserController(this);
 
         final EditText usernameEditText = findViewById(R.id.username);
         final EditText passwordEditText = findViewById(R.id.password);
@@ -167,7 +169,7 @@ public class LoginActivity extends AppCompatActivity implements IUserComunicatio
                             assert user != null;
                             String email = user.getEmail();
                             if (email != null) {
-                                UserController.getUserForEmail(db, email);
+                                userController.getUserForEmail(email);
                             }
 
                             //updateUI(user);
@@ -213,7 +215,7 @@ public class LoginActivity extends AppCompatActivity implements IUserComunicatio
     }
 
     @Override
-    public void login(User user) {
+    public void login(User user, String message) {
         Intent intent = new Intent(LoginActivity.this, activity_principal.class);
         //intent.putExtra("user", user);
         Gson gson = new Gson();
@@ -227,10 +229,5 @@ public class LoginActivity extends AppCompatActivity implements IUserComunicatio
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
             startActivity(intent);
         }
-    }
-
-    @Override
-    public void get_users(ArrayList<User> users) {
-
     }
 }

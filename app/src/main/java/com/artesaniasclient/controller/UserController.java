@@ -3,8 +3,8 @@ package com.artesaniasclient.controller;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
+import com.artesaniasclient.interfaces.ILogin;
 import com.artesaniasclient.interfaces.IUserComunication;
 import com.artesaniasclient.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -13,24 +13,61 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class UserController {
 
-    private static final String TAG = "UserController";
-    private static ArrayList<User> users;
-    public static IUserComunication iUserComunication;
+    private final String TAG = "UserController";
+    private IUserComunication iUserComunication;
+    private ILogin iLogin;
+    private FirebaseFirestore db;
 
-    public static void setup(FirebaseFirestore db) {
+    public UserController() {
+        initFirebase();
+    }
+
+    private void initFirebase() {
+        db = FirebaseFirestore.getInstance();
+    }
+
+    public UserController(ILogin iLogin) {
+        this.iLogin = iLogin;
+        initFirebase();
+    }
+
+    public UserController(IUserComunication iUserComunication) {
+        this.iUserComunication = iUserComunication;
+        initFirebase();
+    }
+
+    public UserController(IUserComunication iUserComunication, ILogin iLogin) {
+        this.iUserComunication = iUserComunication;
+        this.iLogin = iLogin;
+        initFirebase();
+    }
+
+    public IUserComunication getiUserComunication() {
+        return iUserComunication;
+    }
+
+    public void setiUserComunication(IUserComunication iUserComunication) {
+        this.iUserComunication = iUserComunication;
+    }
+
+    public ILogin getiLogin() {
+        return iLogin;
+    }
+
+    public void setiLogin(ILogin iLogin) {
+        this.iLogin = iLogin;
+    }
+
+    public void setup() {
         // [START get_firestore_instance]
         db = FirebaseFirestore.getInstance();
         // [END get_firestore_instance]
@@ -43,25 +80,30 @@ public class UserController {
         // [END set_firestore_settings]
     }
 
-    public static void addUser(FirebaseFirestore db, User user) {
+    public void addUser(User user) {
         // Add a new document with a generated ID
         db.collection("user")
                 .add(user)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
+                        DocumentSnapshot result = documentReference.get().getResult();
+                        assert result != null;
+                        User userCreate = result.toObject(User.class);
+                        getiUserComunication().add_user_success(userCreate, null);
                         Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
+                        getiUserComunication().add_user_success(null, getMessageTask(e));
                         Log.w(TAG, "Error adding document", e);
                     }
                 });
     }
 
-    public static void getUserForEmail(FirebaseFirestore db, String email) {
+    public void getUserForEmail(String email) {
         // [START listen_for_users]
         // Listen for users born before 1900.
         //
@@ -74,34 +116,43 @@ public class UserController {
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         QuerySnapshot result = task.getResult();
+                        assert result != null;
                         DocumentSnapshot docSnap = result.getDocuments().get(0);
                         User user = docSnap.toObject(User.class);
+                        assert user != null;
                         user.setId(docSnap.getId());
-                        iUserComunication.login(user);
+                        getiLogin().login(user, null);
+                    } else {
+                        getiLogin().login(null, getMessageTask(task.getException()));
+                        Log.w(TAG, "Error getting documents.", task.getException());
                     }
                 });
         // [END listen_for_users]
     }
 
-    public static void getAllUsers(FirebaseFirestore db) {
-        users = new ArrayList<>();
+    public void getAllUsers() {
         // [START get_all_users]
+
         db.collection("user")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
+                            ArrayList<User> users = new ArrayList<>();
+                            QuerySnapshot result = task.getResult();
+                            assert result != null;
+                            for (QueryDocumentSnapshot document : result) {
                                 //Aqui vienen los datos
                                 //Aqui hay que especificar como queren recibir los datos
                                 User u = document.toObject(User.class);
                                 u.setId(document.getId());
                                 Log.d(TAG, document.getId() + " => " + document.getData());
                                 users.add(u);
-                                iUserComunication.get_users(users);
                             }
+                            getiUserComunication().get_users_success(users, null);
                         } else {
+                            getiUserComunication().get_users_success(null, getMessageTask(task.getException()));
                             Log.w(TAG, "Error getting documents.", task.getException());
                         }
                     }
@@ -109,23 +160,32 @@ public class UserController {
         // [END get_all_users]
     }
 
-    public void deleteDocument(FirebaseFirestore db, String document) {
+    public void deleteDocument(String idUser) {
         // [START delete_document]
-        db.collection("cities").document(document)
+        db.collection("user").document(idUser)
                 .delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
+                        getiUserComunication().delete_user_success(new User(), null);
                         Log.d(TAG, "DocumentSnapshot successfully deleted!");
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
+                        getiUserComunication().delete_user_success(null, getMessageTask(e));
                         Log.w(TAG, "Error deleting document", e);
                     }
                 });
         // [END delete_document]
     }
 
+    private String getMessageTask(Exception exception) {
+        String message = null;
+        if (exception != null) {
+            message = exception.getMessage();
+        }
+        return message;
+    }
 }
