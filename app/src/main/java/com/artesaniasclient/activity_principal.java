@@ -3,6 +3,9 @@ package com.artesaniasclient;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 
 import android.content.Context;
 import android.content.Intent;
@@ -20,6 +23,7 @@ import com.artesaniasclient.model.User;
 import com.artesaniasclient.ui.login.LoginActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
@@ -30,11 +34,16 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
-public class activity_principal extends AppCompatActivity implements IUserComunication {
+public class activity_principal extends AppCompatActivity implements IUserComunication,
+        NavigationView.OnNavigationItemSelectedListener {
 
     FirebaseFirestore refFireStore;
     CollectionReference refCollection;
     Toolbar toolbar;
+    NavigationView navView;
+    DrawerLayout drawerLayout;
+    Fragment fragment;
+    boolean fragmentTransaction;
     FirebaseFirestore db;
     private FirebaseAuth mAuth;
     TextView txtusername;
@@ -53,12 +62,49 @@ public class activity_principal extends AppCompatActivity implements IUserComuni
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.icon_menu);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         UserController.iUserComunication = this;
         //txtusername = findViewById(R.id.lblUsername);
 
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
+
+        navView = findViewById(R.id.nav_view);
+        Menu m = navView.getMenu();
+        if(user==null) {
+            m.removeItem(R.id.menu_section_2);
+            m.removeItem(R.id.menu_section_3);
+        }
+        else{
+            m.findItem(R.id.menu_section_2).setIcon(R.drawable.icon_info).setTitle("Section 2");
+            m.findItem(R.id.menu_section_3).setIcon(R.drawable.icon_info).setTitle("Section 3");
+        }
+
+        navView.setNavigationItemSelectedListener(this);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        fragmentTransaction = false;
+        fragment = null;
+        switch (menuItem.getItemId()) {
+            case R.id.menu_section_1:
+                fragment = new fragment_crafts();
+                fragmentTransaction = true;
+                break;
+            case R.id.menu_section_2:
+
+                break;
+        }
+        if(fragmentTransaction) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
+            menuItem.setChecked(true);
+            getSupportActionBar().setTitle("");
+        }
+        drawerLayout.closeDrawers();
+        return true;
     }
 
     @Override
@@ -97,6 +143,12 @@ public class activity_principal extends AppCompatActivity implements IUserComuni
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout_crafts);
+                drawerLayout.openDrawer(GravityCompat.START);
+                break;
+        }
         if (id == R.id.btnLogIn) {
             if (user != null && user.getId() != null && user.getId().length() > 0) {
                 mAuth.signOut();
