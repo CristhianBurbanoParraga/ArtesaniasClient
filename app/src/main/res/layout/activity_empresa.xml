@@ -169,36 +169,11 @@
                         android:inputType="text" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/mainemail"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/mainaddress"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginTop="30dp"
-                    android:layout_marginEnd="24dp"
-                    android:hint="@string/prompt_emailuserbussiness"
-                    android:imeActionLabel="@string/action_sign_in_short"
-                    tools:ignore="MissingConstraints">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/email"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/border3"
-                        android:drawableStart="@drawable/icon_password"
-                        android:drawablePadding="10dp"
-                        android:drawableTint="#0669b2"
-                        android:imeOptions="actionDone"
-                        android:inputType="text" />
-                </com.google.android.material.textfield.TextInputLayout>
-
                 <Button
                     android:id="@+id/login"
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
-                    android:layout_below="@+id/mainemail"
+                    android:layout_below="@+id/mainaddress"
                     android:layout_centerInParent="false"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="40dp"
@@ -213,7 +188,7 @@
                     android:id="@+id/register_user"
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
-                    android:layout_below="@+id/mainemail"
+                    android:layout_below="@+id/mainaddress"
                     android:layout_centerInParent="false"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="90dp"
