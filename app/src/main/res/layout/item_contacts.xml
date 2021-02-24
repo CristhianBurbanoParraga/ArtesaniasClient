@@ -60,32 +60,10 @@
                         android:textStyle="normal" />
 
                     <ImageView
-                        android:id="@+id/imageViewliTel"
-                        android:layout_width="20dp"
-                        android:layout_height="21dp"
-                        android:layout_marginTop="30dp"
-                        android:layout_marginEnd="4dp"
-                        app:srcCompat="@drawable/icon_cellphone"
-                        tools:ignore="VectorDrawableCompat" />
-
-                    <TextView
-                        android:id="@+id/txtCel"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
-                        android:layout_marginStart="30dp"
-                        android:layout_marginTop="30dp"
-                        android:layout_marginEnd="10dp"
-                        android:text="Cellphone"
-                        android:textAlignment="textStart"
-                        android:textColor="#FFFFFF"
-                        android:textStyle="normal" />
-
-                    <ImageView
                         android:id="@+id/imageViewliEm"
                         android:layout_width="20dp"
                         android:layout_height="21dp"
-                        android:layout_marginTop="60dp"
+                        android:layout_marginTop="30dp"
                         android:layout_marginEnd="4dp"
                         app:srcCompat="@drawable/icon_email"
                         tools:ignore="VectorDrawableCompat" />
@@ -96,7 +74,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
                         android:layout_marginStart="30dp"
-                        android:layout_marginTop="60dp"
+                        android:layout_marginTop="30dp"
                         android:layout_marginEnd="10dp"
                         android:text="Email"
                         android:textAlignment="textStart"

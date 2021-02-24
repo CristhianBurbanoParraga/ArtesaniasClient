@@ -9,7 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="175dp"
         android:background="#0669b2"
+        android:padding="15dp"
         android:scaleType="fitXY"
-        android:src="@drawable/logo" />
+        android:src="@drawable/iconarte2" />
 
 </FrameLayout>

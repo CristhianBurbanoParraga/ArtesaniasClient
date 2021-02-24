@@ -20,6 +20,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.artesaniasclient.controller.UserController;
@@ -43,6 +44,7 @@ public class activity_principal extends AppCompatActivity implements NavigationV
 
     Toolbar toolbar;
     NavigationView navView;
+    ImageView imgToolbar;
     DrawerLayout drawerLayout;
     Fragment fragment;
     boolean fragmentTransaction;
@@ -59,6 +61,7 @@ public class activity_principal extends AppCompatActivity implements NavigationV
         //user = (User) i.getSerializableExtra("user");
 
         toolbar = findViewById(R.id.toolbar);
+        imgToolbar = findViewById(R.id.imgToolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.icon_menu);
@@ -114,6 +117,8 @@ public class activity_principal extends AppCompatActivity implements NavigationV
             String userJSON = sharedPreferences.getString(getString(R.string.CURRENT_USER_KEY_STORE), gson.toJson(new User()));
             user = gson.fromJson(userJSON, User.class);
         }
+        else
+            imgToolbar.setImageResource(R.drawable.iconarte2);
         //redirectActivity(currentUser);
         //updateUI(currentUser);
     }

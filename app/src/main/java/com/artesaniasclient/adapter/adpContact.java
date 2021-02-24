@@ -27,25 +27,20 @@ public class adpContact extends RecyclerView.Adapter<adpContact.ViewHolder> {
         ShimmerFrameLayout shimmerFrameLayout;
         TextView txtContact;
         ImageView btnShimmer;
-        TextView txtCel;
-        ImageView btnShimmer1;
         TextView txtEmail;
-        ImageView btnShimmer2;
+        ImageView btnShimmer1;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             shimmerFrameLayout = itemView.findViewById(R.id.shimmer);
             txtContact = (TextView) itemView.findViewById(R.id.txtContactName);
             btnShimmer = itemView.findViewById(R.id.imageViewliPart);
-            txtCel = (TextView) itemView.findViewById(R.id.txtCel);
-            btnShimmer1 = itemView.findViewById(R.id.imageViewliTel);
             txtEmail = (TextView) itemView.findViewById(R.id.txtEmail);
-            btnShimmer2 = itemView.findViewById(R.id.imageViewliEm);
+            btnShimmer1 = itemView.findViewById(R.id.imageViewliEm);
         }
 
         public void add_data(Contacts valor) {
             txtContact.setText(valor.getName());
-            txtCel.setText(valor.getPhone());
             txtEmail.setText(valor.getEmail());
         }
     }
@@ -61,8 +56,7 @@ public class adpContact extends RecyclerView.Adapter<adpContact.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull adpContact.ViewHolder holder, int position) {
         try {
-            if(showShimmer)
-            {
+            if(showShimmer){
                 holder.shimmerFrameLayout.startShimmer();
             }
             else
@@ -70,7 +64,6 @@ public class adpContact extends RecyclerView.Adapter<adpContact.ViewHolder> {
                 holder.shimmerFrameLayout.stopShimmer();
                 holder.shimmerFrameLayout.setShimmer(null);
                 holder.txtContact.setBackground(null);
-                holder.txtCel.setBackground(null);
                 holder.txtEmail.setBackground(null);
                 holder.add_data(data.get(position));
             }
