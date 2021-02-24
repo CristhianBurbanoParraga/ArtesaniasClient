@@ -26,6 +26,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.artesaniasclient.R;
 import com.artesaniasclient.RegisterUserActivity;
+import com.artesaniasclient.activity_empresa;
 import com.artesaniasclient.activity_principal;
 import com.artesaniasclient.controller.UserController;
 import com.artesaniasclient.interfaces.ILogin;
@@ -211,7 +212,8 @@ public class LoginActivity extends AppCompatActivity implements ILogin {
     }
 
     public void newBussinesOnClick(View v) {
-
+        Intent intent = new Intent(LoginActivity.this, activity_empresa.class);
+        startActivity(intent);
     }
 
     @Override
