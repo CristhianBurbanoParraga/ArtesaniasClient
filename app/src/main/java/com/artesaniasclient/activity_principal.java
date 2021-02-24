@@ -34,7 +34,7 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
-public class activity_principal extends AppCompatActivity implements         NavigationView.OnNavigationItemSelectedListener {
+public class activity_principal extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     FirebaseFirestore refFireStore;
     CollectionReference refCollection;
@@ -72,11 +72,10 @@ public class activity_principal extends AppCompatActivity implements         Nav
 
         navView = findViewById(R.id.nav_view);
         Menu m = navView.getMenu();
-        if(user==null) {
+        if (user == null) {
             m.removeItem(R.id.menu_section_2);
             m.removeItem(R.id.menu_section_3);
-        }
-        else{
+        } else {
             m.findItem(R.id.menu_section_2).setIcon(R.drawable.icon_info).setTitle("Section 2");
             m.findItem(R.id.menu_section_3).setIcon(R.drawable.icon_info).setTitle("Section 3");
         }
@@ -97,7 +96,7 @@ public class activity_principal extends AppCompatActivity implements         Nav
 
                 break;
         }
-        if(fragmentTransaction) {
+        if (fragmentTransaction) {
             getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
             menuItem.setChecked(true);
             getSupportActionBar().setTitle("");
@@ -144,7 +143,7 @@ public class activity_principal extends AppCompatActivity implements         Nav
         int id = item.getItemId();
         switch (item.getItemId()) {
             case android.R.id.home:
-                drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout_crafts);
+                drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_crafts);
                 drawerLayout.openDrawer(GravityCompat.START);
                 break;
         }

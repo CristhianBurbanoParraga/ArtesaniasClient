@@ -1,9 +1,12 @@
 package com.artesaniasclient.controller;
 
+import android.app.Activity;
+import android.content.Context;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.artesaniasclient.RegisterUserActivity;
 import com.artesaniasclient.interfaces.ILogin;
 import com.artesaniasclient.interfaces.IUserComunication;
 import com.artesaniasclient.model.User;
@@ -11,12 +14,16 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
@@ -26,6 +33,8 @@ public class UserController {
     private IUserComunication iUserComunication;
     private ILogin iLogin;
     private FirebaseFirestore db;
+    private FirebaseAuth mAuth;
+    private Activity activity;
 
     public UserController() {
         initFirebase();
@@ -33,6 +42,10 @@ public class UserController {
 
     private void initFirebase() {
         db = FirebaseFirestore.getInstance();
+    }
+
+    public void initFirebaseAuth() {
+        mAuth = FirebaseAuth.getInstance();
     }
 
     public UserController(ILogin iLogin) {
@@ -49,6 +62,14 @@ public class UserController {
         this.iUserComunication = iUserComunication;
         this.iLogin = iLogin;
         initFirebase();
+    }
+
+    public Activity getActivity() {
+        return activity;
+    }
+
+    public void setActivity(Activity activity) {
+        this.activity = activity;
     }
 
     public IUserComunication getiUserComunication() {
@@ -80,18 +101,19 @@ public class UserController {
         // [END set_firestore_settings]
     }
 
-    public void addUser(User user) {
+    public void addUser(@NotNull User user) {
         // Add a new document with a generated ID
         db.collection("user")
                 .add(user)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
-                        DocumentSnapshot result = documentReference.get().getResult();
-                        assert result != null;
-                        User userCreate = result.toObject(User.class);
-                        getiUserComunication().add_user_success(userCreate, null);
-                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                        user.setId(documentReference.getId());
+                        if (user.getId() == null) {
+                            getiUserComunication().add_user_success(null, "Error al crear un usuario");
+                        } else {
+                            getiUserComunication().add_user_success(user, "Usuario creado exitosamente");
+                        }
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -103,7 +125,26 @@ public class UserController {
                 });
     }
 
-    public void getUserForEmail(String email) {
+    public void createUserFirebaseAuth(@NotNull User userCreate) {
+        mAuth.createUserWithEmailAndPassword(userCreate.getEmail(), userCreate.getPassword())
+                .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            addUser(userCreate);
+                            Log.d(TAG, "createUserWithEmail:success");
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            getiUserComunication().add_user_success(null, getMessageTask(task.getException()));
+                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                        }
+                        // ...
+                    }
+                });
+    }
+
+    public void getUserForEmail(@NotNull String email) {
         // [START listen_for_users]
         // Listen for users born before 1900.
         //
@@ -181,7 +222,7 @@ public class UserController {
         // [END delete_document]
     }
 
-    private String getMessageTask(Exception exception) {
+    public String getMessageTask(Exception exception) {
         String message = null;
         if (exception != null) {
             message = exception.getMessage();

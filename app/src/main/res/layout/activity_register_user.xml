@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#D8D5D5"
-    tools:context=".ui.login.LoginActivity">
+    tools:context=".RegisterUserActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -204,11 +204,11 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="40dp"
                     android:backgroundTint="#0669b2"
-                    android:enabled="false"
                     android:fontFamily="@font/alfa_slab_one"
                     android:text="@string/registrar"
                     android:textColor="@color/white"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:onClick="onRegisterUserClick"/>
                 <Button
                     android:id="@+id/cancel"
                     android:layout_width="wrap_content"
@@ -219,12 +219,11 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginBottom="20dp"
                     android:backgroundTint="#0669b2"
-                    android:enabled="false"
                     android:fontFamily="@font/alfa_slab_one"
                     android:text="@string/cancelar"
                     android:textColor="@color/white"
                     android:textSize="14sp"
-                    android:onClick="newUserOnClick"/>
+                    android:onClick="onCancelActivityClick"/>
 
             </RelativeLayout>
 

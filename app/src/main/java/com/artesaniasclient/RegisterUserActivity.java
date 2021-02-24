@@ -1,19 +1,92 @@
 package com.artesaniasclient;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.widget.TextView;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class RegisterUserActivity extends AppCompatActivity {
+import com.artesaniasclient.controller.UserController;
+import com.artesaniasclient.interfaces.IUserComunication;
+import com.artesaniasclient.model.User;
+import com.artesaniasclient.ui.login.LoginActivity;
 
-    private TextView mTextView;
+import java.util.ArrayList;
+
+public class RegisterUserActivity extends AppCompatActivity implements IUserComunication {
+
+
+    private UserController userController;
+
+    private EditText textFistName;
+    private EditText textLastName;
+    private EditText textUsername;
+    private EditText textPassword;
+    private EditText textPhone;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_user);
+        userController = new UserController(this);
+        userController.initFirebaseAuth();
+        userController.setActivity(this);
 
-        mTextView = (TextView) findViewById(R.id.text);
+        textFistName = findViewById(R.id.firstname);
+        textLastName = findViewById(R.id.lastname);
+        textUsername = findViewById(R.id.username);
+        textPassword = findViewById(R.id.password);
+        textPhone = findViewById(R.id.phone);
+
+    }
+
+    public void onRegisterUserClick(View v) {
+        User user = new User();
+        user.setFirstname(textFistName.getText().toString());
+        user.setLastname(textLastName.getText().toString());
+        user.setUsername(textUsername.getText().toString());
+        user.setPassword(textPassword.getText().toString());
+        user.setPhone(textPhone.getText().toString());
+        user.setEmail(user.getUsername());
+
+        userController.createUserFirebaseAuth(user);
+    }
+
+    public void onCancelActivityClick(View view) {
+        redirect_login();
+    }
+
+
+    @Override
+    public void get_users_success(ArrayList<User> users, String message) {
+    }
+
+    @Override
+    public void add_user_success(User u, String message) {
+        if (u == null && u.getId() == null) {
+            Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+        } else {
+            message = "Usuario registrado exitosamente";
+            Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+            redirect_login();
+        }
+    }
+
+    private void redirect_login() {
+        Intent intent = new Intent(RegisterUserActivity.this, LoginActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void set_user_success(User u, String message) {
+
+    }
+
+    @Override
+    public void delete_user_success(User u, String message) {
+
     }
 }
