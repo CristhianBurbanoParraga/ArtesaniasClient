@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="categoria" >
+        <item>Seleccione una categoria</item>
+        <item>Cerámica</item>
+        <item>Madera</item>
+        <item>Fibras Vegetales</item>
+        <item>Metal</item>
+        <item>Piel y Cuero</item>
+        <item>Textil</item>
+        <item>Joyeria</item>
+        <item>Varios</item>
+    </string-array>
+</resources>
