@@ -6,6 +6,7 @@ import java.util.Date;
 public class Craft implements Serializable {
 
     private String id;
+    String category;
     private String company;
     private String datedisabled;
     private String dateregistry;
@@ -24,7 +25,9 @@ public class Craft implements Serializable {
         this.id = id;
     }
 
-    public Craft(String company, String datedisabled, String dateregistry, String description, String imageurl, boolean isactive, String namecraft, float price, Integer quantity) {
+    public Craft(String id, String category, String company, String datedisabled, String dateregistry, String description, String imageurl, boolean isactive, String namecraft, double price, Integer quantity) {
+        this.id = id;
+        this.category = category;
         this.company = company;
         this.datedisabled = datedisabled;
         this.dateregistry = dateregistry;
@@ -42,6 +45,14 @@ public class Craft implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public String getCompany() {
@@ -104,7 +115,7 @@ public class Craft implements Serializable {
         return price;
     }
 
-    public void setPrice(float price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 

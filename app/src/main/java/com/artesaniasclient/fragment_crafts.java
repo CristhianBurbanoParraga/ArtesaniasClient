@@ -3,6 +3,7 @@ package com.artesaniasclient;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -10,12 +11,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 import com.artesaniasclient.adapter.adpCrafts;
+import com.artesaniasclient.interfaces.ICraft;
 import com.artesaniasclient.model.Craft;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -26,12 +34,15 @@ import java.util.ArrayList;
  * Use the {@link fragment_crafts#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class fragment_crafts extends Fragment {
+public class fragment_crafts extends Fragment implements AdapterView.OnItemSelectedListener, ICraft {
 
     private FirebaseFirestore refFireStore;
-    private adpCrafts mAdapter;
+    private adpCrafts adapter;
     RecyclerView rcvCrafts;
-    private ArrayList<Craft> craftList = new ArrayList<>();
+    static String cat = "All";
+    ArrayAdapter<String> adapterCat;
+    Spinner cbbCategories;
+    private ArrayList<Craft> craftList;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -77,16 +88,31 @@ public class fragment_crafts extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_crafts, container, false);
+        final String[] categories = new String[]{"All","Cat2","Cat3","Accesorios","Cat5","Cat6"};
+        adapterCat = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, categories);
+        cbbCategories = (Spinner)view.findViewById(R.id.cbbCategory);
+        adapterCat.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); //como se muestran los datos
+        cbbCategories.setAdapter(adapterCat);
+        cbbCategories.setOnItemSelectedListener(this);
         //Vincular instancia del recyclerview
         rcvCrafts = (RecyclerView)view.findViewById(R.id.rcvCrafts);
         //Definir la forma de la lista vertical
         rcvCrafts.setLayoutManager(new LinearLayoutManager(getContext()));
+        refFireStore = FirebaseFirestore.getInstance();
         // Inflate the layout for this fragment
         return view;
     }
 
-    private void getDispositivesFromFireStore(){
-        refFireStore.collection("dispositivos")
+    private void getCrafts(){
+        craftList = new ArrayList<>();
+        if (cat.equals("All"))
+            getAllCrafts();
+        else
+            getCraftsbyCategory();
+    }
+
+    private void getAllCrafts(){
+        refFireStore.collection("crafts")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -94,26 +120,90 @@ public class fragment_crafts extends Fragment {
                         if (task.isSuccessful()) {
                             craftList.clear();
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                String id = document.getString("id");
+                                String id = document.getId();
+                                String category = document.getString("category");
                                 String company = document.getString("company");
                                 String datedisabled = document.getString("datedisabled");
                                 String dateregistry = document.getString("dateregistry");
                                 String description = document.getString("description");
                                 String imageurl = document.getString("imageurl");
-                                boolean isactive = Boolean.parseBoolean(document.getString("isactive"));
-                                String namecraft = document.getString("namecraft");
-                                float price = Float.parseFloat(document.getString("price"));
-                                Integer quantity = Integer.parseInt(document.getString("quantity"));
-                                craftList.add(new Craft(company, datedisabled, dateregistry,description,imageurl,
+                                boolean isactive = document.getBoolean("isactive");
+                                String namecraft = document.getString("namecrafts");
+                                double price = document.getDouble("price");
+                                Integer quantity = Integer.parseInt(document.get("quantity").toString());
+                                craftList.add(new Craft(category,id,company, datedisabled, dateregistry,description,imageurl,
                                         isactive,namecraft,price,quantity));
                                 //Log.d(TAG, document.getId() + " => " + document.getData());
                             }
-                            mAdapter = new adpCrafts(craftList, R.layout.item_catalogo);
-                            rcvCrafts.setAdapter(mAdapter);
+                            adapter = new adpCrafts(getContext(),craftList);
+                            rcvCrafts.setAdapter(adapter);
                         } else {
                             //Log.w(TAG, "Error getting documents.", task.getException());
                         }
                     }
                 });
+    }
+
+    private void getCraftsbyCategory(){
+        refFireStore.collection("crafts")
+                .whereEqualTo("category", cat)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value,
+                                        @Nullable FirebaseFirestoreException error) {
+                        if (error != null) {
+                            System.err.println("Listen failed:" + error);
+                            return;
+                        }
+                        for (DocumentSnapshot doc : value) {
+                            if (doc.getId() != null) {
+                                String id = doc.getId();
+                                String category = doc.getString("category");
+                                String company = doc.getString("company");
+                                String datedisabled = doc.getString("datedisabled");
+                                String dateregistry = doc.getString("dateregistry");
+                                String description = doc.getString("description");
+                                String imageurl = doc.getString("imageurl");
+                                boolean isactive = doc.getBoolean("isactive");
+                                String namecraft = doc.getString("namecrafts");
+                                double price = doc.getDouble("price");
+                                Integer quantity = Integer.parseInt(doc.get("quantity").toString());
+                                craftList.add(new Craft(category, id, company, datedisabled, dateregistry,description,imageurl,
+                                        isactive,namecraft,price,quantity));
+                            }
+                        }
+                        adapter = new adpCrafts(getContext(), craftList);
+                        rcvCrafts.setAdapter(adapter);
+                    }
+                });
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        cat = adapterView.getItemAtPosition(i).toString();
+        getCrafts();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {cat = "All"; }
+
+    @Override
+    public void get_craft_success(ArrayList<Craft> crafts, String message) {
+
+    }
+
+    @Override
+    public void add_craft_success(Craft craft, String message) {
+
+    }
+
+    @Override
+    public void set_craft_success(Craft craft, String message) {
+
+    }
+
+    @Override
+    public void delete_craft_success(Craft crafts, String message) {
+
     }
 }
