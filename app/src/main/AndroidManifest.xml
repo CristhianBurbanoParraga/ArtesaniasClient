@@ -9,18 +9,15 @@
         tools:ignore="ScopedStorage" />
     <uses-permission android:name="android.permission.CAMERA" />
 
-
     <application
         android:allowBackup="true"
-        android:icon="@drawable/logo"
+        android:icon="@drawable/iconarte2"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/iconarte2"
         android:supportsRtl="true"
         android:theme="@style/Theme.ArtesaniasClient.NoActionBar">
-        <activity android:name=".activity_empresa"></activity>
-        <activity android:name=".RegisterCrafts">
-
-        </activity>
+        <activity android:name=".activity_empresa" />
+        <activity android:name=".RegisterCrafts" />
         <activity android:name=".RegisterUserActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".activity_contacts" />

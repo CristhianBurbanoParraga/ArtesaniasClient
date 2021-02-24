@@ -10,11 +10,16 @@ import androidx.fragment.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.ActionProvider;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.SubMenu;
+import android.view.View;
 import android.widget.TextView;
 
 import com.artesaniasclient.controller.UserController;
@@ -36,8 +41,6 @@ import java.util.ArrayList;
 
 public class activity_principal extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    FirebaseFirestore refFireStore;
-    CollectionReference refCollection;
     Toolbar toolbar;
     NavigationView navView;
     DrawerLayout drawerLayout;
@@ -45,8 +48,6 @@ public class activity_principal extends AppCompatActivity implements NavigationV
     boolean fragmentTransaction;
     FirebaseFirestore db;
     private FirebaseAuth mAuth;
-    TextView txtusername;
-    String username = "";
     User user = null;
 
     @Override
@@ -57,30 +58,20 @@ public class activity_principal extends AppCompatActivity implements NavigationV
         Intent i = getIntent();
         //user = (User) i.getSerializableExtra("user");
 
-
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.icon_menu);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-
-        //txtusername = findViewById(R.id.lblUsername);
+        getSupportActionBar().setTitle("");
 
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
 
         navView = findViewById(R.id.nav_view);
-        Menu m = navView.getMenu();
-        if (user == null) {
-            m.removeItem(R.id.menu_section_2);
-            m.removeItem(R.id.menu_section_3);
-        } else {
-            m.findItem(R.id.menu_section_2).setIcon(R.drawable.icon_info).setTitle("Section 2");
-            m.findItem(R.id.menu_section_3).setIcon(R.drawable.icon_info).setTitle("Section 3");
-        }
 
         navView.setNavigationItemSelectedListener(this);
+        fragment = new fragment_crafts();
+        getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
     }
 
     @Override
@@ -109,16 +100,20 @@ public class activity_principal extends AppCompatActivity implements NavigationV
     public void onStart() {
         super.onStart();
         String email = "";
+        Menu m = navView.getMenu();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            m.findItem(R.id.menu_section_2).setIcon(R.drawable.icon_info).setTitle("Section 2");
+            m.findItem(R.id.menu_section_3).setIcon(R.drawable.icon_info).setTitle("Section 3");
+
             email = currentUser.getEmail();
             Gson gson = new Gson();
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
             String userJSON = sharedPreferences.getString(getString(R.string.CURRENT_USER_KEY_STORE), gson.toJson(new User()));
             user = gson.fromJson(userJSON, User.class);
         }
-
         //redirectActivity(currentUser);
         //updateUI(currentUser);
     }
@@ -167,5 +162,4 @@ public class activity_principal extends AppCompatActivity implements NavigationV
         }
         return super.onOptionsItemSelected(item);
     }
-
 }

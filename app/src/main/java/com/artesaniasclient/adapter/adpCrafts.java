@@ -56,7 +56,7 @@ public class adpCrafts extends RecyclerView.Adapter<adpCrafts.ViewHolder>
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflr = LayoutInflater.from(ccontext);
-        View view=inflr.inflate(R.layout.item_catalogo,null,false);
+        View view=inflr.inflate(R.layout.item_craft,null,false);
         view.setOnClickListener(this);
         return new ViewHolder(view);
     }
@@ -64,10 +64,11 @@ public class adpCrafts extends RecyclerView.Adapter<adpCrafts.ViewHolder>
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         try {
+            double uno=0.0;
             Craft craft = lista.get(position);
             holder.company.setText(craft.getCompany());
             holder.namecraft.setText(craft.getNamecraft());
-            holder.price.setText((int) craft.getPrice());
+            holder.price.setText(Double.toString(craft.getPrice()));
             holder.description.setText(craft.getDescription());
             GlideApp.with(ccontext)
                     .load(craft.getImageurl())

@@ -39,7 +39,7 @@ public class fragment_crafts extends Fragment implements AdapterView.OnItemSelec
     private FirebaseFirestore refFireStore;
     private adpCrafts adapter;
     RecyclerView rcvCrafts;
-    static String cat = "All";
+    static String cat = "Todos";
     ArrayAdapter<String> adapterCat;
     Spinner cbbCategories;
     private ArrayList<Craft> craftList;
@@ -88,7 +88,7 @@ public class fragment_crafts extends Fragment implements AdapterView.OnItemSelec
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_crafts, container, false);
-        final String[] categories = new String[]{"All","Cat2","Cat3","Accesorios","Cat5","Cat6"};
+        final String[] categories = new String[]{"Todos","Cat2","Cat3","Accesorios","Cat5","Cat6"};
         adapterCat = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, categories);
         cbbCategories = (Spinner)view.findViewById(R.id.cbbCategory);
         adapterCat.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); //como se muestran los datos
@@ -105,7 +105,7 @@ public class fragment_crafts extends Fragment implements AdapterView.OnItemSelec
 
     private void getCrafts(){
         craftList = new ArrayList<>();
-        if (cat.equals("All"))
+        if (cat.equals("Todos"))
             getAllCrafts();
         else
             getCraftsbyCategory();
@@ -127,7 +127,7 @@ public class fragment_crafts extends Fragment implements AdapterView.OnItemSelec
                                 String dateregistry = document.getString("dateregistry");
                                 String description = document.getString("description");
                                 String imageurl = document.getString("imageurl");
-                                boolean isactive = document.getBoolean("isactive");
+                                boolean isactive = Boolean.parseBoolean(document.get("isactive").toString());
                                 String namecraft = document.getString("namecrafts");
                                 double price = document.getDouble("price");
                                 Integer quantity = Integer.parseInt(document.get("quantity").toString());
@@ -185,7 +185,7 @@ public class fragment_crafts extends Fragment implements AdapterView.OnItemSelec
     }
 
     @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {cat = "All"; }
+    public void onNothingSelected(AdapterView<?> adapterView) {cat = "Todos"; }
 
     @Override
     public void get_craft_success(ArrayList<Craft> crafts, String message) {
