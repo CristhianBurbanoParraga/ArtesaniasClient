@@ -125,48 +125,38 @@
 
                 <Button
                     android:id="@+id/login"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_below="@+id/mainpassword"
                     android:layout_centerInParent="false"
                     android:layout_centerHorizontal="true"
+                    android:layout_marginStart="24dp"
                     android:layout_marginTop="40dp"
+                    android:layout_marginEnd="24dp"
                     android:backgroundTint="#0669b2"
                     android:enabled="false"
                     android:fontFamily="@font/alfa_slab_one"
                     android:text="@string/sign_in"
                     android:textColor="@color/white"
                     android:textSize="14sp" />
+
                 <Button
                     android:id="@+id/register_user"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_below="@+id/login"
                     android:layout_centerInParent="false"
                     android:layout_centerHorizontal="true"
+                    android:layout_marginStart="24dp"
                     android:layout_marginTop="20dp"
-                    android:backgroundTint="#0669b2"
-                    android:fontFamily="@font/alfa_slab_one"
-                    android:text="@string/new_user"
-                    android:textColor="@color/white"
-                    android:textSize="14sp"
-                    android:onClick="newUserOnClick"/>
-
-                <Button
-                    android:id="@+id/register_business"
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
-                    android:layout_below="@+id/register_user"
-                    android:layout_centerInParent="false"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="24dp"
                     android:layout_marginBottom="20dp"
                     android:backgroundTint="#0669b2"
                     android:fontFamily="@font/alfa_slab_one"
-                    android:text="@string/new_bussines"
+                    android:onClick="newUserOnClick"
+                    android:text="@string/new_user"
                     android:textColor="@color/white"
-                    android:textSize="14sp"
-                    android:onClick="newBussinesOnClick"/>
+                    android:textSize="14sp" />
 
             </RelativeLayout>
 

@@ -1,12 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <group android:checkableBehavior="single" android:id="@+id/menunavview">
-        <item android:title="Crafts"
-            android:id="@+id/menu_section_1"
-            android:icon="@drawable/logo_temp"/>
-        <item android:title=""
-            android:id="@+id/menu_section_2" />
-        <item android:title=""
-            android:id="@+id/menu_section_3"/>
-    </group>
+
 </menu>

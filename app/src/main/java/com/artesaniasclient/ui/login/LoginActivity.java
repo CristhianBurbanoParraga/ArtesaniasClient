@@ -211,11 +211,6 @@ public class LoginActivity extends AppCompatActivity implements ILogin {
         startActivity(intent);
     }
 
-    public void newBussinesOnClick(View v) {
-        Intent intent = new Intent(LoginActivity.this, activity_empresa.class);
-        startActivity(intent);
-    }
-
     @Override
     public void login(User user, String message) {
         Intent intent = new Intent(LoginActivity.this, activity_principal.class);

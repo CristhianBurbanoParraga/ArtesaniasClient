@@ -1,6 +1,7 @@
 package com.artesaniasclient;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
@@ -52,6 +53,8 @@ public class activity_principal extends AppCompatActivity implements NavigationV
     FirebaseFirestore db;
     private FirebaseAuth mAuth;
     User user = null;
+    static int groupMenu = 1;
+    final int itemCrearEmpresa=1, itemPedidos=2, itemCrearArtesania=3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,10 +75,11 @@ public class activity_principal extends AppCompatActivity implements NavigationV
         mAuth = FirebaseAuth.getInstance();
 
         navView = findViewById(R.id.nav_view);
-
         navView.setNavigationItemSelectedListener(this);
         fragment = new fragment_crafts();
         getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
+
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_crafts);
     }
 
     @Override
@@ -83,11 +87,11 @@ public class activity_principal extends AppCompatActivity implements NavigationV
         fragmentTransaction = false;
         fragment = null;
         switch (menuItem.getItemId()) {
-            case R.id.menu_section_1:
+            case itemCrearEmpresa:
                 fragment = new fragment_crafts();
                 fragmentTransaction = true;
                 break;
-            case R.id.menu_section_2:
+            case itemPedidos:
                 fragment = new FragmentRegisterCrafts();
                 fragmentTransaction = true;
                 break;
@@ -110,17 +114,31 @@ public class activity_principal extends AppCompatActivity implements NavigationV
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            m.findItem(R.id.menu_section_2).setIcon(R.drawable.icon_info).setTitle("Registrar Artesanias");
-            m.findItem(R.id.menu_section_3).setIcon(R.drawable.icon_info).setTitle("Section 3");
-
             email = currentUser.getEmail();
             Gson gson = new Gson();
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
             String userJSON = sharedPreferences.getString(getString(R.string.CURRENT_USER_KEY_STORE), gson.toJson(new User()));
             user = gson.fromJson(userJSON, User.class);
+
+            if (user.getUsertype().equals("Artesano")){
+                m.add(groupMenu,itemCrearEmpresa, itemCrearEmpresa, "Registrar Empresa").setIcon(R.drawable.icon_developer_team);
+                m.add(groupMenu,itemCrearArtesania, itemCrearArtesania, "Registrar Artesanía").setIcon(R.drawable.icon_developer_team);
+            }
+            else {
+                m.add(groupMenu,itemCrearEmpresa, itemCrearEmpresa, "Registrar Empresa").setIcon(R.drawable.icon_developer_team);
+                m.add(groupMenu,itemPedidos, itemPedidos, "Mis Pedidos").setIcon(R.drawable.icon_developer_team);
+            }
         }
         else
+        {   //en caso de no estar logeado se deshabilita el navigation view
             imgToolbar.setImageResource(R.drawable.iconarte2);
+            ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                    this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+            drawerLayout.addDrawerListener(toggle);
+            toggle.syncState();
+            toolbar.setNavigationIcon(null);
+            drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        }
         //redirectActivity(currentUser);
         //updateUI(currentUser);
     }
@@ -145,7 +163,6 @@ public class activity_principal extends AppCompatActivity implements NavigationV
         int id = item.getItemId();
         switch (item.getItemId()) {
             case android.R.id.home:
-                drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_crafts);
                 drawerLayout.openDrawer(GravityCompat.START);
                 break;
         }
