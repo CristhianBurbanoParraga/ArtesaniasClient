@@ -1,4 +1,4 @@
-package com.artesaniasclient;
+package com.artesaniasclient.fragments;
 
 import android.os.Bundle;
 
@@ -15,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
+import com.artesaniasclient.R;
 import com.artesaniasclient.adapter.adpCrafts;
 import com.artesaniasclient.interfaces.ICraft;
 import com.artesaniasclient.model.Craft;

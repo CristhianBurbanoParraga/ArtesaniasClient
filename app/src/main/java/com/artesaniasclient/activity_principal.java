@@ -8,39 +8,27 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
-import android.view.ActionProvider;
-import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.SubMenu;
-import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.artesaniasclient.controller.UserController;
 import com.artesaniasclient.fragments.FragmentRegisterCrafts;
-import com.artesaniasclient.interfaces.IUserComunication;
+import com.artesaniasclient.fragments.fragment_crafts;
+import com.artesaniasclient.fragments.fragment_my_companies;
+import com.artesaniasclient.fragments.fragment_my_crafts;
+import com.artesaniasclient.fragments.fragment_my_orders;
+import com.artesaniasclient.fragments.fragment_register_company;
 import com.artesaniasclient.model.User;
 import com.artesaniasclient.ui.login.LoginActivity;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.Gson;
-
-import java.util.ArrayList;
 
 public class activity_principal extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -92,24 +80,24 @@ public class activity_principal extends AppCompatActivity implements NavigationV
                 fragmentTransaction = true;
                 break;
             case itemCrearEmpresa:
-                fragment = null;
-                fragmentTransaction = false;
+                fragment = new fragment_register_company();
+                fragmentTransaction = true;
                 break;
             case itemPedidos:
-                fragment = null;
-                fragmentTransaction = false;
+                fragment = new fragment_my_orders();
+                fragmentTransaction = true;
                 break;
             case itemCrearArtesania:
                 fragment = new FragmentRegisterCrafts();
                 fragmentTransaction = true;
                 break;
             case itemVerMisEmpresas:
-                fragment = null;
-                fragmentTransaction = false;
+                fragment = new fragment_my_companies();
+                fragmentTransaction = true;
                 break;
             case itemVerMisArtesanias:
-                fragment = null;
-                fragmentTransaction = false;
+                fragment = new fragment_my_crafts();
+                fragmentTransaction = true;
                 break;
         }
         if (fragmentTransaction) {
