@@ -15,6 +15,6 @@
     <item
         android:id="@+id/btnContacts"
         android:icon="@drawable/icon_contacts"
-        android:title="Contacts"
+        android:title="Contactos"
         app:showAsAction="ifRoom" />
 </menu>

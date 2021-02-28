@@ -14,6 +14,7 @@ import com.artesaniasclient.model.Company;
 import com.artesaniasclient.ui.login.LoginActivity;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class activity_empresa extends AppCompatActivity implements ICompanyComunication {
 
@@ -44,6 +45,8 @@ public class activity_empresa extends AppCompatActivity implements ICompanyComun
         company.setRuc(txtRuc.getText().toString());
         company.setCity(txtCity.getText().toString());
         company.setAddress(txtAddress.getText().toString());
+        company.setDateregistry(new Date().toString());
+        company.setIsactive(false);
         companyController.addCompany(company);
     }
 

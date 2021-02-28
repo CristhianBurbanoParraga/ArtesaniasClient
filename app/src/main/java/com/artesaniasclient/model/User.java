@@ -11,13 +11,13 @@ public class User implements Serializable {
     private String dateregistry;
     private String email;
     private boolean isactive;
-    private boolean issuperuser;
     private String lastname;
     private String firstname;
     private String username;
     private String password;
     private String phone;
     private String usertype;
+    private String suscriptiontype;
 
     public User() {
     }
@@ -26,19 +26,19 @@ public class User implements Serializable {
         this.id = id;
     }
 
-    public User(String id, String address, String dateregistry, String email, boolean isactive, boolean issuperuser, String lastname, String firstname, String username, String password, String phone, String usertype) {
+    public User(String id, String address, String dateregistry, String email, boolean isactive, String lastname, String firstname, String username, String password, String phone, String usertype, String suscriptiontype) {
         this.id = id;
         this.address = address;
         this.dateregistry = dateregistry;
         this.email = email;
         this.isactive = isactive;
-        this.issuperuser = issuperuser;
         this.lastname = lastname;
         this.firstname = firstname;
         this.username = username;
         this.password = password;
         this.phone = phone;
         this.usertype = usertype;
+        this.suscriptiontype = suscriptiontype;
     }
 
     public String getId() {
@@ -79,14 +79,6 @@ public class User implements Serializable {
 
     public void setIsactive(boolean isactive) {
         this.isactive = isactive;
-    }
-
-    public boolean isIssuperuser() {
-        return issuperuser;
-    }
-
-    public void setIssuperuser(boolean issuperuser) {
-        this.issuperuser = issuperuser;
     }
 
     public String getLastname() {
@@ -137,6 +129,14 @@ public class User implements Serializable {
         this.usertype = usertype;
     }
 
+    public String getSuscriptiontype() {
+        return suscriptiontype;
+    }
+
+    public void setSuscriptiontype(String suscriptiontype) {
+        this.suscriptiontype = suscriptiontype;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -145,13 +145,13 @@ public class User implements Serializable {
                 ", dateregistry='" + dateregistry + '\'' +
                 ", email='" + email + '\'' +
                 ", isactive=" + isactive +
-                ", issuperuser=" + issuperuser +
                 ", lastname='" + lastname + '\'' +
                 ", firstname='" + firstname + '\'' +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", phone='" + phone + '\'' +
                 ", usertype='" + usertype + '\'' +
+                ", suscriptiontype='" + suscriptiontype + '\'' +
                 '}';
     }
 }

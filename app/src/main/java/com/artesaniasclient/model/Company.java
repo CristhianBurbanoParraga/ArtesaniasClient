@@ -11,7 +11,6 @@ public class Company implements Serializable {
     private String dateregistry;
     private boolean isactive;
     private String ruc;
-    private String suscriptiontype;
 
     public Company() {
     }
@@ -20,7 +19,7 @@ public class Company implements Serializable {
         this.id = id;
     }
 
-    public Company(String id, String address, String businessname, String city, String dateregistry, boolean isactive, String ruc, String suscriptiontype) {
+    public Company(String id, String address, String businessname, String city, String dateregistry, boolean isactive, String ruc) {
         this.id = id;
         this.address = address;
         this.businessname = businessname;
@@ -28,7 +27,6 @@ public class Company implements Serializable {
         this.dateregistry = dateregistry;
         this.isactive = isactive;
         this.ruc = ruc;
-        this.suscriptiontype = suscriptiontype;
     }
 
     public String getId() {
@@ -87,14 +85,6 @@ public class Company implements Serializable {
         this.ruc = ruc;
     }
 
-    public String getSuscriptiontype() {
-        return suscriptiontype;
-    }
-
-    public void setSuscriptiontype(String suscriptiontype) {
-        this.suscriptiontype = suscriptiontype;
-    }
-
     @Override
     public String toString() {
         return "Company{" +
@@ -105,7 +95,6 @@ public class Company implements Serializable {
                 ", dateregistry='" + dateregistry + '\'' +
                 ", isactive=" + isactive +
                 ", ruc='" + ruc + '\'' +
-                ", suscriptiontype='" + suscriptiontype + '\'' +
                 '}';
     }
 }

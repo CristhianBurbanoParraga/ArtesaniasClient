@@ -14,6 +14,7 @@ import com.artesaniasclient.model.User;
 import com.artesaniasclient.ui.login.LoginActivity;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class RegisterUserActivity extends AppCompatActivity implements IUserComunication {
 
@@ -51,7 +52,10 @@ public class RegisterUserActivity extends AppCompatActivity implements IUserComu
         user.setPassword(textPassword.getText().toString());
         user.setPhone(textPhone.getText().toString());
         user.setEmail(user.getUsername());
-
+        user.setSuscriptiontype("Free");
+        user.setIsactive(true);
+        user.setUsertype("Cliente");
+        user.setDateregistry(new Date().toString());
         userController.createUserFirebaseAuth(user);
     }
 

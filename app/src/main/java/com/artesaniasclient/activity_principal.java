@@ -54,7 +54,7 @@ public class activity_principal extends AppCompatActivity implements NavigationV
     private FirebaseAuth mAuth;
     User user = null;
     static int groupMenu = 1;
-    final int itemCrearEmpresa=1, itemPedidos=2, itemCrearArtesania=3;
+    final int itemVerCatalogo =1, itemCrearEmpresa=2, itemPedidos=3, itemCrearArtesania=4, itemVerMisEmpresas=5, itemVerMisArtesanias=6;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,13 +87,29 @@ public class activity_principal extends AppCompatActivity implements NavigationV
         fragmentTransaction = false;
         fragment = null;
         switch (menuItem.getItemId()) {
-            case itemCrearEmpresa:
+            case itemVerCatalogo:
                 fragment = new fragment_crafts();
                 fragmentTransaction = true;
                 break;
+            case itemCrearEmpresa:
+                fragment = null;
+                fragmentTransaction = false;
+                break;
             case itemPedidos:
+                fragment = null;
+                fragmentTransaction = false;
+                break;
+            case itemCrearArtesania:
                 fragment = new FragmentRegisterCrafts();
                 fragmentTransaction = true;
+                break;
+            case itemVerMisEmpresas:
+                fragment = null;
+                fragmentTransaction = false;
+                break;
+            case itemVerMisArtesanias:
+                fragment = null;
+                fragmentTransaction = false;
                 break;
         }
         if (fragmentTransaction) {
@@ -121,10 +137,14 @@ public class activity_principal extends AppCompatActivity implements NavigationV
             user = gson.fromJson(userJSON, User.class);
 
             if (user.getUsertype().equals("Artesano")){
+                m.add(groupMenu,itemVerCatalogo, itemVerCatalogo, "Ver Catálogo").setIcon(R.drawable.icon_developer_team);
                 m.add(groupMenu,itemCrearEmpresa, itemCrearEmpresa, "Registrar Empresa").setIcon(R.drawable.icon_developer_team);
                 m.add(groupMenu,itemCrearArtesania, itemCrearArtesania, "Registrar Artesanía").setIcon(R.drawable.icon_developer_team);
+                m.add(groupMenu,itemVerMisEmpresas, itemVerMisEmpresas, "Mis Empresas").setIcon(R.drawable.icon_developer_team);
+                m.add(groupMenu,itemVerMisArtesanias, itemVerMisArtesanias, "Mis Artesanías").setIcon(R.drawable.icon_developer_team);
             }
             else {
+                m.add(groupMenu,itemVerCatalogo, itemVerCatalogo, "Ver Catálogo").setIcon(R.drawable.icon_developer_team);
                 m.add(groupMenu,itemCrearEmpresa, itemCrearEmpresa, "Registrar Empresa").setIcon(R.drawable.icon_developer_team);
                 m.add(groupMenu,itemPedidos, itemPedidos, "Mis Pedidos").setIcon(R.drawable.icon_developer_team);
             }
@@ -151,9 +171,11 @@ public class activity_principal extends AppCompatActivity implements NavigationV
         if (user != null && user.getId() != null && user.getId().length() > 0) {
             m.setTitle(user.getUsername());
             ml.setIcon(R.drawable.icon_logout);
+            ml.setTitle("Cerrar Sesión");
         } else {
             m.setTitle("");
             ml.setIcon(R.drawable.icon_login);
+            ml.setTitle("Iniciar Sesión");
         }
         return true;
     }
