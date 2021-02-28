@@ -54,7 +54,7 @@ public class activity_principal extends AppCompatActivity implements NavigationV
     private FirebaseAuth mAuth;
     User user = null;
     static int groupMenu = 1;
-    final int itemVerCatalogo =1, itemCrearEmpresa=2, itemPedidos=3, itemCrearArtesania=4, itemVerMisEmpresas=5, itemVerMisArtesanias=6;
+    final int itemVerCatalogo = 1, itemCrearEmpresa = 2, itemPedidos = 3, itemCrearArtesania = 4, itemVerMisEmpresas = 5, itemVerMisArtesanias = 6;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,21 +136,18 @@ public class activity_principal extends AppCompatActivity implements NavigationV
             String userJSON = sharedPreferences.getString(getString(R.string.CURRENT_USER_KEY_STORE), gson.toJson(new User()));
             user = gson.fromJson(userJSON, User.class);
 
-            if (user.getUsertype().equals("Artesano")){
-                m.add(groupMenu,itemVerCatalogo, itemVerCatalogo, "Ver Catálogo").setIcon(R.drawable.icon_developer_team);
-                m.add(groupMenu,itemCrearEmpresa, itemCrearEmpresa, "Registrar Empresa").setIcon(R.drawable.icon_developer_team);
-                m.add(groupMenu,itemCrearArtesania, itemCrearArtesania, "Registrar Artesanía").setIcon(R.drawable.icon_developer_team);
-                m.add(groupMenu,itemVerMisEmpresas, itemVerMisEmpresas, "Mis Empresas").setIcon(R.drawable.icon_developer_team);
-                m.add(groupMenu,itemVerMisArtesanias, itemVerMisArtesanias, "Mis Artesanías").setIcon(R.drawable.icon_developer_team);
+            if (user.getUsertype().equals("Artesano")) {
+                m.add(groupMenu, itemVerCatalogo, itemVerCatalogo, "Ver Catálogo").setIcon(R.drawable.icon_developer_team);
+                m.add(groupMenu, itemCrearEmpresa, itemCrearEmpresa, "Registrar Empresa").setIcon(R.drawable.icon_developer_team);
+                m.add(groupMenu, itemCrearArtesania, itemCrearArtesania, "Registrar Artesanía").setIcon(R.drawable.icon_developer_team);
+                m.add(groupMenu, itemVerMisEmpresas, itemVerMisEmpresas, "Mis Empresas").setIcon(R.drawable.icon_developer_team);
+                m.add(groupMenu, itemVerMisArtesanias, itemVerMisArtesanias, "Mis Artesanías").setIcon(R.drawable.icon_developer_team);
+            } else {
+                m.add(groupMenu, itemVerCatalogo, itemVerCatalogo, "Ver Catálogo").setIcon(R.drawable.icon_developer_team);
+                m.add(groupMenu, itemCrearEmpresa, itemCrearEmpresa, "Registrar Empresa").setIcon(R.drawable.icon_developer_team);
+                m.add(groupMenu, itemPedidos, itemPedidos, "Mis Pedidos").setIcon(R.drawable.icon_developer_team);
             }
-            else {
-                m.add(groupMenu,itemVerCatalogo, itemVerCatalogo, "Ver Catálogo").setIcon(R.drawable.icon_developer_team);
-                m.add(groupMenu,itemCrearEmpresa, itemCrearEmpresa, "Registrar Empresa").setIcon(R.drawable.icon_developer_team);
-                m.add(groupMenu,itemPedidos, itemPedidos, "Mis Pedidos").setIcon(R.drawable.icon_developer_team);
-            }
-        }
-        else
-        {   //en caso de no estar logeado se deshabilita el navigation view
+        } else {   //en caso de no estar logeado se deshabilita el navigation view
             imgToolbar.setImageResource(R.drawable.iconarte2);
             ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                     this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
