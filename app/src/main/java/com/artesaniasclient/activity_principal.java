@@ -24,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.artesaniasclient.controller.UserController;
+import com.artesaniasclient.fragments.FragmentRegisterCrafts;
 import com.artesaniasclient.interfaces.IUserComunication;
 import com.artesaniasclient.model.User;
 import com.artesaniasclient.ui.login.LoginActivity;
@@ -87,7 +88,8 @@ public class activity_principal extends AppCompatActivity implements NavigationV
                 fragmentTransaction = true;
                 break;
             case R.id.menu_section_2:
-
+                fragment = new FragmentRegisterCrafts();
+                fragmentTransaction = true;
                 break;
         }
         if (fragmentTransaction) {
@@ -108,7 +110,7 @@ public class activity_principal extends AppCompatActivity implements NavigationV
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            m.findItem(R.id.menu_section_2).setIcon(R.drawable.icon_info).setTitle("Section 2");
+            m.findItem(R.id.menu_section_2).setIcon(R.drawable.icon_info).setTitle("Registrar Artesanias");
             m.findItem(R.id.menu_section_3).setIcon(R.drawable.icon_info).setTitle("Section 3");
 
             email = currentUser.getEmail();

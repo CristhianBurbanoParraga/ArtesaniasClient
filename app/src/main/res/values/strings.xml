@@ -57,6 +57,7 @@
     <string name="categoriaart">Categoría</string>
     <string name="cantart">Cantidad Actual</string>
     <string name="precioart">Precio</string>
+    <string name="descriptioncrafs">Descripción de la artesanía</string>
     <string name="seleccimg">Selecciona Imagen</string>
 
 </resources>

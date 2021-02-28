@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#D8D5D5"
-    tools:context=".RegisterCrafts">
+    tools:context=".fragments.FragmentRegisterCrafts">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -234,7 +232,7 @@
                     android:fontFamily="@font/alfa_slab_one"
                     android:text="@string/registrar"
                     android:textColor="@color/white"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"/>
 
                 <Button
                     android:id="@+id/cancel"
@@ -263,4 +261,4 @@
         android:layout_gravity="center|center_vertical|center_horizontal"
         android:indeterminate="true"
         android:visibility="gone" />
-</RelativeLayout>
+</FrameLayout>

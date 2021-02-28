@@ -5,10 +5,12 @@
         <item>Cerámica</item>
         <item>Madera</item>
         <item>Fibras Vegetales</item>
+        <item>Mármol, piedra y vidrio</item>
         <item>Metal</item>
         <item>Piel y Cuero</item>
         <item>Textil</item>
-        <item>Joyeria</item>
+        <item>Joyería</item>
+        <item>Instrumentos musicales</item>
         <item>Varios</item>
     </string-array>
 </resources>

@@ -87,7 +87,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/border3"
-                        android:drawableStart="@drawable/icon_email"
+                        android:drawableStart="@drawable/icon_bussiness"
                         android:drawablePadding="10dp"
                         android:drawableTint="#0669b2"
                         android:inputType="text"
@@ -112,7 +112,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/border3"
-                        android:drawableStart="@drawable/icon_password"
+                        android:drawableStart="@drawable/icon_ruc"
                         android:drawablePadding="10dp"
                         android:drawableTint="#0669b2"
                         android:imeOptions="actionDone"
@@ -137,7 +137,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/border3"
-                        android:drawableStart="@drawable/icon_password"
+                        android:drawableStart="@drawable/icon_city"
                         android:drawablePadding="10dp"
                         android:drawableTint="#0669b2"
                         android:imeOptions="actionDone"
@@ -162,7 +162,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/border3"
-                        android:drawableStart="@drawable/icon_password"
+                        android:drawableStart="@drawable/icon_address"
                         android:drawablePadding="10dp"
                         android:drawableTint="#0669b2"
                         android:imeOptions="actionDone"
@@ -170,7 +170,7 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <Button
-                    android:id="@+id/login"
+                    android:id="@+id/registrar_company"
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
                     android:layout_below="@+id/mainaddress"
@@ -183,9 +183,10 @@
                     android:fontFamily="@font/alfa_slab_one"
                     android:text="@string/registrar"
                     android:textColor="@color/white"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:onClick="registry_company"/>
                 <Button
-                    android:id="@+id/register_user"
+                    android:id="@+id/cancelar"
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
                     android:layout_below="@+id/mainaddress"
@@ -198,7 +199,8 @@
                     android:fontFamily="@font/alfa_slab_one"
                     android:text="@string/cancelar"
                     android:textColor="@color/white"
-                    android:textSize="14sp"/>
+                    android:textSize="14sp"
+                    android:onClick="cancel_company"/>
 
             </RelativeLayout>
 

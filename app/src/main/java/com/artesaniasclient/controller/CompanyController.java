@@ -1,5 +1,6 @@
 package com.artesaniasclient.controller;
 
+import android.app.Activity;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -27,6 +28,7 @@ public class CompanyController {
     private final String TAG = "CompanyController";
     private ICompanyComunication iCompanyComunication;
     private FirebaseFirestore db;
+    private Activity activity;
 
     public CompanyController() {
         initFirebase();
@@ -34,6 +36,14 @@ public class CompanyController {
 
     private void initFirebase() {
         db = FirebaseFirestore.getInstance();
+    }
+
+    public Activity getActivity() {
+        return activity;
+    }
+
+    public void setActivity(Activity activity) {
+        this.activity = activity;
     }
 
     public CompanyController(ICompanyComunication iCompanyComunication) {
@@ -69,11 +79,12 @@ public class CompanyController {
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
-                        DocumentSnapshot result = documentReference.get().getResult();
-                        assert result != null;
-                        Company companyCreate = result.toObject(Company.class);
-                        getiCompanyComunication().add_company_success(companyCreate, null);
-                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                        company.setId(documentReference.getId());
+                        if (company.getId() == null) {
+                            getiCompanyComunication().add_company_success(null, "Error al crear la empresa");
+                        } else {
+                            getiCompanyComunication().add_company_success(company, "Empresa creada exitosamente");
+                        }
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
