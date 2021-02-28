@@ -40,9 +40,11 @@ public class fragment_crafts extends Fragment implements AdapterView.OnItemSelec
     private adpCrafts adapter;
     RecyclerView rcvCrafts;
     static String cat = "Todos";
-    ArrayAdapter<String> adapterCat;
+    ArrayAdapter<CharSequence> adapterCat;
     Spinner cbbCategories;
     private ArrayList<Craft> craftList;
+    ArrayAdapter<CharSequence> adp;
+    String[] categories = new String[11];
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -88,8 +90,8 @@ public class fragment_crafts extends Fragment implements AdapterView.OnItemSelec
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_crafts, container, false);
-        final String[] categories = new String[]{"Todos","Cat2","Cat3","Accesorios","Cat5","Cat6"};
-        adapterCat = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, categories);
+        llenarSpinner();
+        adapterCat = new ArrayAdapter<CharSequence>(getContext(), android.R.layout.simple_spinner_item, categories);
         cbbCategories = (Spinner)view.findViewById(R.id.cbbCategory);
         adapterCat.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); //como se muestran los datos
         cbbCategories.setAdapter(adapterCat);
@@ -101,6 +103,16 @@ public class fragment_crafts extends Fragment implements AdapterView.OnItemSelec
         refFireStore = FirebaseFirestore.getInstance();
         // Inflate the layout for this fragment
         return view;
+    }
+
+    private void llenarSpinner(){
+        categories[0] = "Todos";
+        adp = ArrayAdapter.createFromResource(getContext(),R.array.categoria, android.R.layout.simple_spinner_item);
+        int i = 1;
+        while(i<categories.length){
+            categories[i] = (String) adp.getItem(i-1);
+            i=i+1;
+        }
     }
 
     private void getCrafts(){

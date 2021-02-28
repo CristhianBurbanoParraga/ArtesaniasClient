@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="categoria" >
-        <item>Seleccione una categoria</item>
+        <item>Varios</item>
         <item>Cerámica</item>
         <item>Madera</item>
         <item>Fibras Vegetales</item>
@@ -11,6 +11,5 @@
         <item>Textil</item>
         <item>Joyería</item>
         <item>Instrumentos musicales</item>
-        <item>Varios</item>
     </string-array>
 </resources>
