@@ -1,6 +1,7 @@
 package com.artesaniasclient.controller;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -154,5 +155,6 @@ public class CompanyController {
         }
         return message;
     }
+
 
 }

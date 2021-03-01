@@ -55,6 +55,22 @@ public class activity_empresa extends AppCompatActivity implements ICompanyComun
         startActivity(intent);
     }
 
+    public void solicitudBussiness(Company company, String descriptionActivity) {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.putExtra(Intent.EXTRA_EMAIL, new String[] { "cbbp1997@gmail.com" });
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Artesanias Ecuador - Solicitud de Empresa");
+        intent.putExtra(Intent.EXTRA_TEXT, new String[] { "Solicito a Artesanías Ecuador la apertura de mi Empresa.",
+                "Identificada con la siguiente información:",
+                "Nombre de la empresa: " + company.getBusinessname(),
+                "Ruc: " + company.getRuc(),
+                "Ciudad: " + company.getCity(),
+                "Dirección: " + company.getAddress(),
+                descriptionActivity});
+        intent.setType("message/rfc822");
+        startActivity(Intent.createChooser(intent, "Elije un cliente de correo:"));
+    }
+
+
     @Override
     public void add_company_success(Company c, String message) {
         if (c == null && c.getId() == null) {
