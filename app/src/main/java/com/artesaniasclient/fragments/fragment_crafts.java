@@ -21,10 +21,12 @@ import com.artesaniasclient.interfaces.ICraft;
 import com.artesaniasclient.model.Craft;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -181,6 +183,7 @@ public class fragment_crafts extends Fragment implements AdapterView.OnItemSelec
                                 String namecraft = doc.getString("namecrafts");
                                 double price = doc.getDouble("price");
                                 Integer quantity = Integer.parseInt(doc.get("quantity").toString());
+
                                 craftList.add(new Craft(category, id, company, datedisabled, dateregistry,description,imageurl,
                                         isactive,namecraft,price,quantity));
                             }

@@ -132,7 +132,7 @@ public class CompanyController {
         // [END get_all_companies]
     }
 
-    private void getAllMyCompanies(){
+    public void getAllMyCompanies(){
         if (mAuth.getCurrentUser() != null) {
             String useremail = mAuth.getCurrentUser().getEmail();
             companiesList = new ArrayList<>();
