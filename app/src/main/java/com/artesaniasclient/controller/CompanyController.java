@@ -6,6 +6,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.artesaniasclient.adapter.adpCompany;
 import com.artesaniasclient.interfaces.ICompanyComunication;
 import com.artesaniasclient.interfaces.ILogin;
 import com.artesaniasclient.interfaces.IUserComunication;
@@ -15,6 +16,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -30,6 +32,8 @@ public class CompanyController {
     private ICompanyComunication iCompanyComunication;
     private FirebaseFirestore db;
     private Activity activity;
+    ArrayList<Company> companiesList;
+    private FirebaseAuth mAuth;
 
     public CompanyController() {
         initFirebase();
@@ -37,6 +41,7 @@ public class CompanyController {
 
     private void initFirebase() {
         db = FirebaseFirestore.getInstance();
+        mAuth = FirebaseAuth.getInstance();
     }
 
     public Activity getActivity() {
@@ -125,6 +130,46 @@ public class CompanyController {
                     }
                 });
         // [END get_all_companies]
+    }
+
+    private void getAllMyCompanies(){
+        if (mAuth.getCurrentUser() != null) {
+            String useremail = mAuth.getCurrentUser().getEmail();
+            companiesList = new ArrayList<>();
+            db.collection("company")
+                    .whereEqualTo("useremail", useremail)
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                //companiesList.clear();
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+
+                                    String id = document.getId();
+                                    String address = document.getString("address");
+                                    String businessname = document.getString("businessname");
+                                    String city = document.getString("city");
+                                    String dateregistry = document.getString("dateregistry");
+                                    boolean isactive = Boolean.parseBoolean(document.get("isactive").toString());
+                                    String ruc = document.getString("ruc");
+                                    String useremail = document.getString("useremail");
+                                    companiesList.add(new Company(id, address, businessname, city, dateregistry, isactive, ruc, useremail));
+                                    //Log.d(TAG, document.getId() + " => " + document.getData());
+                                }
+                                iCompanyComunication.get_companies_by_useremail_success(companiesList, "");
+                            /*adapter = new adpCompany(getContext(),companiesList);
+                            rcvCompanies.setAdapter(adapter);*/
+                            } else {
+                                //Log.w(TAG, "Error getting documents.", task.getException());
+                                iCompanyComunication.get_companies_by_useremail_success(null, task.getException().getMessage());
+                            }
+                        }
+                    });
+        } else {
+            iCompanyComunication.get_companies_by_useremail_success(null,"Usuario no Autenticado");
+        }
+
     }
 
     public void deleteDocument(String idCompany) {
