@@ -11,6 +11,7 @@ public class Company implements Serializable {
     private String dateregistry;
     private boolean isactive;
     private String ruc;
+    private String useremail;
 
     public Company() {
     }
@@ -19,7 +20,7 @@ public class Company implements Serializable {
         this.id = id;
     }
 
-    public Company(String id, String address, String businessname, String city, String dateregistry, boolean isactive, String ruc) {
+    public Company(String id, String address, String businessname, String city, String dateregistry, boolean isactive, String ruc, String useremail) {
         this.id = id;
         this.address = address;
         this.businessname = businessname;
@@ -27,6 +28,7 @@ public class Company implements Serializable {
         this.dateregistry = dateregistry;
         this.isactive = isactive;
         this.ruc = ruc;
+        this.useremail = useremail;
     }
 
     public String getId() {
@@ -85,6 +87,14 @@ public class Company implements Serializable {
         this.ruc = ruc;
     }
 
+    public String getUseremail() {
+        return useremail;
+    }
+
+    public void setUseremail(String useremail) {
+        this.useremail = useremail;
+    }
+
     @Override
     public String toString() {
         return "Company{" +
@@ -95,6 +105,7 @@ public class Company implements Serializable {
                 ", dateregistry='" + dateregistry + '\'' +
                 ", isactive=" + isactive +
                 ", ruc='" + ruc + '\'' +
+                ", useremail='" + useremail + '\'' +
                 '}';
     }
 }

@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.artesaniasclient.R;
 import com.artesaniasclient.adapter.adpCompany;
@@ -99,9 +100,10 @@ public class fragment_my_companies extends Fragment implements ICompanyComunicat
         return view;
     }
 
-    private void getAllMyCompanies(){
+    /*private void getAllMyCompanies(String email){
         companiesList = new ArrayList<>();
         refFirestore.collection("company")
+                .whereEqualTo("useremail", email)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -116,7 +118,8 @@ public class fragment_my_companies extends Fragment implements ICompanyComunicat
                                 String dateregistry = document.getString("dateregistry");
                                 boolean isactive = Boolean.parseBoolean(document.get("isactive").toString());
                                 String ruc = document.getString("ruc");
-                                companiesList.add(new Company(id, address, businessname, city, dateregistry, isactive, ruc));
+                                String useremail = document.getString("useremail");
+                                companiesList.add(new Company(id, address, businessname, city, dateregistry, isactive, ruc, useremail));
                                 //Log.d(TAG, document.getId() + " => " + document.getData());
                             }
                             adapter = new adpCompany(getContext(),companiesList);
@@ -126,7 +129,9 @@ public class fragment_my_companies extends Fragment implements ICompanyComunicat
                         }
                     }
                 });
-    }
+    }*/
+
+
 
     @Override
     public void add_company_success(Company c, String message) {
@@ -141,5 +146,15 @@ public class fragment_my_companies extends Fragment implements ICompanyComunicat
     @Override
     public void delete_company_success(Company c, String message) {
 
+    }
+
+    @Override
+    public void get_companies_by_useremail_success(ArrayList<Company> companiesList, String message) {
+        if (companiesList == null) {
+            Toast.makeText(getContext(),message,Toast.LENGTH_SHORT).show();
+        } else {
+            adapter = new adpCompany(getContext(),companiesList);
+            rcvCompanies.setAdapter(adapter);
+        }
     }
 }
