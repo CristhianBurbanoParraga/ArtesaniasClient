@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +18,10 @@ import android.widget.Spinner;
 
 import com.artesaniasclient.R;
 import com.artesaniasclient.adapter.adpCrafts;
+import com.artesaniasclient.controller.CompanyController;
+import com.artesaniasclient.interfaces.ICompanyComunication;
 import com.artesaniasclient.interfaces.ICraft;
+import com.artesaniasclient.model.Company;
 import com.artesaniasclient.model.Craft;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -32,15 +36,18 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
+import static android.content.ContentValues.TAG;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link fragment_crafts#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class fragment_crafts extends Fragment implements AdapterView.OnItemSelectedListener, ICraft {
+public class fragment_crafts extends Fragment implements AdapterView.OnItemSelectedListener {
 
     private FirebaseFirestore refFireStore;
     private adpCrafts adapter;
+    CompanyController controller;
     RecyclerView rcvCrafts;
     static String cat = "Todos";
     ArrayAdapter<CharSequence> adapterCat;
@@ -104,6 +111,7 @@ public class fragment_crafts extends Fragment implements AdapterView.OnItemSelec
         //Definir la forma de la lista vertical
         rcvCrafts.setLayoutManager(new LinearLayoutManager(getContext()));
         refFireStore = FirebaseFirestore.getInstance();
+
         // Inflate the layout for this fragment
         return view;
     }
@@ -118,6 +126,35 @@ public class fragment_crafts extends Fragment implements AdapterView.OnItemSelec
         }
     }
 
+    private ArrayList<Company> getCompany(){
+        ArrayList<Company> list = new ArrayList<>();
+        refFireStore.collection("company")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            list.clear();
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                String id = document.getId();
+                                String address = document.getString("address");
+                                String businessname = document.getString("businessname");
+                                String city = document.getString("city");
+                                String dateregistry = document.getString("dateregistry");
+                                boolean isactive = Boolean.parseBoolean(document.get("isactive").toString());
+                                String ruc = document.getString("ruc");
+                                String useremail = document.getString("useremail");
+                                list.add(new Company(id, address, businessname, city, dateregistry, isactive, ruc, useremail));
+                                //Log.d(TAG, document.getId() + " => " + document.getData());
+                            }
+                        } else {
+                            //Log.w(TAG, "Error getting documents.", task.getException());
+                        }
+                    }
+                });
+        return list;
+    }
+
     private void getCrafts(){
         craftList = new ArrayList<>();
         if (cat.equals("Todos"))
@@ -127,6 +164,7 @@ public class fragment_crafts extends Fragment implements AdapterView.OnItemSelec
     }
 
     private void getAllCrafts(){
+        ArrayList<Company> ac = getCompany();
         refFireStore.collection("crafts")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -137,7 +175,14 @@ public class fragment_crafts extends Fragment implements AdapterView.OnItemSelec
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 String id = document.getId();
                                 String category = document.getString("category");
-                                String company = document.getString("company");
+                                String idcompany = document.getString("company");
+                                String company = document.getString("company");;
+                                for(int c = 0; c < ac.size(); c++){
+                                    Company companyModel = ac.get(c);
+                                    if(companyModel.getId().equals(idcompany)){
+                                        company = companyModel.getBusinessname();
+                                    }
+                                }
                                 String datedisabled = document.getString("datedisabled");
                                 String dateregistry = document.getString("dateregistry");
                                 String description = document.getString("description");
@@ -203,23 +248,4 @@ public class fragment_crafts extends Fragment implements AdapterView.OnItemSelec
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {cat = "Todos"; }
 
-    @Override
-    public void get_craft_success(ArrayList<Craft> crafts, String message) {
-
-    }
-
-    @Override
-    public void add_craft_success(Craft craft, String message) {
-
-    }
-
-    @Override
-    public void set_craft_success(Craft craft, String message) {
-
-    }
-
-    @Override
-    public void delete_craft_success(Craft crafts, String message) {
-
-    }
 }
