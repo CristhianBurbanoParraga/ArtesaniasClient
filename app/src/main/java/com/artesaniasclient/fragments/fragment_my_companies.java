@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.artesaniasclient.R;
 import com.artesaniasclient.adapter.adpCompany;
 import com.artesaniasclient.adapter.adpCrafts;
+import com.artesaniasclient.controller.CompanyController;
 import com.artesaniasclient.interfaces.ICompanyComunication;
 import com.artesaniasclient.model.Company;
 import com.artesaniasclient.model.Craft;
@@ -38,6 +39,7 @@ public class fragment_my_companies extends Fragment implements ICompanyComunicat
 
     private FirebaseFirestore refFirestore;
     private adpCompany adapter;
+    CompanyController controller;
     RecyclerView rcvCompanies;
     static String cat = "Todos";
     ArrayAdapter<CharSequence> adapterCat;
@@ -96,6 +98,8 @@ public class fragment_my_companies extends Fragment implements ICompanyComunicat
         //Definir la forma de la lista vertical
         rcvCompanies.setLayoutManager(new LinearLayoutManager(getContext()));
         refFirestore = FirebaseFirestore.getInstance();
+        controller = new CompanyController(this);
+        controller.getAllMyCompanies();
         // Inflate the layout for this fragment
         return view;
     }

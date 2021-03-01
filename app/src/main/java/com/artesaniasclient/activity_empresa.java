@@ -92,4 +92,9 @@ public class activity_empresa extends AppCompatActivity implements ICompanyComun
     public void delete_company_success(Company c, String message) {
 
     }
+
+    @Override
+    public void get_companies_by_useremail_success(ArrayList<Company> companiesList, String message) {
+
+    }
 }

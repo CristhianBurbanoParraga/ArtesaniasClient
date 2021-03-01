@@ -125,4 +125,9 @@ public class fragment_register_company extends Fragment implements ICompanyComun
     public void delete_company_success(Company c, String message) {
 
     }
+
+    @Override
+    public void get_companies_by_useremail_success(ArrayList<Company> companiesList, String message) {
+
+    }
 }
