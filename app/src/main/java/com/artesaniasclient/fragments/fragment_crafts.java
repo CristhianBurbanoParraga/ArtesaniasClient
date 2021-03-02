@@ -188,7 +188,7 @@ public class fragment_crafts extends Fragment implements AdapterView.OnItemSelec
                                 String description = document.getString("description");
                                 String imageurl = document.getString("imageurl");
                                 boolean isactive = Boolean.parseBoolean(document.get("isactive").toString());
-                                String namecraft = document.getString("namecrafts");
+                                String namecraft = document.getString("namecraft");
                                 double price = document.getDouble("price");
                                 Integer quantity = Integer.parseInt(document.get("quantity").toString());
                                 craftList.add(new Craft(category,id,company, datedisabled, dateregistry,description,imageurl,
@@ -225,7 +225,7 @@ public class fragment_crafts extends Fragment implements AdapterView.OnItemSelec
                                 String description = doc.getString("description");
                                 String imageurl = doc.getString("imageurl");
                                 boolean isactive = doc.getBoolean("isactive");
-                                String namecraft = doc.getString("namecrafts");
+                                String namecraft = doc.getString("namecraft");
                                 double price = doc.getDouble("price");
                                 Integer quantity = Integer.parseInt(doc.get("quantity").toString());
 

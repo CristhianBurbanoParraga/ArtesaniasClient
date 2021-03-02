@@ -78,7 +78,7 @@ public class fragment_register_company extends Fragment implements ICompanyComun
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_crafts, container, false);
+        View view = inflater.inflate(R.layout.fragment_register_company, container, false);
         companyController = new CompanyController(this);
 
         txtNameBussines = view.findViewById(R.id.namebussines);
