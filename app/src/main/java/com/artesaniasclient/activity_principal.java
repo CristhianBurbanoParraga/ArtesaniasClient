@@ -123,17 +123,20 @@ public class activity_principal extends AppCompatActivity implements NavigationV
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
             String userJSON = sharedPreferences.getString(getString(R.string.CURRENT_USER_KEY_STORE), gson.toJson(new User()));
             user = gson.fromJson(userJSON, User.class);
-
-            if (user.getUsertype().equals("Artesano")) {
-                m.add(groupMenu, itemVerCatalogo, itemVerCatalogo, "Ver Catálogo").setIcon(R.drawable.icon_developer_team);
-                m.add(groupMenu, itemCrearEmpresa, itemCrearEmpresa, "Registrar Empresa").setIcon(R.drawable.icon_developer_team);
-                m.add(groupMenu, itemCrearArtesania, itemCrearArtesania, "Registrar Artesanía").setIcon(R.drawable.icon_developer_team);
-                m.add(groupMenu, itemVerMisEmpresas, itemVerMisEmpresas, "Mis Empresas").setIcon(R.drawable.icon_developer_team);
-                m.add(groupMenu, itemVerMisArtesanias, itemVerMisArtesanias, "Mis Artesanías").setIcon(R.drawable.icon_developer_team);
+            if (user != null) {
+                if (user.getUsertype() != null && user.getUsertype().equals("Artesano")) {
+                    m.add(groupMenu, itemVerCatalogo, itemVerCatalogo, "Ver Catálogo").setIcon(R.drawable.icon_developer_team);
+                    m.add(groupMenu, itemCrearEmpresa, itemCrearEmpresa, "Registrar Empresa").setIcon(R.drawable.icon_developer_team);
+                    m.add(groupMenu, itemCrearArtesania, itemCrearArtesania, "Registrar Artesanía").setIcon(R.drawable.icon_developer_team);
+                    m.add(groupMenu, itemVerMisEmpresas, itemVerMisEmpresas, "Mis Empresas").setIcon(R.drawable.icon_developer_team);
+                    m.add(groupMenu, itemVerMisArtesanias, itemVerMisArtesanias, "Mis Artesanías").setIcon(R.drawable.icon_developer_team);
+                } else {
+                    m.add(groupMenu, itemVerCatalogo, itemVerCatalogo, "Ver Catálogo").setIcon(R.drawable.icon_developer_team);
+                    m.add(groupMenu, itemCrearEmpresa, itemCrearEmpresa, "Registrar Empresa").setIcon(R.drawable.icon_developer_team);
+                    m.add(groupMenu, itemPedidos, itemPedidos, "Mis Pedidos").setIcon(R.drawable.icon_developer_team);
+                }
             } else {
-                m.add(groupMenu, itemVerCatalogo, itemVerCatalogo, "Ver Catálogo").setIcon(R.drawable.icon_developer_team);
-                m.add(groupMenu, itemCrearEmpresa, itemCrearEmpresa, "Registrar Empresa").setIcon(R.drawable.icon_developer_team);
-                m.add(groupMenu, itemPedidos, itemPedidos, "Mis Pedidos").setIcon(R.drawable.icon_developer_team);
+                logout();
             }
         } else {   //en caso de no estar logeado se deshabilita el navigation view
             imgToolbar.setImageResource(R.drawable.iconarte2);
@@ -172,16 +175,12 @@ public class activity_principal extends AppCompatActivity implements NavigationV
             case android.R.id.home:
                 drawerLayout.openDrawer(GravityCompat.START);
                 break;
+            default:
+                break;
         }
         if (id == R.id.btnLogIn) {
             if (user != null && user.getId() != null && user.getId().length() > 0) {
-                mAuth.signOut();
-                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.remove(getString(R.string.CURRENT_USER_KEY_STORE));
-                editor.apply();
-                Intent intent = new Intent(this, activity_principal.class);
-                startActivity(intent);
+                logout();
             } else {
                 Intent intent = new Intent(this, LoginActivity.class);
                 startActivity(intent);
@@ -192,5 +191,15 @@ public class activity_principal extends AppCompatActivity implements NavigationV
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void logout() {
+        mAuth.signOut();
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.remove(getString(R.string.CURRENT_USER_KEY_STORE));
+        editor.apply();
+        Intent intent = new Intent(this, activity_principal.class);
+        startActivity(intent);
     }
 }
