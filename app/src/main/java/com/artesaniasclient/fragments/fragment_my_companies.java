@@ -1,9 +1,11 @@
 package com.artesaniasclient.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -47,6 +49,7 @@ public class fragment_my_companies extends Fragment implements ICompanyComunicat
     private ArrayList<Company> companiesList;
     ArrayAdapter<CharSequence> adp;
     String[] categories = new String[11];
+    Bundle bundle = new Bundle();
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -158,6 +161,28 @@ public class fragment_my_companies extends Fragment implements ICompanyComunicat
             Toast.makeText(getContext(),message,Toast.LENGTH_SHORT).show();
         } else {
             adapter = new adpCompany(getContext(),companiesList);
+            adapter.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int opcselec=rcvCompanies.getChildAdapterPosition(view);
+                    String idselec= companiesList.get(opcselec).getId();
+                    String nameselec= companiesList.get(opcselec).getBusinessname();
+                    bundle.putString("id", idselec);
+                    bundle.putString("name", nameselec);
+                    // Crea el nuevo fragmento y la transacción.
+                    Fragment nuevoFragmento = new fragment_my_crafts();
+                    nuevoFragmento.setArguments(bundle);
+                    FragmentTransaction transaction = getFragmentManager().beginTransaction()
+                            .replace(R.id.content, nuevoFragmento);
+
+                    // Commit a la transacción
+                    transaction.commit();
+
+                    // Bundle b = new Bundle();
+                    //  b.putString("edicionID", nombreselec);
+
+                }
+            });
             rcvCompanies.setAdapter(adapter);
         }
     }

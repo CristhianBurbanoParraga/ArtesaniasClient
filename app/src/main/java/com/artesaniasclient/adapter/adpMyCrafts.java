@@ -16,15 +16,15 @@ import com.artesaniasclient.model.Craft;
 
 import java.util.ArrayList;
 
-public class adpCrafts extends RecyclerView.Adapter<adpCrafts.ViewHolder>
-        implements View.OnClickListener{
+public class adpMyCrafts extends RecyclerView.Adapter<adpMyCrafts.ViewHolder>
+        implements View.OnClickListener {
 
     private Context ccontext;
     private View.OnClickListener listener;
 
     private ArrayList<Craft> lista;
 
-    public adpCrafts(Context context, ArrayList<Craft> lista) {
+    public adpMyCrafts(Context context, ArrayList<Craft> lista) {
         ccontext = context;
         this.lista=lista;
     }
@@ -44,25 +44,25 @@ public class adpCrafts extends RecyclerView.Adapter<adpCrafts.ViewHolder>
         ImageView imageurl;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            company = (TextView) itemView.findViewById(R.id.txtCompany);
-            namecraft = (TextView) itemView.findViewById(R.id.txtNameCraft);
-            price = (TextView) itemView.findViewById(R.id.txtPrice);
-            description = (TextView) itemView.findViewById(R.id.txtDescription);
-            imageurl = (ImageView) itemView.findViewById(R.id.imgCraft);
+            company = (TextView) itemView.findViewById(R.id.txtCompany2);
+            namecraft = (TextView) itemView.findViewById(R.id.txtNameCraft2);
+            price = (TextView) itemView.findViewById(R.id.txtPrice2);
+            description = (TextView) itemView.findViewById(R.id.txtDescription2);
+            imageurl = (ImageView) itemView.findViewById(R.id.imgCraft2);
         }
     }
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public adpMyCrafts.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflr = LayoutInflater.from(ccontext);
-        View view=inflr.inflate(R.layout.item_craft,null,false);
+        View view = inflr.inflate(R.layout.item_m,null,false);
         view.setOnClickListener(this);
-        return new ViewHolder(view);
+        return new adpMyCrafts.ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull adpMyCrafts.ViewHolder holder, int position) {
         try {
             Craft craft = lista.get(position);
             holder.company.setText(craft.getCompany());
@@ -78,6 +78,9 @@ public class adpCrafts extends RecyclerView.Adapter<adpCrafts.ViewHolder>
     }
 
     @Override
-    public int getItemCount() {return lista.size(); }
+    public int getItemCount() {
+        return lista.size();
+    }
+
 
 }

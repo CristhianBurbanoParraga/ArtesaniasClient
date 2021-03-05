@@ -131,6 +131,7 @@ public class Craft implements Serializable {
     public String toString() {
         return "Craft{" +
                 "id='" + id + '\'' +
+                ", category='" + category + '\'' +
                 ", company='" + company + '\'' +
                 ", datedisabled=" + datedisabled +
                 ", dateregistry=" + dateregistry +
