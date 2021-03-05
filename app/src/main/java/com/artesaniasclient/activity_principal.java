@@ -95,10 +95,6 @@ public class activity_principal extends AppCompatActivity implements NavigationV
                 fragment = new fragment_my_companies();
                 fragmentTransaction = true;
                 break;
-            case itemVerMisArtesanias:
-                fragment = new fragment_my_crafts();
-                fragmentTransaction = true;
-                break;
         }
         if (fragmentTransaction) {
             getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
@@ -114,6 +110,7 @@ public class activity_principal extends AppCompatActivity implements NavigationV
         super.onStart();
         String email = "";
         Menu m = navView.getMenu();
+        m.removeGroup(1);
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
@@ -129,7 +126,7 @@ public class activity_principal extends AppCompatActivity implements NavigationV
                 m.add(groupMenu,itemCrearEmpresa, itemCrearEmpresa, "Registrar Empresa").setIcon(R.drawable.icon_developer_team);
                 m.add(groupMenu,itemCrearArtesania, itemCrearArtesania, "Registrar Artesanía").setIcon(R.drawable.icon_developer_team);
                 m.add(groupMenu,itemVerMisEmpresas, itemVerMisEmpresas, "Mis Empresas").setIcon(R.drawable.icon_developer_team);
-                m.add(groupMenu,itemVerMisArtesanias, itemVerMisArtesanias, "Mis Artesanías").setIcon(R.drawable.icon_developer_team);
+                //m.add(groupMenu,itemVerMisArtesanias, itemVerMisArtesanias, "Mis Artesanías").setIcon(R.drawable.icon_developer_team);
             }
             else {
                 m.add(groupMenu,itemVerCatalogo, itemVerCatalogo, "Ver Catálogo").setIcon(R.drawable.icon_developer_team);

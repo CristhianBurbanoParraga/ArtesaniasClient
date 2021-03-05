@@ -14,6 +14,7 @@ import android.provider.OpenableColumns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -32,7 +33,7 @@ import java.util.ArrayList;
  * Use the {@link FragmentRegisterCrafts#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FragmentRegisterCrafts extends Fragment implements ICraft {
+public class FragmentRegisterCrafts extends Fragment implements ICraft, AdapterView.OnItemSelectedListener {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -44,7 +45,7 @@ public class FragmentRegisterCrafts extends Fragment implements ICraft {
     private String mParam2;
 
     String nombreimg;
-
+    static String cat = "Todos";
     View view;
 
     private static final int PICK_IMAGE = 100;
@@ -109,6 +110,7 @@ public class FragmentRegisterCrafts extends Fragment implements ICraft {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
         spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(this);
 
         txtNameArte = view.findViewById(R.id.namearte);
         txtCantArte = view.findViewById(R.id.cantarte);
@@ -154,6 +156,7 @@ public class FragmentRegisterCrafts extends Fragment implements ICraft {
     public void registrarcrafts () {
         Craft craft = new Craft();
         craft.setNamecraft(txtNameArte.getText().toString());
+        craft.setCategory(cat);
         craft.setQuantity(Integer.parseInt(txtCantArte.getText().toString()));
         craft.setPrice(Double.parseDouble(txtPrecioArte.getText().toString()));
         craft.setDescription(txtDescription.getText().toString());
@@ -180,5 +183,20 @@ public class FragmentRegisterCrafts extends Fragment implements ICraft {
     @Override
     public void delete_craft_success(Craft crafts, String message) {
 
+    }
+
+    @Override
+    public void get_craft_by_company_success(ArrayList<Craft> crafts, String message) {
+
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        cat = adapterView.getItemAtPosition(i).toString();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+        cat = "Varios";
     }
 }

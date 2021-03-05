@@ -119,4 +119,9 @@ public class RegisterCrafts extends AppCompatActivity implements ICraft {
     public void delete_craft_success(Craft crafts, String message) {
 
     }
+
+    @Override
+    public void get_craft_by_company_success(ArrayList<Craft> crafts, String message) {
+
+    }
 }

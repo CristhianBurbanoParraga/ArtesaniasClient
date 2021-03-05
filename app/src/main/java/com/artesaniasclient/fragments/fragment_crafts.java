@@ -53,6 +53,7 @@ public class fragment_crafts extends Fragment implements AdapterView.OnItemSelec
     ArrayAdapter<CharSequence> adapterCat;
     Spinner cbbCategories;
     private ArrayList<Craft> craftList;
+    ArrayList<Company> ac;
     ArrayAdapter<CharSequence> adp;
     String[] categories = new String[11];
 
@@ -111,7 +112,7 @@ public class fragment_crafts extends Fragment implements AdapterView.OnItemSelec
         //Definir la forma de la lista vertical
         rcvCrafts.setLayoutManager(new LinearLayoutManager(getContext()));
         refFireStore = FirebaseFirestore.getInstance();
-
+        ac = getCompany();
         // Inflate the layout for this fragment
         return view;
     }
@@ -134,7 +135,7 @@ public class fragment_crafts extends Fragment implements AdapterView.OnItemSelec
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            list.clear();
+                            //list.clear();
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 String id = document.getId();
                                 String address = document.getString("address");
@@ -164,19 +165,18 @@ public class fragment_crafts extends Fragment implements AdapterView.OnItemSelec
     }
 
     private void getAllCrafts(){
-        ArrayList<Company> ac = getCompany();
         refFireStore.collection("crafts")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            craftList.clear();
+                            //craftList.clear();
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 String id = document.getId();
                                 String category = document.getString("category");
                                 String idcompany = document.getString("company");
-                                String company = document.getString("company");;
+                                String company = "";
                                 for(int c = 0; c < ac.size(); c++){
                                     Company companyModel = ac.get(c);
                                     if(companyModel.getId().equals(idcompany)){
@@ -215,11 +215,19 @@ public class fragment_crafts extends Fragment implements AdapterView.OnItemSelec
                             System.err.println("Listen failed:" + error);
                             return;
                         }
+                        //craftList.clear();
                         for (DocumentSnapshot doc : value) {
                             if (doc.getId() != null) {
                                 String id = doc.getId();
                                 String category = doc.getString("category");
-                                String company = doc.getString("company");
+                                String idcompany = doc.getString("company");
+                                String company = "";
+                                for(int c = 0; c < ac.size(); c++){
+                                    Company companyModel = ac.get(c);
+                                    if(companyModel.getId().equals(idcompany)){
+                                        company = companyModel.getBusinessname();
+                                    }
+                                }
                                 String datedisabled = doc.getString("datedisabled");
                                 String dateregistry = doc.getString("dateregistry");
                                 String description = doc.getString("description");

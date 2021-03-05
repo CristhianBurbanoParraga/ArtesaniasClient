@@ -19,16 +19,20 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
 
 public class CraftController {
     private final String TAG = "CraftController";
     private ICraft iCraftComunication;
     private FirebaseFirestore db;
+    private ArrayList<Craft> craftList;
 
     public CraftController() {
         initFirebase();
@@ -125,6 +129,42 @@ public class CraftController {
                 }
             }
         });
+    }
+
+     public void getAllMyCrafts(String id){
+         db.collection("crafts")
+                 .whereEqualTo("company", id)
+                 .get()
+                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                     @Override
+                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                         if (task.isSuccessful()) {
+                             craftList.clear();
+                             for (QueryDocumentSnapshot document : task.getResult()) {
+                                 String id = document.getId();
+                                 String category = document.getString("category");
+                                 String company = document.getString("company");
+                                 String datedisabled = document.getString("datedisabled");
+                                 String dateregistry = document.getString("dateregistry");
+                                 String description = document.getString("description");
+                                 String imageurl = document.getString("imageurl");
+                                 boolean isactive = document.getBoolean("isactive");
+                                 String namecraft = document.getString("namecraft");
+                                 double price = document.getDouble("price");
+                                 Integer quantity = Integer.parseInt(document.get("quantity").toString());
+                                 craftList.add(new Craft(category,id,company, datedisabled, dateregistry,description,imageurl,
+                                         isactive,namecraft,price,quantity));
+                                 //Log.d(TAG, document.getId() + " => " + document.getData());
+                             }
+                             iCraftComunication.get_craft_by_company_success(craftList,"");
+                            /*adapter = new adpCompany(getContext(),companiesList);
+                            rcvCompanies.setAdapter(adapter);*/
+                         } else {
+                             //Log.w(TAG, "Error getting documents.", task.getException());
+                             iCraftComunication.get_craft_by_company_success(null,"No existen artesanías en la empresa");
+                         }
+                     }
+                 });
     }
 
     private String getMessageTask(Exception exception) {
