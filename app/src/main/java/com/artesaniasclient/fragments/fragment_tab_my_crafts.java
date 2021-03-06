@@ -74,12 +74,12 @@ public class fragment_tab_my_crafts extends Fragment implements AdapterView.OnIt
         craftList = new ArrayList<>();
 
         adapterCat = new ArrayAdapter<CharSequence>(getContext(), android.R.layout.simple_spinner_item, categories);
-        cbbCategories = (Spinner)view.findViewById(R.id.cbbCategory2);
+        cbbCategories = (Spinner) view.findViewById(R.id.cbbCategory2);
         adapterCat.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); //como se muestran los datos
         cbbCategories.setAdapter(adapterCat);
         cbbCategories.setOnItemSelectedListener(this);
         //Vincular instancia del recyclerview
-        rcvCrafts = (RecyclerView)view.findViewById(R.id.rcvMyCrafts);
+        rcvCrafts = (RecyclerView) view.findViewById(R.id.rcvMyCrafts);
         //Definir la forma de la lista vertical
         rcvCrafts.setLayoutManager(new LinearLayoutManager(getContext()));
         refFireStore = FirebaseFirestore.getInstance();
@@ -88,17 +88,17 @@ public class fragment_tab_my_crafts extends Fragment implements AdapterView.OnIt
         return view;
     }
 
-    private void llenarSpinner(){
+    private void llenarSpinner() {
         categories[0] = "Todos";
-        adp = ArrayAdapter.createFromResource(getContext(),R.array.categoria, android.R.layout.simple_spinner_item);
+        adp = ArrayAdapter.createFromResource(getContext(), R.array.categoria, android.R.layout.simple_spinner_item);
         int i = 1;
-        while(i<categories.length){
-            categories[i] = (String) adp.getItem(i-1);
-            i=i+1;
+        while (i < categories.length) {
+            categories[i] = (String) adp.getItem(i - 1);
+            i = i + 1;
         }
     }
 
-    private ArrayList<Company> getCompany(){
+    private ArrayList<Company> getCompany() {
         ArrayList<Company> list = new ArrayList<>();
         refFireStore.collection("company")
                 .get()
@@ -127,11 +127,11 @@ public class fragment_tab_my_crafts extends Fragment implements AdapterView.OnIt
         return list;
     }
 
-    private void getCrafts(){
+    private void getCrafts() {
 
     }
 
-    public void getAllMyCrafts(){
+    public void getAllMyCrafts() {
         refFireStore.collection("crafts")
                 .whereEqualTo("company", id)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -155,8 +155,8 @@ public class fragment_tab_my_crafts extends Fragment implements AdapterView.OnIt
                             String namecraft = document.getString("namecraft");
                             double price = document.getDouble("price");
                             Integer quantity = Integer.parseInt(document.get("quantity").toString());
-                            craftList.add(new Craft(category,id,company, datedisabled, dateregistry,description,imageurl,
-                                    isactive,namecraft,price,quantity));
+                            craftList.add(new Craft(id, category, company, datedisabled, dateregistry, description, imageurl,
+                                    isactive, namecraft, price, quantity));
                         }
                         adapter = new adpMyCrafts(getContext(), craftList);
                         rcvCrafts.setAdapter(adapter);

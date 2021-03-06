@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -20,11 +21,6 @@ import com.artesaniasclient.model.Company;
 import java.util.ArrayList;
 import java.util.Date;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link fragment_register_company#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class fragment_register_company extends Fragment implements ICompanyComunication {
 
     private CompanyController companyController;
@@ -33,61 +29,45 @@ public class fragment_register_company extends Fragment implements ICompanyComun
     private EditText txtRuc;
     private EditText txtCity;
     private EditText txtAddress;
+    Button buttonRegistry;
+    Button buttonCancel;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     public fragment_register_company() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment fragment_register_company.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static fragment_register_company newInstance(String param1, String param2) {
-        fragment_register_company fragment = new fragment_register_company();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_register_company, container, false);
         companyController = new CompanyController(this);
-
+        buttonRegistry = view.findViewById(R.id.registrar_company);
+        buttonCancel = view.findViewById(R.id.cancelar);
         txtNameBussines = view.findViewById(R.id.namebussines);
         txtRuc = view.findViewById(R.id.ruc);
         txtCity = view.findViewById(R.id.city);
         txtAddress = view.findViewById(R.id.address);
+
+        buttonRegistry.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                registry_company();
+            }
+        });
+
+        buttonCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cancel_company();
+            }
+        });
+
         return view;
     }
 
-    public void registry_company(View view) {
+    public void registry_company() {
         Company company = new Company();
         company.setBusinessname(txtNameBussines.getText().toString());
         company.setRuc(txtRuc.getText().toString());
@@ -98,7 +78,7 @@ public class fragment_register_company extends Fragment implements ICompanyComun
         companyController.addCompany(company);
     }
 
-    public void cancel_company(View view) {
+    public void cancel_company() {
         Intent intent = new Intent(getContext(), activity_principal.class);
         startActivity(intent);
     }
