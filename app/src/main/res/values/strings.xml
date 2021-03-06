@@ -62,4 +62,7 @@
 
     <string name="login">Login</string>
     <string name="logout">Logout</string>
+
+    <string name="list_crafts">Mis artesanías</string>
+    <string name="registry_crafts">Registrar artesanías</string>
 </resources>
