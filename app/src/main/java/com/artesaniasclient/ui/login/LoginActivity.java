@@ -25,6 +25,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.artesaniasclient.R;
+import com.artesaniasclient.RecuperarClaveActivity;
 import com.artesaniasclient.RegisterUserActivity;
 import com.artesaniasclient.activity_empresa;
 import com.artesaniasclient.activity_principal;
@@ -67,6 +68,7 @@ public class LoginActivity extends AppCompatActivity implements ILogin {
         final EditText usernameEditText = findViewById(R.id.username);
         final EditText passwordEditText = findViewById(R.id.password);
         final Button loginButton = findViewById(R.id.login);
+        final Button restaurarBotton = findViewById(R.id.restaurarclave);
         loadingProgressBar = findViewById(R.id.loading);
 
         loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
@@ -143,6 +145,14 @@ public class LoginActivity extends AppCompatActivity implements ILogin {
                 //loadingProgressBar.setVisibility(View.VISIBLE);
                 //loginViewModel.login(usernameEditText.getText().toString(),
                 //      passwordEditText.getText().toString());
+            }
+        });
+
+        restaurarBotton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent iinntteenntt = new Intent(LoginActivity.this, RecuperarClaveActivity.class);
+                startActivity(iinntteenntt);
             }
         });
     }
