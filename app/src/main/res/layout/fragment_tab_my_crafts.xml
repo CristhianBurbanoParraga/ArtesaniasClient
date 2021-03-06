@@ -9,7 +9,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#3fbcef"
-        android:layout_marginTop="85dp"
         android:padding="5dp">
 
         <TextView
@@ -38,7 +37,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="120dp">
+        android:layout_marginTop="35dp">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcvMyCrafts"

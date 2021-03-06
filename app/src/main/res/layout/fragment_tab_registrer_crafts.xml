@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginBottom="20dp"
     tools:context=".fragments.fragment_tab_registrer_crafts">
 
     <ScrollView
@@ -210,9 +211,9 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/imgart"
                     android:layout_centerInParent="false"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginLeft="60dp"
+                    android:layout_marginStart="10dp"
                     android:layout_marginTop="20dp"
+                    android:layout_marginEnd="10dp"
                     android:backgroundTint="#0669b2"
                     android:clickable="true"
                     android:fontFamily="@font/alfa_slab_one"
@@ -220,33 +221,38 @@
                     android:textColor="@color/white"
                     android:textSize="14sp" />
 
-                <Button
-                    android:id="@+id/register"
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_below="@+id/seleccionarimg"
-                    android:layout_centerInParent="false"
-                    android:layout_marginLeft="60dp"
-                    android:layout_marginTop="30dp"
-                    android:backgroundTint="#0669b2"
-                    android:fontFamily="@font/alfa_slab_one"
-                    android:text="@string/registrar"
-                    android:textColor="@color/white"
-                    android:textSize="14sp"/>
+                    android:layout_centerInParent="true">
 
-                <Button
-                    android:id="@+id/cancel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
-                    android:layout_below="@+id/seleccionarimg"
-                    android:layout_centerInParent="false"
-                    android:layout_marginLeft="210dp"
-                    android:layout_marginTop="30dp"
-                    android:backgroundTint="#0669b2"
-                    android:fontFamily="@font/alfa_slab_one"
-                    android:text="@string/cancelar"
-                    android:textColor="@color/white"
-                    android:textSize="14sp" />
+                    <Button
+                        android:id="@+id/register"
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dp"
+                        android:layout_centerHorizontal="false"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginTop="30dp"
+                        android:backgroundTint="#0669b2"
+                        android:fontFamily="@font/alfa_slab_one"
+                        android:text="@string/registrar"
+                        android:textColor="@color/white"
+                        android:textSize="14sp" />
+
+                    <Button
+                        android:id="@+id/cancel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginTop="30dp"
+                        android:layout_toEndOf="@+id/register"
+                        android:backgroundTint="#0669b2"
+                        android:fontFamily="@font/alfa_slab_one"
+                        android:text="@string/cancelar"
+                        android:textColor="@color/white"
+                        android:textSize="14sp" />
+                </RelativeLayout>
 
             </RelativeLayout>
 
