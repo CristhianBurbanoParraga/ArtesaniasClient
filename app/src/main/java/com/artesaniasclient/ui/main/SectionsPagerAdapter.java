@@ -7,12 +7,13 @@ import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
+import com.artesaniasclient.R;
 import com.artesaniasclient.fragments.fragment_tab_my_crafts;
 import com.artesaniasclient.fragments.fragment_tab_registrer_crafts;
-import com.artesaniasclient.R;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
@@ -31,13 +32,14 @@ public class SectionsPagerAdapter extends FragmentStatePagerAdapter {
         bundle = distbundle;
     }
 
+    @NotNull
     @Override
     public Fragment getItem(int position) {
 
         Fragment fragment = null;
         switch (position){
             case 0:
-                fragment = new fragment_tab_my_crafts(mContext);
+                fragment = new fragment_tab_my_crafts();
                 fragment.setArguments(bundle);
                 break;
             case 1:
