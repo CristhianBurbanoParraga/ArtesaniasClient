@@ -39,6 +39,11 @@
         app:itemTextColor="#FFFFFF"
         app:menu="@menu/menu_navview">
 
+        <include
+            android:id="@+id/footer_admin"
+            layout="@layout/footer">
+        </include>
+
     </com.google.android.material.navigation.NavigationView>
 
 

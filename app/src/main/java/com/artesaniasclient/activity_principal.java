@@ -15,6 +15,7 @@ import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.artesaniasclient.fragments.fragment_crafts;
 import com.artesaniasclient.fragments.fragment_my_companies;
@@ -38,6 +39,7 @@ public class activity_principal extends AppCompatActivity implements NavigationV
     DrawerLayout drawerLayout;
     Fragment fragment;
     boolean fragmentTransaction;
+    TextView txtUserFooter;
     FirebaseFirestore db;
     private FirebaseAuth mAuth;
     User user = null;
@@ -51,13 +53,13 @@ public class activity_principal extends AppCompatActivity implements NavigationV
 
         Intent i = getIntent();
         //user = (User) i.getSerializableExtra("user");
+        txtUserFooter = findViewById(R.id.txtUserFooter);
 
         toolbar = findViewById(R.id.toolbar);
         imgToolbar = findViewById(R.id.imgToolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("");
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.icon_menu);
-        getSupportActionBar().setTitle("");
+        getSupportActionBar().setTitle("Catálogo");
 
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
@@ -74,32 +76,38 @@ public class activity_principal extends AppCompatActivity implements NavigationV
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         fragmentTransaction = false;
         fragment = null;
+        String titulo = "";
         switch (menuItem.getItemId()) {
             case itemVerCatalogo:
                 fragment = new fragment_crafts();
                 fragmentTransaction = true;
+                titulo = "Catálogo";
                 break;
             case itemCrearEmpresa:
                 fragment = new fragment_register_company();
                 fragmentTransaction = true;
+                titulo = "Registrar Empresa";
                 break;
             case itemPedidos:
                 fragment = new fragment_my_orders();
                 fragmentTransaction = true;
+                titulo = "Mis Pedidos";
                 break;
             case itemVerMisEmpresas:
                 fragment = new fragment_my_companies();
                 fragmentTransaction = true;
+                titulo = "Mis Empresas";
                 break;
             case itemVentas:
                 fragment = new fragment_my_sales();
                 fragmentTransaction = true;
+                titulo = "Mis Ventas";
                 break;
         }
         if (fragmentTransaction) {
             getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
             menuItem.setChecked(true);
-            getSupportActionBar().setTitle("");
+            getSupportActionBar().setTitle(titulo);
         }
         drawerLayout.closeDrawers();
         return true;
@@ -121,6 +129,7 @@ public class activity_principal extends AppCompatActivity implements NavigationV
             String userJSON = sharedPreferences.getString(getString(R.string.CURRENT_USER_KEY_STORE), gson.toJson(new User()));
             user = gson.fromJson(userJSON, User.class);
             if (user != null) {
+                txtUserFooter.setText("Usuario: " + user.getUsername());
                 if (user.getUsertype() != null && user.getUsertype().equals("Artesano")) {
                     m.add(groupMenu, itemVerCatalogo, itemVerCatalogo, "Ver Catálogo").setIcon(R.drawable.icon_catalogue);
                     m.add(groupMenu, itemCrearEmpresa, itemCrearEmpresa, "Registrar Empresa").setIcon(R.drawable.icon_addcompany);
@@ -135,7 +144,10 @@ public class activity_principal extends AppCompatActivity implements NavigationV
                 logout();
             }
         } else {   //en caso de no estar logeado se deshabilita el navigation view
+            getSupportActionBar().setTitle("");
             imgToolbar.setImageResource(R.drawable.iconarte2);
+            imgToolbar.setPadding(5,5,5,5);
+            imgToolbar.setTranslationX(-16);
             ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                     this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
             drawerLayout.addDrawerListener(toggle);
@@ -150,14 +162,11 @@ public class activity_principal extends AppCompatActivity implements NavigationV
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_toolbar, menu);
-        MenuItem m = menu.findItem(R.id.btnUser);
         MenuItem ml = menu.findItem(R.id.btnLogIn);
         if (user != null && user.getId() != null && user.getId().length() > 0) {
-            m.setTitle(user.getUsername());
             ml.setIcon(R.drawable.icon_logout);
             ml.setTitle("Cerrar Sesión");
         } else {
-            m.setTitle("");
             ml.setIcon(R.drawable.icon_login);
             ml.setTitle("Iniciar Sesión");
         }

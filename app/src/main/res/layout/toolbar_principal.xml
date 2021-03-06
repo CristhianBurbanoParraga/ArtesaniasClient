@@ -13,8 +13,6 @@
         android:id="@+id/imgToolbar"
         android:layout_width="80dp"
         android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:translationX="-16dp"
         tools:layout_editor_absoluteX="16dp" />
 
 </androidx.appcompat.widget.Toolbar>
