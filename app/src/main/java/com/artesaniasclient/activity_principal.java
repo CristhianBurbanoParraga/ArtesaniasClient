@@ -16,7 +16,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 
-import com.artesaniasclient.fragments.FragmentRegisterCrafts;
 import com.artesaniasclient.fragments.fragment_crafts;
 import com.artesaniasclient.fragments.fragment_my_companies;
 import com.artesaniasclient.fragments.fragment_my_crafts;
