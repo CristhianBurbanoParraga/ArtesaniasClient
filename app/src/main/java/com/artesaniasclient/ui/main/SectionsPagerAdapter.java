@@ -53,7 +53,8 @@ public class SectionsPagerAdapter extends FragmentStatePagerAdapter {
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
-        return mContext.getResources().getString(TAB_TITLES[position]);
+        String pagetitle =  mContext.getResources().getString(TAB_TITLES[position]);
+        return pagetitle;
     }
 
     @Override

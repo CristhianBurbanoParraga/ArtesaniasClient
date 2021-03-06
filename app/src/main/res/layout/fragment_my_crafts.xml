@@ -49,7 +49,9 @@
             android:id="@+id/tabs_main"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#3fbcef"/>
+            app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
+            android:background="#3fbcef"
+            />
     </com.google.android.material.appbar.AppBarLayout>
 
     <RelativeLayout
