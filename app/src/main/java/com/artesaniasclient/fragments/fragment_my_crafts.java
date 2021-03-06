@@ -162,7 +162,7 @@ public class fragment_my_crafts extends Fragment implements AdapterView.OnItemSe
     private void getCrafts(){
 
     }
-    
+
     public void getAllMyCrafts(){
         refFireStore.collection("crafts")
                 .whereEqualTo("company", id)
