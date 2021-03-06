@@ -21,6 +21,7 @@ import com.artesaniasclient.fragments.fragment_crafts;
 import com.artesaniasclient.fragments.fragment_my_companies;
 import com.artesaniasclient.fragments.fragment_my_crafts;
 import com.artesaniasclient.fragments.fragment_my_orders;
+import com.artesaniasclient.fragments.fragment_my_sales;
 import com.artesaniasclient.fragments.fragment_register_company;
 import com.artesaniasclient.model.User;
 import com.artesaniasclient.ui.login.LoginActivity;
@@ -42,7 +43,7 @@ public class activity_principal extends AppCompatActivity implements NavigationV
     private FirebaseAuth mAuth;
     User user = null;
     static int groupMenu = 1;
-    final int itemVerCatalogo = 1, itemCrearEmpresa = 2, itemPedidos = 3, itemCrearArtesania = 4, itemVerMisEmpresas = 5, itemVerMisArtesanias = 6;
+    final int itemVerCatalogo = 1, itemCrearEmpresa = 2, itemPedidos = 3, itemCrearArtesania = 4, itemVerMisEmpresas = 5, itemVentas = 6, itemVerMisArtesanias = 7;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,12 +88,12 @@ public class activity_principal extends AppCompatActivity implements NavigationV
                 fragment = new fragment_my_orders();
                 fragmentTransaction = true;
                 break;
-            case itemCrearArtesania:
-                fragment = new FragmentRegisterCrafts();
-                fragmentTransaction = true;
-                break;
             case itemVerMisEmpresas:
                 fragment = new fragment_my_companies();
+                fragmentTransaction = true;
+                break;
+            case itemVentas:
+                fragment = new fragment_my_sales();
                 fragmentTransaction = true;
                 break;
         }
@@ -122,15 +123,14 @@ public class activity_principal extends AppCompatActivity implements NavigationV
             user = gson.fromJson(userJSON, User.class);
             if (user != null) {
                 if (user.getUsertype() != null && user.getUsertype().equals("Artesano")) {
-                    m.add(groupMenu, itemVerCatalogo, itemVerCatalogo, "Ver Catálogo").setIcon(R.drawable.icon_developer_team);
-                    m.add(groupMenu, itemCrearEmpresa, itemCrearEmpresa, "Registrar Empresa").setIcon(R.drawable.icon_developer_team);
-                    //m.add(groupMenu, itemCrearArtesania, itemCrearArtesania, "Registrar Artesanía").setIcon(R.drawable.icon_developer_team);
-                    m.add(groupMenu, itemVerMisEmpresas, itemVerMisEmpresas, "Mis Empresas").setIcon(R.drawable.icon_developer_team);
-                    //m.add(groupMenu, itemVerMisArtesanias, itemVerMisArtesanias, "Mis Artesanías").setIcon(R.drawable.icon_developer_team);
+                    m.add(groupMenu, itemVerCatalogo, itemVerCatalogo, "Ver Catálogo").setIcon(R.drawable.icon_catalogue);
+                    m.add(groupMenu, itemCrearEmpresa, itemCrearEmpresa, "Registrar Empresa").setIcon(R.drawable.icon_addcompany);
+                    m.add(groupMenu, itemVerMisEmpresas, itemVerMisEmpresas, "Mis Empresas").setIcon(R.drawable.icon_bussiness);
+                    m.add(groupMenu, itemVentas, itemVentas, "Mis Ventas").setIcon(R.drawable.icon_sales);
                 } else {
-                    m.add(groupMenu, itemVerCatalogo, itemVerCatalogo, "Ver Catálogo").setIcon(R.drawable.icon_developer_team);
-                    m.add(groupMenu, itemCrearEmpresa, itemCrearEmpresa, "Registrar Empresa").setIcon(R.drawable.icon_developer_team);
-                    m.add(groupMenu, itemPedidos, itemPedidos, "Mis Pedidos").setIcon(R.drawable.icon_developer_team);
+                    m.add(groupMenu, itemVerCatalogo, itemVerCatalogo, "Ver Catálogo").setIcon(R.drawable.icon_catalogue);
+                    m.add(groupMenu, itemCrearEmpresa, itemCrearEmpresa, "Registrar Empresa").setIcon(R.drawable.icon_addcompany);
+                    m.add(groupMenu, itemPedidos, itemPedidos, "Mis Pedidos").setIcon(R.drawable.icon_orders);
                 }
             } else {
                 logout();
