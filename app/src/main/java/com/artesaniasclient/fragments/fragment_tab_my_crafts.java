@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,7 +24,10 @@ import com.artesaniasclient.model.Company;
 import com.artesaniasclient.model.Craft;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -171,37 +175,32 @@ public class fragment_tab_my_crafts extends Fragment implements AdapterView.OnIt
     public void getAllMyCrafts(){
         refFireStore.collection("crafts")
                 .whereEqualTo("company", id)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            craftList.clear();
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                String id = document.getId();
-                                String category = document.getString("category");
-                                String company = document.getString("company");
-                                String datedisabled = document.getString("datedisabled");
-                                String dateregistry = document.getString("dateregistry");
-                                String description = document.getString("description");
-                                String imageurl = document.getString("imageurl");
-                                boolean isactive = document.getBoolean("isactive");
-                                String namecraft = document.getString("namecraft");
-                                double price = document.getDouble("price");
-                                Integer quantity = Integer.parseInt(document.get("quantity").toString());
-                                craftList.add(new Craft(category,id,company, datedisabled, dateregistry,description,imageurl,
-                                        isactive,namecraft,price,quantity));
-                                //Log.d(TAG, document.getId() + " => " + document.getData());
-                            }
-                            adapter = new adpMyCrafts(getContext(), craftList);
-                            rcvCrafts.setAdapter(adapter);
-                            //iCraftComunication.get_craft_by_company_success(craftList,"");
-                            /*adapter = new adpCompany(getContext(),companiesList);
-                            rcvCompanies.setAdapter(adapter);*/
-                        } else {
-                            //Log.w(TAG, "Error getting documents.", task.getException());
-                            //iCraftComunication.get_craft_by_company_success(null,"No existen artesanías en la empresa");
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if (error != null) {
+                            System.err.println("Listen failed:" + error);
+                            return;
                         }
+
+                        craftList.clear();
+                        for (DocumentSnapshot document : value) {
+                            String id = document.getId();
+                            String category = document.getString("category");
+                            String company = document.getString("company");
+                            String datedisabled = document.getString("datedisabled");
+                            String dateregistry = document.getString("dateregistry");
+                            String description = document.getString("description");
+                            String imageurl = document.getString("imageurl");
+                            boolean isactive = document.getBoolean("isactive");
+                            String namecraft = document.getString("namecraft");
+                            double price = document.getDouble("price");
+                            Integer quantity = Integer.parseInt(document.get("quantity").toString());
+                            craftList.add(new Craft(category,id,company, datedisabled, dateregistry,description,imageurl,
+                                    isactive,namecraft,price,quantity));
+                        }
+                        adapter = new adpMyCrafts(getContext(), craftList);
+                        rcvCrafts.setAdapter(adapter);
                     }
                 });
     }

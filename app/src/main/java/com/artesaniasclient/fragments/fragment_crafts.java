@@ -164,7 +164,41 @@ public class fragment_crafts extends Fragment implements AdapterView.OnItemSelec
             getCraftsbyCategory();
     }
 
-    private void getAllCrafts(){
+    public void getAllCrafts(){
+        refFireStore.collection("crafts")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        for (DocumentSnapshot document : value) {
+                            String id = document.getId();
+                            String category = document.getString("category");
+                            String idcompany = document.getString("company");
+                            String company = "";
+                            for(int c = 0; c < ac.size(); c++){
+                                Company companyModel = ac.get(c);
+                                if(companyModel.getId().equals(idcompany)){
+                                    company = companyModel.getBusinessname();
+                                }
+                            }
+                            String datedisabled = document.getString("datedisabled");
+                            String dateregistry = document.getString("dateregistry");
+                            String description = document.getString("description");
+                            String imageurl = document.getString("imageurl");
+                            boolean isactive = Boolean.parseBoolean(document.get("isactive").toString());
+                            String namecraft = document.getString("namecraft");
+                            double price = document.getDouble("price");
+                            Integer quantity = Integer.parseInt(document.get("quantity").toString());
+                            craftList.add(new Craft(category,id,company, datedisabled, dateregistry,description,imageurl,
+                                    isactive,namecraft,price,quantity));
+                            //Log.d(TAG, document.getId() + " => " + document.getData());
+                        }
+                        adapter = new adpCrafts(getContext(),craftList);
+                        rcvCrafts.setAdapter(adapter);
+                    }
+                });
+    }
+
+    private void getAll(){
         refFireStore.collection("crafts")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
