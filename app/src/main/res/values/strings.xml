@@ -65,4 +65,8 @@
 
     <string name="list_crafts">Mis artesanías</string>
     <string name="registry_crafts">Registrar artesanías</string>
+
+    <string name="app_rc_correo">Correo de restauración</string>
+    <string name="app_rc_btn_recuperar">Restaurar</string>
+    <string name="app_rc_btn_rest">¿Olvidó su clave?</string>
 </resources>
