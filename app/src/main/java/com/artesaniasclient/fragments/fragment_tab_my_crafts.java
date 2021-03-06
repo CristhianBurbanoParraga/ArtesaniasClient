@@ -95,6 +95,12 @@ public class fragment_tab_my_crafts extends Fragment implements AdapterView.OnIt
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        getAllMyCrafts();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -115,7 +121,7 @@ public class fragment_tab_my_crafts extends Fragment implements AdapterView.OnIt
         rcvCrafts.setLayoutManager(new LinearLayoutManager(getContext()));
         refFireStore = FirebaseFirestore.getInstance();
         ac = getCompany();
-        getAllMyCrafts();
+        //getAllMyCrafts();
         return view;
     }
 

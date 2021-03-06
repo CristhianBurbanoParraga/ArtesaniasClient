@@ -244,7 +244,7 @@
                         android:id="@+id/cancel"
                         android:layout_width="wrap_content"
                         android:layout_height="50dp"
-                        android:layout_marginLeft="30dp"
+                        android:layout_marginLeft="5pt"
                         android:layout_marginTop="30dp"
                         android:layout_toEndOf="@+id/register"
                         android:backgroundTint="#0669b2"

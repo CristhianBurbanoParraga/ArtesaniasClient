@@ -27,7 +27,9 @@ import com.artesaniasclient.controller.CraftController;
 import com.artesaniasclient.interfaces.ICraft;
 import com.artesaniasclient.model.Craft;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -38,6 +40,7 @@ public class fragment_tab_registrer_crafts extends Fragment implements ICraft, A
 
     private final Context mContext;
 
+    String id, name;
     String nombreimg;
     static String cat = "Todos";
     View view;
@@ -90,8 +93,11 @@ public class fragment_tab_registrer_crafts extends Fragment implements ICraft, A
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
+            id = getArguments().getString("id");
+            name = getArguments().getString("name");
         }
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -154,6 +160,7 @@ public class fragment_tab_registrer_crafts extends Fragment implements ICraft, A
 
     }
 
+
     public void registrarcrafts () {
         Craft craft = new Craft();
         craft.setNamecraft(txtNameArte.getText().toString());
@@ -161,6 +168,10 @@ public class fragment_tab_registrer_crafts extends Fragment implements ICraft, A
         craft.setQuantity(Integer.parseInt(txtCantArte.getText().toString()));
         craft.setPrice(Double.parseDouble(txtPrecioArte.getText().toString()));
         craft.setDescription(txtDescription.getText().toString());
+        craft.setCompany(id);
+        //Date date = new Date();
+        String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+        craft.setDateregistry(date);
         //craftController.addCraft(craft);
         craftController.UploadFile(nombreimg, craft, imageUri);
 
