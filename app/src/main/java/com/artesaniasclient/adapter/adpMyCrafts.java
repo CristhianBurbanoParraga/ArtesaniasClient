@@ -40,11 +40,10 @@ public class adpMyCrafts extends RecyclerView.Adapter<adpMyCrafts.ViewHolder>
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView company, namecraft, price, description;
+        TextView namecraft, price, description;
         ImageView imageurl;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            company = (TextView) itemView.findViewById(R.id.txtCompany2);
             namecraft = (TextView) itemView.findViewById(R.id.txtNameCraft2);
             price = (TextView) itemView.findViewById(R.id.txtPrice2);
             description = (TextView) itemView.findViewById(R.id.txtDescription2);
@@ -65,7 +64,6 @@ public class adpMyCrafts extends RecyclerView.Adapter<adpMyCrafts.ViewHolder>
     public void onBindViewHolder(@NonNull adpMyCrafts.ViewHolder holder, int position) {
         try {
             Craft craft = lista.get(position);
-            holder.company.setText(craft.getCompany());
             holder.namecraft.setText(craft.getNamecraft());
             holder.price.setText(Double.toString(craft.getPrice()));
             holder.description.setText(craft.getDescription());

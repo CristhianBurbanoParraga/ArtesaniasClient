@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
@@ -18,6 +19,7 @@ public class fragment_my_crafts extends Fragment {
     Bundle bundle;
     SectionsPagerAdapter sectionsPagerAdapter;
     ViewPager viewPager;
+    TextView nameCompany;
 
     public fragment_my_crafts() {
         // Required empty public constructor
@@ -38,6 +40,9 @@ public class fragment_my_crafts extends Fragment {
         viewPager.setAdapter(sectionsPagerAdapter);
         TabLayout tabs = view.findViewById(R.id.tabs_main);
         tabs.setupWithViewPager(viewPager);
+
+        nameCompany = view.findViewById(R.id.lblTitleCompany);
+        nameCompany.setText("Empresa: " + name);
         return view;
     }
 }

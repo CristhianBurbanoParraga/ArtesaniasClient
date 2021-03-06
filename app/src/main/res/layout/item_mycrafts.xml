@@ -98,29 +98,6 @@
                 android:layout_toEndOf="@+id/lblPrice2"
                 android:text="Price" />
 
-            <TextView
-                android:id="@+id/lblCompany2"
-                style="@style/TextAppearance.AppCompat.Body1"
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/txtPrice2"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_toEndOf="@+id/imgCraft2"
-                android:text="Empresa:"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/txtCompany2"
-                style="@style/TextAppearance.AppCompat.Body1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/txtPrice2"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_toEndOf="@+id/lblCompany2"
-                android:text="Company" />
-
         </RelativeLayout>
 
     </androidx.cardview.widget.CardView>

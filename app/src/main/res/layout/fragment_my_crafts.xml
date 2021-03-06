@@ -13,14 +13,15 @@
         android:background="@color/black" />
 
     <RelativeLayout
+        android:id="@+id/layoutTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="1dp"
         android:background="#3fbcef"
-        android:padding="5dp" >
+        android:padding="5dp">
 
         <TextView
-            android:id="@+id/lblTiTleCat2"
+            android:id="@+id/lblTitleCompany"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -36,6 +37,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:layout_below="@+id/layoutTitle"
         android:layout_marginTop="39dp"
         android:background="@color/black" />
 
@@ -67,63 +69,5 @@
 
         </androidx.viewpager.widget.ViewPager>
     </RelativeLayout>
-
-    <!--<RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="35dp"
-        android:layout_marginTop="40dp"
-        android:background="#3fbcef">
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text=""/>
-
-    </RelativeLayout>-->
-
-    <!--<RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
-        android:background="#3fbcef"
-        android:padding="5dp">
-
-        <TextView
-            android:id="@+id/lblCategoryCrafs2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_centerInParent="true"
-            android:layout_marginStart="10dp"
-            android:text="Categoría:"
-            android:textColor="#fff"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            tools:ignore="HardcodedText" />
-
-        <Spinner
-            android:id="@+id/cbbCategory2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_toEndOf="@+id/lblCategoryCrafs2"
-            android:textSize="14sp" />
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="75dp">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rcvMyCrafts"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="43dp"
-            android:layout_marginEnd="3dp" />
-    </RelativeLayout>-->
 
 </FrameLayout>
