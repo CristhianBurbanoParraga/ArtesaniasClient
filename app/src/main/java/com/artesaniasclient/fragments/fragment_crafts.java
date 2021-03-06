@@ -101,6 +101,8 @@ public class fragment_crafts extends Fragment implements AdapterView.OnItemSelec
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_crafts, container, false);
+        refFireStore = FirebaseFirestore.getInstance();
+        ac = getCompany();
         llenarSpinner();
         adapterCat = new ArrayAdapter<CharSequence>(getContext(), android.R.layout.simple_spinner_item, categories);
         cbbCategories = (Spinner)view.findViewById(R.id.cbbCategory);
@@ -111,8 +113,6 @@ public class fragment_crafts extends Fragment implements AdapterView.OnItemSelec
         rcvCrafts = (RecyclerView)view.findViewById(R.id.rcvCrafts);
         //Definir la forma de la lista vertical
         rcvCrafts.setLayoutManager(new LinearLayoutManager(getContext()));
-        refFireStore = FirebaseFirestore.getInstance();
-        ac = getCompany();
         // Inflate the layout for this fragment
         return view;
     }

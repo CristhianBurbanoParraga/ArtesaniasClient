@@ -124,7 +124,7 @@ public class activity_principal extends AppCompatActivity implements NavigationV
                 if (user.getUsertype() != null && user.getUsertype().equals("Artesano")) {
                     m.add(groupMenu, itemVerCatalogo, itemVerCatalogo, "Ver Catálogo").setIcon(R.drawable.icon_developer_team);
                     m.add(groupMenu, itemCrearEmpresa, itemCrearEmpresa, "Registrar Empresa").setIcon(R.drawable.icon_developer_team);
-                    m.add(groupMenu, itemCrearArtesania, itemCrearArtesania, "Registrar Artesanía").setIcon(R.drawable.icon_developer_team);
+                    //m.add(groupMenu, itemCrearArtesania, itemCrearArtesania, "Registrar Artesanía").setIcon(R.drawable.icon_developer_team);
                     m.add(groupMenu, itemVerMisEmpresas, itemVerMisEmpresas, "Mis Empresas").setIcon(R.drawable.icon_developer_team);
                     //m.add(groupMenu, itemVerMisArtesanias, itemVerMisArtesanias, "Mis Artesanías").setIcon(R.drawable.icon_developer_team);
                 } else {
@@ -179,7 +179,7 @@ public class activity_principal extends AppCompatActivity implements NavigationV
             if (user != null && user.getId() != null && user.getId().length() > 0) {
                 logout();
             } else {
-                Intent intent = new Intent(this, LoginActivity.class);
+                Intent intent = new Intent(this, LoginActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
             }
         }
@@ -196,7 +196,9 @@ public class activity_principal extends AppCompatActivity implements NavigationV
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.remove(getString(R.string.CURRENT_USER_KEY_STORE));
         editor.apply();
-        Intent intent = new Intent(this, activity_principal.class);
-        startActivity(intent);
+        //Intent intent = new Intent(this, activity_principal.class);
+        //startActivity(intent);
+        finish();
+        startActivity(getIntent());
     }
 }
