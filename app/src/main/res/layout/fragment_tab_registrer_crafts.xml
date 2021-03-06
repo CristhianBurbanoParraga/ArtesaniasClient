@@ -23,50 +23,19 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="350dp"
-                android:background="@drawable/fondo">
-
-                <ImageView
-                    android:id="@+id/imageView2"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="0dp"
-                    android:layout_marginBottom="0dp"
-                    android:contentDescription="@string/descr"
-                    android:paddingTop="50dp"
-                    android:paddingBottom="80dp"
-                    app:srcCompat="@drawable/iconarte2" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="-50dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/fondo2">
 
                 <TextView
-                    android:id="@+id/title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:fontFamily="@font/alfa_slab_one"
-                    android:text="@string/registrarart"
-                    android:textAlignment="center"
-                    android:textColor="#525966"
-                    android:textSize="25sp"
-                    android:textStyle="bold"
-                    tools:ignore="MissingConstraints"
-                    tools:layout_editor_absoluteY="88dp" />
-
-                <TextView
                     android:id="@+id/textView2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/title"
-                    android:layout_centerInParent="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_centerHorizontal="true"
                     android:text="@string/Ingresedatos"
                     android:textColor="#525966"
                     android:textSize="18sp" />
@@ -78,7 +47,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/textView2"
                     android:layout_marginStart="24dp"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="20dp"
                     android:layout_marginEnd="24dp"
                     android:hint="@string/nombreart"
                     tools:ignore="MissingConstraints">
@@ -102,7 +71,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/nameart"
                     android:layout_marginStart="24dp"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="20dp"
                     android:layout_marginEnd="24dp"
                     android:hint="@string/cantart"
                     tools:ignore="MissingConstraints">
@@ -127,7 +96,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/cantart"
                     android:layout_marginStart="24dp"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="20dp"
                     android:layout_marginEnd="24dp"
                     android:hint="@string/precioart"
                     tools:ignore="MissingConstraints">
@@ -151,7 +120,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/precioart"
                     android:layout_marginStart="24dp"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="20dp"
                     android:layout_marginEnd="24dp"
                     android:hint="@string/descriptioncrafs"
                     tools:ignore="MissingConstraints">
@@ -159,12 +128,16 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/description"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="150dp"
                         android:background="@drawable/border3"
                         android:drawableStart="@drawable/nameart"
                         android:drawablePadding="10dp"
                         android:drawableTint="#0669b2"
-                        android:inputType="textEmailAddress"
+                        android:gravity="top"
+                        android:overScrollMode="always"
+                        android:scrollbarStyle="insideInset"
+                        android:scrollbars="vertical"
+                        android:inputType="textMultiLine"
                         android:selectAllOnFocus="true" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -175,7 +148,7 @@
                     android:layout_height="75dp"
                     android:layout_below="@+id/maindescription"
                     android:layout_marginStart="24dp"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="20dp"
                     android:layout_marginEnd="24dp"
                     android:hint="@string/descriptioncrafs"
                     tools:ignore="MissingConstraints">
@@ -200,7 +173,7 @@
                     android:layout_below="@+id/categoriaart"
                     android:layout_centerHorizontal="true"
                     android:layout_marginStart="24dp"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="20dp"
                     android:layout_marginEnd="24dp"
                     android:contentDescription="@string/descr"
                     app:srcCompat="@drawable/img_base" />
@@ -215,44 +188,48 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="10dp"
                     android:backgroundTint="#0669b2"
-                    android:clickable="true"
                     android:fontFamily="@font/alfa_slab_one"
                     android:text="@string/seleccimg"
                     android:textColor="@color/white"
-                    android:textSize="14sp" />
+                    android:textSize="12sp" />
 
-                <RelativeLayout
+                <LinearLayout
+                    android:id="@+id/relativeButtons"
+                    android:weightSum="2"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="10dp"
                     android:layout_below="@+id/seleccionarimg"
                     android:layout_centerInParent="true">
 
                     <Button
                         android:id="@+id/register"
-                        android:layout_width="wrap_content"
                         android:layout_height="50dp"
-                        android:layout_centerHorizontal="false"
-                        android:layout_marginLeft="30dp"
-                        android:layout_marginTop="30dp"
                         android:backgroundTint="#0669b2"
+                        android:layout_weight="1"
                         android:fontFamily="@font/alfa_slab_one"
                         android:text="@string/registrar"
                         android:textColor="@color/white"
-                        android:textSize="14sp" />
+                        android:textSize="12sp"
+                        tools:ignore="ButtonStyle"
+                        android:layout_marginEnd="10dp"
+                        android:layout_width="wrap_content" />
 
                     <Button
                         android:id="@+id/cancel"
-                        android:layout_width="wrap_content"
                         android:layout_height="50dp"
-                        android:layout_marginLeft="5pt"
-                        android:layout_marginTop="30dp"
-                        android:layout_toEndOf="@+id/register"
                         android:backgroundTint="#0669b2"
                         android:fontFamily="@font/alfa_slab_one"
                         android:text="@string/cancelar"
                         android:textColor="@color/white"
-                        android:textSize="14sp" />
-                </RelativeLayout>
+                        android:textSize="12sp"
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        tools:ignore="ButtonStyle" />
+                </LinearLayout>
 
             </RelativeLayout>
 

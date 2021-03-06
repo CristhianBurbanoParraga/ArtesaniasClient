@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 
 import com.artesaniasclient.R;
@@ -124,6 +126,8 @@ public class fragment_tab_registrer_crafts extends Fragment implements ICraft, A
         txtCantArte = view.findViewById(R.id.cantarte);
         txtPrecioArte = view.findViewById(R.id.precioarte);
         txtDescription = view.findViewById(R.id.description);
+
+
 
         btnimagen.setOnClickListener(new View.OnClickListener() {
             @Override
