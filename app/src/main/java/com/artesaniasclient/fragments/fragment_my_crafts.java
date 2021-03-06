@@ -58,7 +58,6 @@ public class fragment_my_crafts extends Fragment implements AdapterView.OnItemSe
     ArrayAdapter<CharSequence> adp;
     String[] categories = new String[11];
 
-    View view;
     Bundle bundle;
     private SectionsPagerAdapter sectionsPagerAdapter;
     private ViewPager viewPager;
@@ -106,8 +105,9 @@ public class fragment_my_crafts extends Fragment implements AdapterView.OnItemSe
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_my_crafts, container, false);
         id = getArguments().getString("id");
         name = getArguments().getString("name");
         bundle = new Bundle();
@@ -119,12 +119,7 @@ public class fragment_my_crafts extends Fragment implements AdapterView.OnItemSe
         viewPager.setAdapter(sectionsPagerAdapter);
         TabLayout tabs = view.findViewById(R.id.tabs_main);
         tabs.setupWithViewPager(viewPager);
-    }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_my_crafts, container, false);
         //codigo de daniela
         /*llenarSpinner();
         adapterCat = new ArrayAdapter<CharSequence>(getContext(), android.R.layout.simple_spinner_item, categories);
