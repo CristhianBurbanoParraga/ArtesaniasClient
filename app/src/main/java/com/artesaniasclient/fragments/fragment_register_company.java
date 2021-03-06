@@ -12,7 +12,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.artesaniasclient.R;
-import com.artesaniasclient.activity_empresa;
 import com.artesaniasclient.activity_principal;
 import com.artesaniasclient.controller.CompanyController;
 import com.artesaniasclient.interfaces.ICompanyComunication;

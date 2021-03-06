@@ -27,21 +27,16 @@ import androidx.lifecycle.ViewModelProvider;
 import com.artesaniasclient.R;
 import com.artesaniasclient.RecuperarClaveActivity;
 import com.artesaniasclient.RegisterUserActivity;
-import com.artesaniasclient.activity_empresa;
 import com.artesaniasclient.activity_principal;
 import com.artesaniasclient.controller.UserController;
 import com.artesaniasclient.interfaces.ILogin;
-import com.artesaniasclient.interfaces.IUserComunication;
 import com.artesaniasclient.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.Gson;
-
-import java.util.ArrayList;
 
 public class LoginActivity extends AppCompatActivity implements ILogin {
 

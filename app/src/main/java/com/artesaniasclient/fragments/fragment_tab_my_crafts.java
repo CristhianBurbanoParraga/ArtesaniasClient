@@ -67,7 +67,8 @@ public class fragment_tab_my_crafts extends Fragment implements AdapterView.OnIt
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_tab_my_crafts, container, false);
-
+        id = getArguments().getString("id");
+        name = getArguments().getString("name");
         //codigo copiado de daniela
         llenarSpinner();
         craftList = new ArrayList<>();
