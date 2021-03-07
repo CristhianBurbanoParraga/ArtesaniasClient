@@ -1,16 +1,12 @@
 package com.artesaniasclient.fragments;
 
-import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,12 +18,9 @@ import android.widget.Spinner;
 import com.artesaniasclient.R;
 import com.artesaniasclient.adapter.adpMyCrafts;
 import com.artesaniasclient.controller.CompanyController;
-import com.artesaniasclient.interfaces.ICompanyComunication;
 import com.artesaniasclient.interfaces.Updateable;
 import com.artesaniasclient.model.Company;
 import com.artesaniasclient.model.Craft;
-import com.artesaniasclient.ui.main.PlaceholderFragment;
-import com.artesaniasclient.ui.main.SectionsPagerAdapter;
 import com.artesaniasclient.utils.Util;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -82,7 +75,7 @@ public class fragment_tab_my_crafts extends Fragment implements AdapterView.OnIt
         View view = inflater.inflate(R.layout.fragment_tab_my_crafts, container, false);
         id = getArguments().getString("id");
         name = getArguments().getString("name");
-        //codigo copiado de daniela
+        //codigo de daniela
         llenarSpinner();
         craftList = new ArrayList<>();
 
@@ -144,7 +137,6 @@ public class fragment_tab_my_crafts extends Fragment implements AdapterView.OnIt
 
     }
 
-
     public void getAllMyCrafts() {
         refFireStore.collection("crafts")
                 .whereEqualTo("company", id)
@@ -181,6 +173,7 @@ public class fragment_tab_my_crafts extends Fragment implements AdapterView.OnIt
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         cat = parent.getItemAtPosition(position).toString();
+        getCrafts();
     }
 
     @Override

@@ -2,9 +2,7 @@ package com.artesaniasclient.ui.main;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.SparseArray;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;

@@ -25,8 +25,8 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.artesaniasclient.R;
-import com.artesaniasclient.RecuperarClaveActivity;
-import com.artesaniasclient.RegisterUserActivity;
+import com.artesaniasclient.activity_recuperar_clave;
+import com.artesaniasclient.activity_register_user;
 import com.artesaniasclient.activity_principal;
 import com.artesaniasclient.controller.UserController;
 import com.artesaniasclient.interfaces.ILogin;
@@ -41,12 +41,8 @@ import com.google.gson.Gson;
 public class LoginActivity extends AppCompatActivity implements ILogin {
 
     private LoginViewModel loginViewModel;
-
-
     private FirebaseAuth mAuth;
-
     private ProgressBar loadingProgressBar;
-
     private UserController userController;
 
     @Override
@@ -96,7 +92,6 @@ public class LoginActivity extends AppCompatActivity implements ILogin {
                     updateUiWithUser(loginResult.getSuccess());
                 }
                 setResult(Activity.RESULT_OK);
-
                 //Complete and destroy login activity once successful
                 finish();
             }
@@ -146,7 +141,7 @@ public class LoginActivity extends AppCompatActivity implements ILogin {
         restaurarBotton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent iinntteenntt = new Intent(LoginActivity.this, RecuperarClaveActivity.class);
+                Intent iinntteenntt = new Intent(LoginActivity.this, activity_recuperar_clave.class);
                 startActivity(iinntteenntt);
             }
         });
@@ -177,7 +172,6 @@ public class LoginActivity extends AppCompatActivity implements ILogin {
                             if (email != null) {
                                 userController.getUserForEmail(email);
                             }
-
                             //updateUI(user);
                         } else {
                             Toast.makeText(LoginActivity.this, "Authentication failed.\nEmail or password incorrect",
@@ -185,7 +179,6 @@ public class LoginActivity extends AppCompatActivity implements ILogin {
                             loadingProgressBar.setVisibility(View.GONE);
                             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                         }
-
                         // [START_EXCLUDE]
                         if (!task.isSuccessful()) {
                             //mBinding.status.setText(R.string.auth_failed);
@@ -212,7 +205,7 @@ public class LoginActivity extends AppCompatActivity implements ILogin {
     }
 
     public void newUserOnClick(View v) {
-        Intent intent = new Intent(LoginActivity.this, RegisterUserActivity.class);
+        Intent intent = new Intent(LoginActivity.this, activity_register_user.class);
         startActivity(intent);
     }
 

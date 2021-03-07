@@ -1,12 +1,10 @@
 package com.artesaniasclient.controller;
 
 import android.app.Activity;
-import android.content.Context;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.artesaniasclient.RegisterUserActivity;
 import com.artesaniasclient.interfaces.ILogin;
 import com.artesaniasclient.interfaces.IUserComunication;
 import com.artesaniasclient.model.User;
@@ -173,7 +171,6 @@ public class UserController {
 
     public void getAllUsers() {
         // [START get_all_users]
-
         db.collection("user")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {

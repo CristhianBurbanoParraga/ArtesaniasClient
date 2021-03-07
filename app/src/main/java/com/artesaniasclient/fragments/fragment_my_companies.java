@@ -1,9 +1,7 @@
 package com.artesaniasclient.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -18,17 +16,10 @@ import android.widget.Toast;
 
 import com.artesaniasclient.R;
 import com.artesaniasclient.adapter.adpCompany;
-import com.artesaniasclient.adapter.adpCrafts;
 import com.artesaniasclient.controller.CompanyController;
 import com.artesaniasclient.interfaces.ICompanyComunication;
 import com.artesaniasclient.model.Company;
-import com.artesaniasclient.model.Craft;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
@@ -107,39 +98,6 @@ public class fragment_my_companies extends Fragment implements ICompanyComunicat
         return view;
     }
 
-    /*private void getAllMyCompanies(String email){
-        companiesList = new ArrayList<>();
-        refFirestore.collection("company")
-                .whereEqualTo("useremail", email)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            companiesList.clear();
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                String id = document.getId();
-                                String address = document.getString("address");
-                                String businessname = document.getString("businessname");
-                                String city = document.getString("city");
-                                String dateregistry = document.getString("dateregistry");
-                                boolean isactive = Boolean.parseBoolean(document.get("isactive").toString());
-                                String ruc = document.getString("ruc");
-                                String useremail = document.getString("useremail");
-                                companiesList.add(new Company(id, address, businessname, city, dateregistry, isactive, ruc, useremail));
-                                //Log.d(TAG, document.getId() + " => " + document.getData());
-                            }
-                            adapter = new adpCompany(getContext(),companiesList);
-                            rcvCompanies.setAdapter(adapter);
-                        } else {
-                            //Log.w(TAG, "Error getting documents.", task.getException());
-                        }
-                    }
-                });
-    }*/
-
-
-
     @Override
     public void add_company_success(Company c, String message) {
 
@@ -177,10 +135,6 @@ public class fragment_my_companies extends Fragment implements ICompanyComunicat
 
                     // Commit a la transacción
                     transaction.commit();
-
-                    // Bundle b = new Bundle();
-                    //  b.putString("edicionID", nombreselec);
-
                 }
             });
             rcvCompanies.setAdapter(adapter);

@@ -25,6 +25,7 @@ import com.google.firebase.storage.UploadTask;
 import java.util.ArrayList;
 
 public class CraftController {
+
     private final String TAG = "CraftController";
     private ICraft iCraftComunication;
     private FirebaseFirestore db;
@@ -95,7 +96,6 @@ public class CraftController {
         StorageReference riversRef = storageRef.child(UriImage);
 
         UploadTask uploadTask = riversRef.putBytes(imageBytes);
-
         // Register observers to listen for when the download is done or if it fails
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
@@ -126,7 +126,6 @@ public class CraftController {
             }
         });
     }
-
 
     public void edit_craft(Craft craft) {
         db.collection("crafts").document(craft.getId())

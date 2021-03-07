@@ -16,7 +16,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class RecuperarClaveActivity extends AppCompatActivity {
+public class activity_recuperar_clave extends AppCompatActivity {
 
     EditText correo_recuperacion;
     Button btn_recuperar;
@@ -61,7 +61,7 @@ public class RecuperarClaveActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()){
                     Toast.makeText(getApplicationContext(),"Profavor revise su correo para restaurar su clave", Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(RecuperarClaveActivity.this, LoginActivity.class);
+                    Intent intent = new Intent(activity_recuperar_clave.this, LoginActivity.class);
                     startActivity(intent);
                     finish();
                 } else {

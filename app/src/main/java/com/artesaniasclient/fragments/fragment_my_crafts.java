@@ -64,7 +64,6 @@ public class fragment_my_crafts extends Fragment {
             }
         });
 
-
         nameCompany = view.findViewById(R.id.lblTitleCompany);
         nameCompany.setText("Empresa: " + name);
         return view;

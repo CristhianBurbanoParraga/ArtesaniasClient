@@ -80,5 +80,4 @@ public class adpMyCrafts extends RecyclerView.Adapter<adpMyCrafts.ViewHolder>
         return lista.size();
     }
 
-
 }

@@ -1,7 +1,5 @@
 package com.artesaniasclient.model;
 
-import com.google.firebase.auth.FirebaseUser;
-
 import java.io.Serializable;
 
 public class User implements Serializable {

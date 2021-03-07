@@ -2,7 +2,6 @@ package com.artesaniasclient.fragments;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -23,7 +22,6 @@ import com.artesaniasclient.activity_principal;
 import com.artesaniasclient.controller.CompanyController;
 import com.artesaniasclient.interfaces.ICompanyComunication;
 import com.artesaniasclient.model.Company;
-import com.artesaniasclient.model.MailJob;
 import com.artesaniasclient.utils.Util;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -50,7 +48,6 @@ public class fragment_register_company extends Fragment implements ICompanyComun
     private EditText txtAddress;
     Button buttonRegistry;
     Button buttonCancel;
-
     View view;
 
     public fragment_register_company() {

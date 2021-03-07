@@ -10,7 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.artesaniasclient.R;
-import com.artesaniasclient.certificaciones.GlideApp;
 import com.artesaniasclient.model.Company;
 
 import java.util.ArrayList;
@@ -66,9 +65,6 @@ public class adpCompany extends RecyclerView.Adapter<adpCompany.ViewHolder>
             holder.ruc.setText(company.getRuc());
             holder.city.setText(company.getCity());
             holder.address.setText(company.getAddress());
-            /*GlideApp.with(ccontext)
-                    .load(craft.getImageurl())
-                    .into(holder.imageurl);*/
         }catch (Exception e){
             String res=e.toString();
         }

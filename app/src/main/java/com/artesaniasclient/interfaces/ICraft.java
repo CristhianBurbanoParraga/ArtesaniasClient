@@ -1,8 +1,5 @@
 package com.artesaniasclient.interfaces;
 
-
-
-import com.artesaniasclient.model.Company;
 import com.artesaniasclient.model.Craft;
 
 import java.util.ArrayList;

@@ -11,20 +11,6 @@
         android:layout_height="wrap_content"
         android:background="#0669b2">
 
-        <!--<TextView
-            android:id="@+id/txtBienvenida"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:paddingTop="5dp"
-            android:text="Bienvenido/a"
-            android:textAlignment="center"
-            android:textAllCaps="true"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large.Inverse"
-            android:textColor="#044e7d"
-            android:textSize="20sp"
-            android:textStyle="bold" />-->
-
         <TextView
             android:id="@+id/txtUserFooter"
             android:layout_width="wrap_content"

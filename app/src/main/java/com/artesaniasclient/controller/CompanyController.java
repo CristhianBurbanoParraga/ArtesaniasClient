@@ -1,24 +1,18 @@
 package com.artesaniasclient.controller;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.artesaniasclient.adapter.adpCompany;
 import com.artesaniasclient.interfaces.ICompanyComunication;
-import com.artesaniasclient.interfaces.ILogin;
-import com.artesaniasclient.interfaces.IUserComunication;
 import com.artesaniasclient.model.Company;
-import com.artesaniasclient.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -104,7 +98,6 @@ public class CompanyController {
 
     public void getAllCompanies() {
         // [START get_all_companies]
-
         db.collection("company")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -146,7 +139,6 @@ public class CompanyController {
                             if (task.isSuccessful()) {
                                 //companiesList.clear();
                                 for (QueryDocumentSnapshot document : task.getResult()) {
-
                                     String id = document.getId();
                                     String address = document.getString("address");
                                     String businessname = document.getString("businessname");
@@ -170,7 +162,6 @@ public class CompanyController {
         } else {
             iCompanyComunication.get_companies_by_useremail_success(null,"Usuario no Autenticado");
         }
-
     }
 
     public void deleteDocument(String idCompany) {

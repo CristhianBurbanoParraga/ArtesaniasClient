@@ -16,8 +16,7 @@ import com.artesaniasclient.ui.login.LoginActivity;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class RegisterUserActivity extends AppCompatActivity implements IUserComunication {
-
+public class activity_register_user extends AppCompatActivity implements IUserComunication {
 
     private UserController userController;
 
@@ -27,11 +26,11 @@ public class RegisterUserActivity extends AppCompatActivity implements IUserComu
     private EditText textPassword;
     private EditText textPhone;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_user);
+
         userController = new UserController(this);
         userController.initFirebaseAuth();
         userController.setActivity(this);
@@ -41,7 +40,6 @@ public class RegisterUserActivity extends AppCompatActivity implements IUserComu
         textUsername = findViewById(R.id.username);
         textPassword = findViewById(R.id.password);
         textPhone = findViewById(R.id.phone);
-
     }
 
     public void onRegisterUserClick(View v) {
@@ -63,7 +61,6 @@ public class RegisterUserActivity extends AppCompatActivity implements IUserComu
         redirect_login();
     }
 
-
     @Override
     public void get_users_success(ArrayList<User> users, String message) {
     }
@@ -80,7 +77,7 @@ public class RegisterUserActivity extends AppCompatActivity implements IUserComu
     }
 
     private void redirect_login() {
-        Intent intent = new Intent(RegisterUserActivity.this, LoginActivity.class);
+        Intent intent = new Intent(activity_register_user.this, LoginActivity.class);
         startActivity(intent);
     }
 

@@ -44,7 +44,6 @@ public class fragment_tab_registrer_crafts extends Fragment implements ICraft, A
     String cat = "Todos";
 
     View view = null;
-
     Craft craft;
     boolean isEditCraft = false;
 
@@ -141,7 +140,6 @@ public class fragment_tab_registrer_crafts extends Fragment implements ICraft, A
         progressDialog = ProgressDialog.show(getContext(),"Porfavor espere...",
                 "Registrando cambios...", true,false);
         craftController.UploadFile(isEditCraft, craft, Util.getBytesImageView(imagen));
-
     }
 
     @Override
@@ -178,7 +176,7 @@ public class fragment_tab_registrer_crafts extends Fragment implements ICraft, A
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
-
+        cat = "Todos";
     }
 
     @Override
