@@ -1,10 +1,16 @@
 package com.artesaniasclient.fragments;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,11 +24,20 @@ import com.artesaniasclient.controller.CompanyController;
 import com.artesaniasclient.interfaces.ICompanyComunication;
 import com.artesaniasclient.model.Company;
 import com.artesaniasclient.model.MailJob;
+import com.artesaniasclient.utils.Util;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 public class fragment_register_company extends Fragment implements ICompanyComunication {
 
@@ -33,11 +48,10 @@ public class fragment_register_company extends Fragment implements ICompanyComun
     private EditText txtRuc;
     private EditText txtCity;
     private EditText txtAddress;
-    private EditText txtEmailSolicitud;
-    private EditText txtClaveSolicitud;
     Button buttonRegistry;
     Button buttonCancel;
 
+    View view;
 
     public fragment_register_company() {
         // Required empty public constructor
@@ -46,7 +60,7 @@ public class fragment_register_company extends Fragment implements ICompanyComun
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_register_company, container, false);
+        view = inflater.inflate(R.layout.fragment_register_company, container, false);
         companyController = new CompanyController(this);
         buttonRegistry = view.findViewById(R.id.registrar_company);
         buttonCancel = view.findViewById(R.id.cancelar);
@@ -54,8 +68,6 @@ public class fragment_register_company extends Fragment implements ICompanyComun
         txtRuc = view.findViewById(R.id.ruc);
         txtCity = view.findViewById(R.id.city);
         txtAddress = view.findViewById(R.id.address);
-        txtEmailSolicitud = view.findViewById(R.id.username);
-        txtClaveSolicitud = view.findViewById(R.id.password);
         auth = FirebaseAuth.getInstance();
 
         buttonRegistry.setOnClickListener(new View.OnClickListener() {
@@ -86,23 +98,23 @@ public class fragment_register_company extends Fragment implements ICompanyComun
         company.setIsactive(false);
         company.setUseremail(auth.getCurrentUser().getEmail());
         companyController.addCompany(company);
-        SendRegistrationRequestCompany("cbbp1997@gmail.com",
-                "Solicitud de registro de Empresa de artesanías",
-                "Solicito uno aprobación para registrar mi emprasa a Artesanías Ecuador, cuyos datos de la misma serían los siguientes: \n" +
-                        "Nombre de la empresa: " + company.getBusinessname() + "\n" +
-                        "RUC: " + company.getRuc() + "\n" +
-                        "Ciudad: " + company.getCity() + "\n" +
-                        "Dirección: " + company.getAddress() + "\n" +
-                        "Cuenta Artesanías Ecuador asociada: " + company.getUseremail());
-        /*new MailJob(txtEmailSolicitud.getText().toString(), txtClaveSolicitud.getText().toString()).execute(
-                new MailJob.Mail(txtEmailSolicitud.getText().toString(), "cbbp1997@gmail.com",
-                        "Solicitud de registro de Empresa de artesanías",
-                        "Solicito uno aprobación para registrar mi emprasa a Artesanías Ecuador, cuyos datos de la misma serían los siguientes: \n" +
-                                "Nombre de la empresa: " + company.getBusinessname() + "\n" +
-                                "RUC: " + company.getRuc() + "\n" +
-                                "Ciudad: " + company.getCity() + "\n" +
-                                "Dirección: " + company.getAddress()));
-        Toast.makeText(getActivity().getApplicationContext(), "Solicitud realizada con exito, obtendra una respuestas en los siguientes dias", Toast.LENGTH_SHORT).show();*/
+        Session session = Session.getInstance(Util.getPropertiesJavaMail(), new Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(Util.adminMail, Util.adminPassword);
+            }
+        });
+        try {
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(Util.adminMail));
+            message.setRecipients(Message.RecipientType.TO,
+                    InternetAddress.parse(Util.adminMail.trim()));
+            message.setSubject("Solicitud de registro empresa: " + company.getBusinessname());
+            message.setText(company.toString());
+            new SendEmail().execute(message);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public void SendRegistrationRequestCompany (String toEmail, String subject, String message) {
@@ -116,7 +128,7 @@ public class fragment_register_company extends Fragment implements ICompanyComun
         // Establezco el tipo de Intent
         intent.setType("message/rfc822");
         // Lanzo el selector de cliente de Correo
-        getActivity().startActivity(Intent.createChooser(intent,"Elije un cliente de Correo:"));
+        getActivity().startActivity(Intent.createChooser(intent,"Elije un cliente de Correo..."));
     }
 
     public void cancel_company() {
@@ -149,5 +161,50 @@ public class fragment_register_company extends Fragment implements ICompanyComun
     @Override
     public void get_companies_by_useremail_success(ArrayList<Company> companiesList, String message) {
 
+    }
+
+    private class SendEmail extends AsyncTask<Message, String, String> {
+        private ProgressDialog progressDialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog = ProgressDialog.show(getContext(),"Porfavor espere...",
+                    "Enviando email...", true,false);
+        }
+
+        @Override
+        protected String doInBackground(Message... messages) {
+            try {
+                Transport.send(messages[0]);
+                return "Success";
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                return "Error";
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            progressDialog.dismiss();
+            if (s.equals("Success")) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setCancelable(false);
+                builder.setTitle(Html.fromHtml("<font color='#509324'>Success</font>"));
+                builder.setMessage("Email enviado correctamente");
+                builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        Intent intent = new Intent(getContext(), activity_principal.class);
+                        startActivity(intent);
+                    }
+                });
+                builder.show();
+            } else {
+                Toast.makeText(getContext(),"Hubo un error", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }
