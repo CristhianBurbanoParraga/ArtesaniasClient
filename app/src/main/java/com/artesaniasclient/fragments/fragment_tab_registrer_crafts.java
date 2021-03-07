@@ -20,6 +20,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -62,6 +63,7 @@ public class fragment_tab_registrer_crafts extends Fragment implements ICraft, A
     EditText txtDescription;
     Spinner spinner;
     Button registerbutton;
+    Button cancel;
     TextView txtTitleDesc;
 
     public fragment_tab_registrer_crafts(fragment_my_crafts fragment_my_crafts) {
@@ -86,6 +88,7 @@ public class fragment_tab_registrer_crafts extends Fragment implements ICraft, A
         imagen = (ImageView) view.findViewById(R.id.imgart);
         btnimagen = (Button) view.findViewById(R.id.seleccionarimg);
         registerbutton = view.findViewById(R.id.register);
+        cancel = view.findViewById(R.id.cancel);
         spinner = (Spinner) view.findViewById(R.id.categoriaarte);
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
@@ -104,7 +107,12 @@ public class fragment_tab_registrer_crafts extends Fragment implements ICraft, A
         btnimagen.setOnClickListener(v -> openGallery());
 
         registerbutton.setOnClickListener(v -> registrarcrafts());
+        cancel.setOnClickListener(v -> cancelar());
         return view;
+    }
+
+    private void cancelar() {
+        fragment_my_crafts.viewPager.setCurrentItem(0);
     }
 
     private void openGallery() {
@@ -126,6 +134,20 @@ public class fragment_tab_registrer_crafts extends Fragment implements ICraft, A
     }
 
     public void registrarcrafts() {
+        if (Util.typeSuscriptionOfUser.equals("Free")) {
+            if (Util.countCraftsOfUser < 5) {
+                Util.countCraftsOfUser += 1;
+                passregistrarcrafts();
+            } else {
+                Toast.makeText(getContext(),"Pásate a Primium para registrar más artesanías",Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            Util.countCraftsOfUser += 1;
+            passregistrarcrafts();
+        }
+    }
+
+    private void passregistrarcrafts() {
         if (craft == null) craft = new Craft();
         craft.setNamecraft(txtNameArte.getText().toString());
         craft.setCategory(cat);
@@ -137,11 +159,11 @@ public class fragment_tab_registrer_crafts extends Fragment implements ICraft, A
             @SuppressLint("SimpleDateFormat") String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
             craft.setDateregistry(date);
             craft.setImageName(nombreimg);
-            this.resetView();
+            //this.resetView();
         }
         progressDialog = ProgressDialog.show(getContext(), "Porfavor espere...",
                 "Registrando cambios...", true, false);
-        craftController.UploadFile(isEditCraft, craft, Util.getBytesImageView(imagen));
+        craftController.UploadFile(isEditCraft, craft, Util.getBytesImageView(imagen), getContext());
     }
 
     private void resetView() {

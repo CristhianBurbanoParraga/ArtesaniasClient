@@ -147,6 +147,14 @@ public class User implements Serializable {
         this.countcrafts = countcrafts;
     }
 
+    public int getCountcompanies() {
+        return countcompanies;
+    }
+
+    public void setCountcompanies(int countcompanies) {
+        this.countcompanies = countcompanies;
+    }
+
     @Override
     public String toString() {
         return "User{" +

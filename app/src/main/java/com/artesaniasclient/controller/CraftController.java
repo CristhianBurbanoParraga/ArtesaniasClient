@@ -1,5 +1,6 @@
 package com.artesaniasclient.controller;
 
+import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
 
@@ -7,6 +8,7 @@ import androidx.annotation.NonNull;
 
 import com.artesaniasclient.interfaces.ICraft;
 import com.artesaniasclient.model.Craft;
+import com.artesaniasclient.model.User;
 import com.artesaniasclient.utils.Util;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -65,7 +67,7 @@ public class CraftController {
         // [END set_firestore_settings]
     }
 
-    public void addCraft(Craft craft) {
+    public void addCraft(Craft craft, Context context) {
         // Add a new document with a generated ID
         db.collection("crafts")
                 .add(craft)
@@ -73,10 +75,12 @@ public class CraftController {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
                         craft.setId(documentReference.getId());
+                        updateCounCraftsOfUser(Util.getUserConnect(context).getId(), Util.countCraftsOfUser);
                         if (craft.getId() == null) {
                             getiCraft().add_craft_success(null, "Error al crear la artesania");
                         } else {
                             getiCraft().add_craft_success(craft, "Artesania creada exitosamente");
+
                         }
                     }
                 })
@@ -89,7 +93,7 @@ public class CraftController {
                 });
     }
 
-    public void UploadFile(boolean isEditCraft, Craft craft, byte[] imageBytes) {
+    public void UploadFile(boolean isEditCraft, Craft craft, byte[] imageBytes, Context context) {
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReference();
         String UriImage = "images/" + craft.getImageName();
@@ -118,7 +122,7 @@ public class CraftController {
                     Uri downloadUri = task.getResult();
                     craft.setImageurl(downloadUri.toString());
                     if (isEditCraft) edit_craft(craft);
-                    else addCraft(craft);
+                    else addCraft(craft, context);
                 } else {
                     // Handle failures
                     // ...
@@ -142,6 +146,25 @@ public class CraftController {
                     public void onFailure(@NonNull Exception e) {
                         Log.w(TAG, "Error writing document", e);
                         getiCraft().set_craft_success(null, Util.getMessageTask(e));
+                    }
+                });
+    }
+
+    public void updateCounCraftsOfUser (String iduser, int quantity) {
+        db.collection("user").document(iduser)
+                .update("countcrafts",quantity)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        /*Log.d(TAG, "DocumentSnapshot successfully written!");
+                        getiCraft().set_craft_success(new Craft(), "Artesania editada exitosamente");*/
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        /*Log.w(TAG, "Error writing document", e);
+                        getiCraft().set_craft_success(null, Util.getMessageTask(e));*/
                     }
                 });
     }

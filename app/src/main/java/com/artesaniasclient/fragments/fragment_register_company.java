@@ -85,6 +85,20 @@ public class fragment_register_company extends Fragment implements ICompanyComun
     }
 
     public void registry_company() {
+        if (Util.typeSuscriptionOfUser.equals("Free")) {
+            if (Util.countCompaniesOfUser < 1) {
+                Util.countCompaniesOfUser += 1;
+                passregistry_company();
+            } else {
+                Toast.makeText(getContext(),"Pásate a Primium para registrar más empresas",Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            Util.countCompaniesOfUser += 1;
+            passregistry_company();
+        }
+    }
+
+    private void passregistry_company () {
         Company company = new Company();
         company.setBusinessname(txtNameBussines.getText().toString());
         company.setRuc(txtRuc.getText().toString());
@@ -94,7 +108,7 @@ public class fragment_register_company extends Fragment implements ICompanyComun
         company.setDateregistry(date);
         company.setIsactive(false);
         company.setUseremail(auth.getCurrentUser().getEmail());
-        companyController.addCompany(company);
+        companyController.addCompany(company, getContext());
         Session session = Session.getInstance(Util.getPropertiesJavaMail(), new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {

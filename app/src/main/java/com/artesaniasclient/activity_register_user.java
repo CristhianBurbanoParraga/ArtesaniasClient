@@ -54,6 +54,8 @@ public class activity_register_user extends AppCompatActivity implements IUserCo
         user.setIsactive(true);
         user.setUsertype("Cliente");
         user.setDateregistry(new Date().toString());
+        user.setCountcrafts(0);
+        user.setCountcompanies(0);
         userController.createUserFirebaseAuth(user);
     }
 

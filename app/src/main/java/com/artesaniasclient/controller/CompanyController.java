@@ -1,12 +1,14 @@
 package com.artesaniasclient.controller;
 
 import android.app.Activity;
+import android.content.Context;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 
 import com.artesaniasclient.interfaces.ICompanyComunication;
 import com.artesaniasclient.model.Company;
+import com.artesaniasclient.utils.Util;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -72,7 +74,7 @@ public class CompanyController {
         // [END set_firestore_settings]
     }
 
-    public void addCompany(Company company) {
+    public void addCompany(Company company, Context context) {
         // Add a new document with a generated ID
         db.collection("company")
                 .add(company)
@@ -80,6 +82,7 @@ public class CompanyController {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
                         company.setId(documentReference.getId());
+                        updateCounCompaniesOfUser(Util.getUserConnect(context).getId(), Util.countCompaniesOfUser);
                         if (company.getId() == null) {
                             getiCompanyComunication().add_company_success(null, "Error al crear la empresa");
                         } else {
@@ -162,6 +165,25 @@ public class CompanyController {
         } else {
             iCompanyComunication.get_companies_by_useremail_success(null,"Usuario no Autenticado");
         }
+    }
+
+    public void updateCounCompaniesOfUser (String iduser, int quantity) {
+        db.collection("user").document(iduser)
+                .update("countcompanies",quantity)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        /*Log.d(TAG, "DocumentSnapshot successfully written!");
+                        getiCraft().set_craft_success(new Craft(), "Artesania editada exitosamente");*/
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        /*Log.w(TAG, "Error writing document", e);
+                        getiCraft().set_craft_success(null, Util.getMessageTask(e));*/
+                    }
+                });
     }
 
     public void deleteDocument(String idCompany) {

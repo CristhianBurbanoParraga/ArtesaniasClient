@@ -27,6 +27,7 @@ import com.artesaniasclient.fragments.fragment_register_company;
 import com.artesaniasclient.model.User;
 import com.artesaniasclient.ui.login.LoginActivity;
 import com.google.android.material.navigation.NavigationView;
+import com.artesaniasclient.utils.Util;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -132,10 +133,14 @@ public class activity_principal extends AppCompatActivity implements NavigationV
         if (currentUser != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             email = currentUser.getDisplayName();
-            Gson gson = new Gson();
+            user = Util.getUserConnect(getApplicationContext());
+            /*Gson gson = new Gson();
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
             String userJSON = sharedPreferences.getString(getString(R.string.CURRENT_USER_KEY_STORE), gson.toJson(new User()));
-            user = gson.fromJson(userJSON, User.class);
+            user = gson.fromJson(userJSON, User.class);*/
+            Util.typeSuscriptionOfUser = user.getSuscriptiontype();
+            Util.countCraftsOfUser = user.getCountcrafts();
+            Util.countCompaniesOfUser = user.getCountcompanies();
             bundle.putString("datos", new Gson().toJson(user));
             if (user != null) {
                 txtUserFooter.setText("Usuario: " + user.getUsername());
