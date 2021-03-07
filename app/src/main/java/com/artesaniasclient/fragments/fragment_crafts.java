@@ -53,7 +53,7 @@ public class fragment_crafts extends Fragment implements AdapterView.OnItemSelec
     ArrayAdapter<CharSequence> adapterCat;
     Spinner cbbCategories;
     private ArrayList<Craft> craftList;
-    ArrayList<Company> ac;
+    static ArrayList<Company> ac;
     ArrayAdapter<CharSequence> adp;
     String[] categories = new String[11];
 
@@ -130,27 +130,24 @@ public class fragment_crafts extends Fragment implements AdapterView.OnItemSelec
     private ArrayList<Company> getCompany(){
         ArrayList<Company> list = new ArrayList<>();
         refFireStore.collection("company")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            //list.clear();
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                String id = document.getId();
-                                String address = document.getString("address");
-                                String businessname = document.getString("businessname");
-                                String city = document.getString("city");
-                                String dateregistry = document.getString("dateregistry");
-                                boolean isactive = Boolean.parseBoolean(document.get("isactive").toString());
-                                String ruc = document.getString("ruc");
-                                String useremail = document.getString("useremail");
-                                list.add(new Company(id, address, businessname, city, dateregistry, isactive, ruc, useremail));
-                                //Log.d(TAG, document.getId() + " => " + document.getData());
-                            }
-                        } else {
-                            //Log.w(TAG, "Error getting documents.", task.getException());
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        for (DocumentSnapshot document : value) {
+                            String id = document.getId();
+                            String address = document.getString("address");
+                            String businessname = document.getString("businessname");
+                            String city = document.getString("city");
+                            String dateregistry = document.getString("dateregistry");
+                            boolean isactive = Boolean.parseBoolean(document.get("isactive").toString());
+                            String ruc = document.getString("ruc");
+                            String useremail = document.getString("useremail");
+                            list.add(new Company(id, address, businessname, city, dateregistry, isactive, ruc, useremail));
+                            //Log.d(TAG, document.getId() + " => " + document.getData());
+                            //Log.d(TAG, document.getId() + " => " + document.getData());
                         }
+                        adapter = new adpCrafts(getContext(),craftList);
+                        rcvCrafts.setAdapter(adapter);
                     }
                 });
         return list;
@@ -194,46 +191,6 @@ public class fragment_crafts extends Fragment implements AdapterView.OnItemSelec
                         }
                         adapter = new adpCrafts(getContext(),craftList);
                         rcvCrafts.setAdapter(adapter);
-                    }
-                });
-    }
-
-    private void getAll(){
-        refFireStore.collection("crafts")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            //craftList.clear();
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                String id = document.getId();
-                                String category = document.getString("category");
-                                String idcompany = document.getString("company");
-                                String company = "";
-                                for(int c = 0; c < ac.size(); c++){
-                                    Company companyModel = ac.get(c);
-                                    if(companyModel.getId().equals(idcompany)){
-                                        company = companyModel.getBusinessname();
-                                    }
-                                }
-                                String datedisabled = document.getString("datedisabled");
-                                String dateregistry = document.getString("dateregistry");
-                                String description = document.getString("description");
-                                String imageurl = document.getString("imageurl");
-                                boolean isactive = Boolean.parseBoolean(document.get("isactive").toString());
-                                String namecraft = document.getString("namecraft");
-                                double price = document.getDouble("price");
-                                Integer quantity = Integer.parseInt(document.get("quantity").toString());
-                                craftList.add(new Craft(category,id,company, datedisabled, dateregistry,description,imageurl,
-                                        isactive,namecraft,price,quantity));
-                                //Log.d(TAG, document.getId() + " => " + document.getData());
-                            }
-                            adapter = new adpCrafts(getContext(),craftList);
-                            rcvCrafts.setAdapter(adapter);
-                        } else {
-                            //Log.w(TAG, "Error getting documents.", task.getException());
-                        }
                     }
                 });
     }
