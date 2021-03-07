@@ -18,7 +18,7 @@ public class fragment_my_crafts extends Fragment {
     String id, name;
     Bundle bundle;
     SectionsPagerAdapter sectionsPagerAdapter;
-    ViewPager viewPager;
+    public ViewPager viewPager;
     TextView nameCompany;
 
     public fragment_my_crafts() {

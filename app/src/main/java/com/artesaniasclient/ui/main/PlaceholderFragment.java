@@ -18,6 +18,7 @@ import com.artesaniasclient.R;
  * A placeholder fragment containing a simple view.
  */
 public class PlaceholderFragment extends Fragment {
+    static int pos = 2;
 
     private static final String ARG_SECTION_NUMBER = "section_number";
 

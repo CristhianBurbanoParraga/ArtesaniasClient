@@ -6,8 +6,11 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,8 +25,11 @@ import com.artesaniasclient.controller.CompanyController;
 import com.artesaniasclient.interfaces.ICompanyComunication;
 import com.artesaniasclient.model.Company;
 import com.artesaniasclient.model.Craft;
+import com.artesaniasclient.ui.main.PlaceholderFragment;
+import com.artesaniasclient.ui.main.SectionsPagerAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -52,6 +58,8 @@ public class fragment_tab_my_crafts extends Fragment implements AdapterView.OnIt
     ArrayList<Company> ac;
     ArrayAdapter<CharSequence> adp;
     String[] categories = new String[11];
+    Bundle bundle = new Bundle();
+    TabLayout tabLayout;
 
     public fragment_tab_my_crafts() {
     }
@@ -131,6 +139,12 @@ public class fragment_tab_my_crafts extends Fragment implements AdapterView.OnIt
 
     }
 
+    private void setupViewPager(ViewPager viewPager) {
+        SectionsPagerAdapter adapter = new SectionsPagerAdapter(getContext(), getChildFragmentManager(), bundle);
+        adapter.getItem(1);
+        viewPager.setAdapter(adapter);
+    }
+
     public void getAllMyCrafts() {
         refFireStore.collection("crafts")
                 .whereEqualTo("company", id)
@@ -160,6 +174,39 @@ public class fragment_tab_my_crafts extends Fragment implements AdapterView.OnIt
                         }
                         adapter = new adpMyCrafts(getContext(), craftList);
                         rcvCrafts.setAdapter(adapter);
+                        adapter.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                int opcselec = rcvCrafts.getChildAdapterPosition(view);
+                                String idcraft = craftList.get(opcselec).getId();
+                                String namecraft = craftList.get(opcselec).getNamecraft();
+                                String category = craftList.get(opcselec).getCategory();
+                                String datedisabled = craftList.get(opcselec).getDatedisabled();
+                                String dateregistry = craftList.get(opcselec).getDateregistry();
+                                String description = craftList.get(opcselec).getDescription();
+                                String imageurl = craftList.get(opcselec).getImageurl();
+                                Boolean isactive = craftList.get(opcselec).isIsactive();
+                                Double price = craftList.get(opcselec).getPrice();
+                                Integer quantity = craftList.get(opcselec).getQuantity();
+                                bundle.putString("idcraft", idcraft);
+                                bundle.putString("namecraft", namecraft);
+                                bundle.putString("category", category);
+                                bundle.putString("datedisabled", datedisabled);
+                                bundle.putString("dateregistry", dateregistry);
+                                bundle.putString("description", description);
+                                bundle.putString("imageurl", imageurl);
+                                bundle.putBoolean("isactive", isactive);
+                                bundle.putDouble("price", price);
+                                bundle.putInt("quantity", quantity);
+
+                                //cambiar fragment tab
+                                SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(view.getContext(), getChildFragmentManager(), bundle);
+                                Fragment pos = sectionsPagerAdapter.getItem(1);
+                                Fragment fragment = new fragment_my_crafts();
+                                fragment.setArguments(bundle);
+                                
+                            }
+                        });
                     }
                 });
     }
