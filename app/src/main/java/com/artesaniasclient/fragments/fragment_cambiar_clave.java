@@ -80,7 +80,7 @@ public class fragment_cambiar_clave extends Fragment {
         String datos = getArguments().getString("datos");
         user = new Gson().fromJson(datos, User.class);
         txtUserEmail = view.findViewById(R.id.email);
-        btnCambiarClave = view.findViewById(R.id.cambiarclave);
+        btnCambiarClave = view.findViewById(R.id.fcambiarclave);
 
         btnCambiarClave.setOnClickListener(new View.OnClickListener() {
             @Override

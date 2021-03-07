@@ -162,7 +162,7 @@
                     android:weightSum="2">
 
                     <Button
-                        android:id="@+id/registrar_company"
+                        android:id="@+id/fcambiarclave"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_marginEnd="10dp"
