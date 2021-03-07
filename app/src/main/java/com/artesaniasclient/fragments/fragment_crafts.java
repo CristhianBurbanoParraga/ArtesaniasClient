@@ -156,6 +156,7 @@ public class fragment_crafts extends Fragment implements AdapterView.OnItemSelec
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if(craftList != null) craftList.clear();
                         for (DocumentSnapshot doc : value) {
                             if (doc.getId() != null) {
                                 String idcompany = doc.getString("company");
@@ -190,7 +191,7 @@ public class fragment_crafts extends Fragment implements AdapterView.OnItemSelec
                             System.err.println("Listen failed:" + error);
                             return;
                         }
-                        //craftList.clear();
+                        if(craftList != null) craftList.clear();
                         for (DocumentSnapshot doc : value) {
                             if (doc.getId() != null) {
                                 String idcompany = doc.getString("company");

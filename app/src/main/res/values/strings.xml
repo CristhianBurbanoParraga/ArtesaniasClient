@@ -52,6 +52,20 @@
     <string name="telefono">Telefono</string>
 
     <!--
+ Mi información
+  -->
+    <string name="titleinfo">MI INFORMACIÓN</string>
+    <string name="desctitleinfo">Modifique sus datos</string>
+    <string name="infoaddress">Dirección</string>
+    <string name="infoemail">Correo electrónico</string>
+    <string name="infolastname">Apellidos</string>
+    <string name="infoname">Nombres</string>
+    <string name="infopass">Clave</string>
+    <string name="infoPhone">Teléfono</string>
+    <string name="infosuscription">Suscripción</string>
+    <string name="infousername">Usuario</string>
+
+    <!--
   Registrar artesanias
    -->
     <string name="registrarart">Registrar Artesanía</string>

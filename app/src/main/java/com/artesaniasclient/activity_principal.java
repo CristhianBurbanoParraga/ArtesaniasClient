@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.artesaniasclient.fragments.fragment_crafts;
 import com.artesaniasclient.fragments.fragment_my_companies;
 import com.artesaniasclient.fragments.fragment_my_crafts;
+import com.artesaniasclient.fragments.fragment_my_info;
 import com.artesaniasclient.fragments.fragment_my_orders;
 import com.artesaniasclient.fragments.fragment_my_sales;
 import com.artesaniasclient.fragments.fragment_register_company;
@@ -44,7 +45,7 @@ public class activity_principal extends AppCompatActivity implements NavigationV
     private FirebaseAuth mAuth;
     User user = null;
     static int groupMenu = 1;
-    final int itemVerCatalogo = 1, itemCrearEmpresa = 2, itemPedidos = 3, itemCrearArtesania = 4, itemVerMisEmpresas = 5, itemVentas = 6, itemVerMisArtesanias = 7;
+    final int itemMyInfo = 1, itemVerCatalogo = 2, itemCrearEmpresa = 3, itemPedidos = 4, itemCrearArtesania = 5, itemVerMisEmpresas = 5, itemVentas = 6, itemVerMisArtesanias = 7;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +79,11 @@ public class activity_principal extends AppCompatActivity implements NavigationV
         fragment = null;
         String titulo = "";
         switch (menuItem.getItemId()) {
+            case itemMyInfo:
+                fragment = new fragment_my_info();
+                fragmentTransaction = true;
+                titulo = "Mi Información";
+                break;
             case itemVerCatalogo:
                 fragment = new fragment_crafts();
                 fragmentTransaction = true;
@@ -131,11 +137,13 @@ public class activity_principal extends AppCompatActivity implements NavigationV
             if (user != null) {
                 txtUserFooter.setText("Usuario: " + user.getUsername());
                 if (user.getUsertype() != null && user.getUsertype().equals("Artesano")) {
+                    m.add(groupMenu, itemMyInfo, itemMyInfo, "Mi Información").setIcon(R.drawable.icon_my_info);
                     m.add(groupMenu, itemVerCatalogo, itemVerCatalogo, "Ver Catálogo").setIcon(R.drawable.icon_catalogue);
                     m.add(groupMenu, itemCrearEmpresa, itemCrearEmpresa, "Registrar Empresa").setIcon(R.drawable.icon_addcompany);
                     m.add(groupMenu, itemVerMisEmpresas, itemVerMisEmpresas, "Mis Empresas").setIcon(R.drawable.icon_bussiness);
                     m.add(groupMenu, itemVentas, itemVentas, "Mis Ventas").setIcon(R.drawable.icon_sales);
                 } else {
+                    m.add(groupMenu, itemMyInfo, itemMyInfo, "Mi Información").setIcon(R.drawable.icon_my_info);
                     m.add(groupMenu, itemVerCatalogo, itemVerCatalogo, "Ver Catálogo").setIcon(R.drawable.icon_catalogue);
                     m.add(groupMenu, itemCrearEmpresa, itemCrearEmpresa, "Registrar Empresa").setIcon(R.drawable.icon_addcompany);
                     m.add(groupMenu, itemPedidos, itemPedidos, "Mis Pedidos").setIcon(R.drawable.icon_orders);
