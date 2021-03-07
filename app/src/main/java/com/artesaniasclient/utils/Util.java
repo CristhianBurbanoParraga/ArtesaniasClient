@@ -12,6 +12,8 @@ public class Util {
 
     public static final String adminMail = "cristhian.crypton@gmail.com";
     public static final String adminPassword = "1207334184.Qwerty";
+    public static final int countCraftsOfUser = 0;
+    public static final int coutCompaniesOfUser = 0;
 
     public static Bundle getBundleFusion(Bundle bundleOld, Bundle bundleNew) {
         if (bundleOld == null) return bundleNew;

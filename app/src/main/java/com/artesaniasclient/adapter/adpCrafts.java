@@ -58,6 +58,7 @@ public class adpCrafts extends RecyclerView.Adapter<adpCrafts.ViewHolder>
         LayoutInflater inflr = LayoutInflater.from(ccontext);
         View view=inflr.inflate(R.layout.item_craft,null,false);
         view.setOnClickListener(this);
+        //lista = new ArrayList<>();
         return new ViewHolder(view);
     }
 

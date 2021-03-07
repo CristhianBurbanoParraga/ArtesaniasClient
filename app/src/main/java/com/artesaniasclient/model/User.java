@@ -16,6 +16,8 @@ public class User implements Serializable {
     private String phone;
     private String usertype;
     private String suscriptiontype;
+    private int countcrafts;
+    private int countcompanies;
 
     public User() {
     }
@@ -24,7 +26,7 @@ public class User implements Serializable {
         this.id = id;
     }
 
-    public User(String id, String address, String dateregistry, String email, boolean isactive, String lastname, String firstname, String username, String password, String phone, String usertype, String suscriptiontype) {
+    public User(String id, String address, String dateregistry, String email, boolean isactive, String lastname, String firstname, String username, String password, String phone, String usertype, String suscriptiontype, int countcrafts, int countcompanies) {
         this.id = id;
         this.address = address;
         this.dateregistry = dateregistry;
@@ -37,6 +39,8 @@ public class User implements Serializable {
         this.phone = phone;
         this.usertype = usertype;
         this.suscriptiontype = suscriptiontype;
+        this.countcrafts = countcrafts;
+        this.countcompanies = countcompanies;
     }
 
     public String getId() {
@@ -135,6 +139,14 @@ public class User implements Serializable {
         this.suscriptiontype = suscriptiontype;
     }
 
+    public int getCountcrafts() {
+        return countcrafts;
+    }
+
+    public void setCountcrafts(int countcrafts) {
+        this.countcrafts = countcrafts;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -150,6 +162,8 @@ public class User implements Serializable {
                 ", phone='" + phone + '\'' +
                 ", usertype='" + usertype + '\'' +
                 ", suscriptiontype='" + suscriptiontype + '\'' +
+                ", countcrafts='" + countcrafts + '\'' +
+                ", countcompanies='" + countcompanies + '\'' +
                 '}';
     }
 }
