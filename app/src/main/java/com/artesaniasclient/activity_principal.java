@@ -34,6 +34,7 @@ import com.google.gson.Gson;
 
 public class activity_principal extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
+    Bundle bundle = new Bundle();
     Toolbar toolbar;
     NavigationView navView;
     ImageView imgToolbar;
@@ -81,6 +82,7 @@ public class activity_principal extends AppCompatActivity implements NavigationV
         switch (menuItem.getItemId()) {
             case itemMyInfo:
                 fragment = new fragment_my_info();
+                fragment.setArguments(bundle);
                 fragmentTransaction = true;
                 titulo = "Mi Información";
                 break;
@@ -129,11 +131,12 @@ public class activity_principal extends AppCompatActivity implements NavigationV
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            email = currentUser.getEmail();
+            email = currentUser.getDisplayName();
             Gson gson = new Gson();
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
             String userJSON = sharedPreferences.getString(getString(R.string.CURRENT_USER_KEY_STORE), gson.toJson(new User()));
             user = gson.fromJson(userJSON, User.class);
+            bundle.putString("datos", new Gson().toJson(user));
             if (user != null) {
                 txtUserFooter.setText("Usuario: " + user.getUsername());
                 if (user.getUsertype() != null && user.getUsertype().equals("Artesano")) {

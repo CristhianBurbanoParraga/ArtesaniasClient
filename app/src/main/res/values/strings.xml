@@ -60,10 +60,13 @@
     <string name="infoemail">Correo electrónico</string>
     <string name="infolastname">Apellidos</string>
     <string name="infoname">Nombres</string>
-    <string name="infopass">Clave</string>
-    <string name="infoPhone">Teléfono</string>
+    <string name="infopass">Clave Actual</string>
+    <string name="infophone">Teléfono</string>
     <string name="infosuscription">Suscripción</string>
     <string name="infousername">Usuario</string>
+    <string name="infocambiarclave">Cambiar Clave</string>
+    <string name="infopassnew">Clave Nueva</string>
+    <string name="infopassrep">Repetir Clave</string>
 
     <!--
   Registrar artesanias

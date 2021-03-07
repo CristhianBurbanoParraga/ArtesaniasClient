@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.fragment_my_info"
-    android:background="#D8D5D5" >
+    android:background="#D8D5D5"
+    tools:context=".fragments.fragment_cambiar_clave">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -29,64 +28,48 @@
                 android:background="@drawable/fondo2">
 
                 <TextView
-                    android:id="@+id/titleinfo"
+                    android:id="@+id/title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:fontFamily="@font/alfa_slab_one"
-                    android:text="@string/titleinfo"
+                    android:text="@string/infocambiarclave"
                     android:textAlignment="center"
+                    android:textAllCaps="true"
                     android:textColor="#525966"
                     android:textSize="25sp"
                     android:textStyle="bold"
                     tools:ignore="MissingConstraints"
                     tools:layout_editor_absoluteY="88dp" />
 
-                <Button
-                    android:id="@+id/premium"
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
-                    android:layout_below="@+id/titleinfo"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="20dp"
-                    android:backgroundTint="#0669b2"
-                    android:fontFamily="@font/alfa_slab_one"
-                    android:text="Cambiar a premium"
-                    android:textColor="@color/white"
-                    android:textSize="12sp"
-                    app:icon="@drawable/icon_premium"
-                    app:iconGravity="textStart"
-                    tools:ignore="ButtonStyle" />
-
                 <TextView
                     android:id="@+id/textView2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
-                    android:layout_below="@+id/premium"
-                    android:layout_centerHorizontal="true"
+                    android:layout_below="@+id/title"
+                    android:layout_centerInParent="true"
                     android:text="@string/desctitleinfo"
                     android:textColor="#525966"
                     android:textSize="18sp" />
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/maininfoname"
+                    android:id="@+id/mainemail"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/textView2"
                     android:layout_marginStart="24dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="30dp"
                     android:layout_marginEnd="24dp"
-                    android:hint="@string/infoname"
+                    android:hint="@string/infoemail"
                     tools:ignore="MissingConstraints">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/infoname"
+                        android:id="@+id/email"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/border3"
-                        android:drawableStart="@drawable/icon_developer_team"
+                        android:drawableStart="@drawable/icon_email"
                         android:drawablePadding="10dp"
                         android:drawableTint="#0669b2"
                         android:inputType="text"
@@ -94,24 +77,24 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/maininfoapellidos"
+                    android:id="@+id/mainclaveactual"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/maininfoname"
+                    android:layout_below="@+id/mainemail"
                     android:layout_marginStart="24dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="30dp"
                     android:layout_marginEnd="24dp"
-                    android:hint="@string/infolastname"
+                    android:hint="@string/infopass"
                     android:imeActionLabel="@string/action_sign_in_short"
                     tools:ignore="MissingConstraints">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/infoapellidos"
+                        android:id="@+id/claveactual"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/border3"
-                        android:drawableStart="@drawable/icon_developer_team"
+                        android:drawableStart="@drawable/icon_password"
                         android:drawablePadding="10dp"
                         android:drawableTint="#0669b2"
                         android:imeOptions="actionDone"
@@ -119,24 +102,24 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/maininfodir"
+                    android:id="@+id/mainclavenueva"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/maininfoapellidos"
+                    android:layout_below="@+id/mainclaveactual"
                     android:layout_marginStart="24dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="30dp"
                     android:layout_marginEnd="24dp"
-                    android:hint="@string/infoaddress"
+                    android:hint="@string/infopassnew"
                     android:imeActionLabel="@string/action_sign_in_short"
                     tools:ignore="MissingConstraints">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/infodir"
+                        android:id="@+id/clavenueva"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/border3"
-                        android:drawableStart="@drawable/icon_city"
+                        android:drawableStart="@drawable/icon_password"
                         android:drawablePadding="10dp"
                         android:drawableTint="#0669b2"
                         android:imeOptions="actionDone"
@@ -144,24 +127,24 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/maininfocel"
+                    android:id="@+id/mainrepclave"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/maininfodir"
+                    android:layout_below="@+id/mainclavenueva"
                     android:layout_marginStart="24dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="30dp"
                     android:layout_marginEnd="24dp"
-                    android:hint="@string/infophone"
+                    android:hint="@string/infopassrep"
                     android:imeActionLabel="@string/action_sign_in_short"
                     tools:ignore="MissingConstraints">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/infocel"
+                        android:id="@+id/repnueva"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/border3"
-                        android:drawableStart="@drawable/icon_cellphone"
+                        android:drawableStart="@drawable/icon_password"
                         android:drawablePadding="10dp"
                         android:drawableTint="#0669b2"
                         android:imeOptions="actionDone"
@@ -171,7 +154,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/maininfocel"
+                    android:layout_below="@+id/mainrepclave"
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="20dp"
@@ -179,22 +162,10 @@
                     android:weightSum="2">
 
                     <Button
-                        android:id="@+id/modify_myinfo"
-                        android:layout_width="wrap_content"
+                        android:id="@+id/registrar_company"
+                        android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_marginEnd="10dp"
-                        android:layout_weight="1"
-                        android:backgroundTint="#0669b2"
-                        android:fontFamily="@font/alfa_slab_one"
-                        android:text="@string/modificar"
-                        android:textColor="@color/white"
-                        android:textSize="12sp"
-                        tools:ignore="ButtonStyle" />
-
-                    <Button
-                        android:id="@+id/cambiarclave"
-                        android:layout_width="wrap_content"
-                        android:layout_height="50dp"
                         android:layout_weight="1"
                         android:backgroundTint="#0669b2"
                         android:fontFamily="@font/alfa_slab_one"
