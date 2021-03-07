@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -23,13 +24,18 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.artesaniasclient.R;
+import com.artesaniasclient.certificaciones.GlideApp;
 import com.artesaniasclient.controller.CraftController;
 import com.artesaniasclient.interfaces.ICraft;
 import com.artesaniasclient.interfaces.Updateable;
 import com.artesaniasclient.model.Craft;
+import com.squareup.picasso.Picasso;
 
+import java.net.URL;
+import java.net.URLConnection;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -42,11 +48,15 @@ import java.util.Date;
 public class fragment_tab_registrer_crafts extends Fragment implements ICraft, AdapterView.OnItemSelectedListener, Updateable {
 
     private final Context mContext;
-
-    String id, name;
+    String id, name, idcraft, namecraft, category, datedisabled, dateregistry, description, imageurl;
+    Boolean isactive;
+    Double price;
+    Integer quantity, cont = 0;
     String nombreimg;
     static String cat = "Todos";
-    View view;
+    static View view = null;
+    LayoutInflater inflater;
+    ViewGroup container;
 
     private static final int PICK_IMAGE = 100;
     private CraftController craftController;
@@ -58,7 +68,9 @@ public class fragment_tab_registrer_crafts extends Fragment implements ICraft, A
     EditText txtCantArte;
     EditText txtPrecioArte;
     EditText txtDescription;
+    Spinner spinner;
     Button registerbutton;
+    TextView txtTitleDesc;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -80,13 +92,7 @@ public class fragment_tab_registrer_crafts extends Fragment implements ICraft, A
             mParam2 = getArguments().getString(ARG_PARAM2);
             id = getArguments().getString("id");
             name = getArguments().getString("name");
-
         }
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
     }
 
     @Override
@@ -97,10 +103,11 @@ public class fragment_tab_registrer_crafts extends Fragment implements ICraft, A
 
         craftController = new CraftController(this);
 
+        txtTitleDesc = view.findViewById(R.id.txtTitleDesc);
         imagen = (ImageView) view.findViewById(R.id.imgart);
         btnimagen = (Button) view.findViewById(R.id.seleccionarimg);
         registerbutton = view.findViewById(R.id.register);
-        @SuppressLint("WrongViewCast") Spinner spinner = (Spinner) view.findViewById(R.id.categoriaarte);
+        spinner = (Spinner) view.findViewById(R.id.categoriaarte);
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
                 R.array.categoria, android.R.layout.simple_spinner_item);
@@ -114,8 +121,6 @@ public class fragment_tab_registrer_crafts extends Fragment implements ICraft, A
         txtCantArte = view.findViewById(R.id.cantarte);
         txtPrecioArte = view.findViewById(R.id.precioarte);
         txtDescription = view.findViewById(R.id.description);
-
-
 
         btnimagen.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -149,9 +154,7 @@ public class fragment_tab_registrer_crafts extends Fragment implements ICraft, A
             returnCursor.moveToFirst();
             nombreimg = returnCursor.getString(nameIndex);
         }
-
     }
-
 
     public void registrarcrafts () {
         Craft craft = new Craft();
@@ -166,7 +169,6 @@ public class fragment_tab_registrer_crafts extends Fragment implements ICraft, A
         craft.setDateregistry(date);
         //craftController.addCraft(craft);
         craftController.UploadFile(nombreimg, craft, imageUri);
-
     }
 
     @Override
@@ -206,9 +208,51 @@ public class fragment_tab_registrer_crafts extends Fragment implements ICraft, A
 
     @Override
     public void update() {
-        String idcraft = getArguments().getString("idcraft");
+        idcraft = getArguments().getString("idcraft");
         if (idcraft != null){
-            idcraft = idcraft;
+            namecraft = getArguments().getString("namecraft");
+            category = getArguments().getString("category");
+            datedisabled = getArguments().getString("datedisabled");
+            dateregistry = getArguments().getString("dateregistry");
+            description = getArguments().getString("description");
+            imageurl = getArguments().getString("imageurl");
+            isactive = getArguments().getBoolean("isactive");
+            price = getArguments().getDouble("price");
+            quantity = getArguments().getInt("quantity");
+
+            txtNameArte = this.view.findViewById(R.id.namearte);
+            txtCantArte = this.view.findViewById(R.id.cantarte);
+            txtPrecioArte = this.view.findViewById(R.id.precioarte);
+            txtDescription = this.view.findViewById(R.id.description);
+            imagen = this.view.findViewById(R.id.imgart);
+            spinner = this.view.findViewById(R.id.categoriaarte);
+            registerbutton = this.view.findViewById(R.id.register);
+            txtTitleDesc = this.view.findViewById(R.id.txtTitleDesc);
+
+            txtTitleDesc.setText("Modifique datos de la artesanía");
+            txtNameArte.setText(namecraft);
+            txtCantArte.setText(quantity.toString());
+            txtPrecioArte.setText(price.toString());
+            txtDescription.setText(description);
+            Picasso.get().load(imageurl).into(imagen);
+            spinner.setSelection(obtenerPosicionItem(spinner, category));
+            registerbutton.setText("Modificar");
         }
+    }
+
+    public static int obtenerPosicionItem(Spinner spinner, String categoria) {
+        //Creamos la variable posicion y lo inicializamos en 0
+        int posicion = 0;
+        //Recorre el spinner en busca del ítem que coincida con el parametro `String categoria`
+        //que lo pasaremos posteriormente
+        for (int i = 0; i < spinner.getCount(); i++) {
+            //Almacena la posición del ítem que coincida con la búsqueda
+            if (spinner.getItemAtPosition(i).toString().equalsIgnoreCase(categoria)) {
+                posicion = i;
+            }
+        }
+        //Devuelve un valor entero (si encontro una coincidencia devuelve la
+        // posición 0 o N, de lo contrario devuelve 0 = posición inicial)
+        return posicion;
     }
 }

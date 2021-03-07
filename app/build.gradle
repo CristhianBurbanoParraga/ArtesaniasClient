@@ -59,4 +59,5 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
     compile 'com.sun.mail:android-mail:1.6.2'
     compile 'com.sun.mail:android-activation:1.6.2'
+    implementation 'com.squareup.picasso:picasso:2.71828'
 }
