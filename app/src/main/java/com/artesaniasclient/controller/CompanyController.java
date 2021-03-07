@@ -138,6 +138,7 @@ public class CompanyController {
             companiesList = new ArrayList<>();
             db.collection("company")
                     .whereEqualTo("useremail", useremail)
+                    .whereEqualTo("isactive", true)
                     .get()
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
