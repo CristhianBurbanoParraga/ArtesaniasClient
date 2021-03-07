@@ -1,6 +1,5 @@
 package com.artesaniasclient.fragments;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -39,8 +38,6 @@ public class fragment_register_company extends Fragment implements ICompanyComun
     Button buttonRegistry;
     Button buttonCancel;
 
-    View view;
-
 
     public fragment_register_company() {
         // Required empty public constructor
@@ -49,7 +46,7 @@ public class fragment_register_company extends Fragment implements ICompanyComun
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_register_company, container, false);
+        View view = inflater.inflate(R.layout.fragment_register_company, container, false);
         companyController = new CompanyController(this);
         buttonRegistry = view.findViewById(R.id.registrar_company);
         buttonCancel = view.findViewById(R.id.cancelar);
@@ -89,15 +86,15 @@ public class fragment_register_company extends Fragment implements ICompanyComun
         company.setIsactive(false);
         company.setUseremail(auth.getCurrentUser().getEmail());
         companyController.addCompany(company);
-        /*SendRegistrationRequestCompany("cbbp1997@gmail.com",
+        SendRegistrationRequestCompany("cbbp1997@gmail.com",
                 "Solicitud de registro de Empresa de artesanías",
                 "Solicito uno aprobación para registrar mi emprasa a Artesanías Ecuador, cuyos datos de la misma serían los siguientes: \n" +
                         "Nombre de la empresa: " + company.getBusinessname() + "\n" +
                         "RUC: " + company.getRuc() + "\n" +
                         "Ciudad: " + company.getCity() + "\n" +
                         "Dirección: " + company.getAddress() + "\n" +
-                        "Cuenta Artesanías Ecuador asociada: " + company.getUseremail());*/
-        new MailJob(txtEmailSolicitud.getText().toString(), txtClaveSolicitud.getText().toString()).execute(
+                        "Cuenta Artesanías Ecuador asociada: " + company.getUseremail());
+        /*new MailJob(txtEmailSolicitud.getText().toString(), txtClaveSolicitud.getText().toString()).execute(
                 new MailJob.Mail(txtEmailSolicitud.getText().toString(), "cbbp1997@gmail.com",
                         "Solicitud de registro de Empresa de artesanías",
                         "Solicito uno aprobación para registrar mi emprasa a Artesanías Ecuador, cuyos datos de la misma serían los siguientes: \n" +
@@ -105,7 +102,7 @@ public class fragment_register_company extends Fragment implements ICompanyComun
                                 "RUC: " + company.getRuc() + "\n" +
                                 "Ciudad: " + company.getCity() + "\n" +
                                 "Dirección: " + company.getAddress()));
-        Toast.makeText(getActivity().getApplicationContext(), "Solicitud realizada con exito, obtendra una respuestas en los siguientes dias", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity().getApplicationContext(), "Solicitud realizada con exito, obtendra una respuestas en los siguientes dias", Toast.LENGTH_SHORT).show();*/
     }
 
     public void SendRegistrationRequestCompany (String toEmail, String subject, String message) {
@@ -119,7 +116,7 @@ public class fragment_register_company extends Fragment implements ICompanyComun
         // Establezco el tipo de Intent
         intent.setType("message/rfc822");
         // Lanzo el selector de cliente de Correo
-        getActivity().startActivity(Intent.createChooser(intent,"Elije un cliente de Correo..."));
+        getActivity().startActivity(Intent.createChooser(intent,"Elije un cliente de Correo:"));
     }
 
     public void cancel_company() {
