@@ -17,18 +17,24 @@ import com.artesaniasclient.activity_principal;
 import com.artesaniasclient.controller.CompanyController;
 import com.artesaniasclient.interfaces.ICompanyComunication;
 import com.artesaniasclient.model.Company;
+import com.artesaniasclient.model.MailJob;
+import com.google.firebase.auth.FirebaseAuth;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
 public class fragment_register_company extends Fragment implements ICompanyComunication {
 
+    FirebaseAuth auth;
     private CompanyController companyController;
 
     private EditText txtNameBussines;
     private EditText txtRuc;
     private EditText txtCity;
     private EditText txtAddress;
+    private EditText txtEmailSolicitud;
+    private EditText txtClaveSolicitud;
     Button buttonRegistry;
     Button buttonCancel;
 
@@ -36,7 +42,6 @@ public class fragment_register_company extends Fragment implements ICompanyComun
     public fragment_register_company() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,6 +54,9 @@ public class fragment_register_company extends Fragment implements ICompanyComun
         txtRuc = view.findViewById(R.id.ruc);
         txtCity = view.findViewById(R.id.city);
         txtAddress = view.findViewById(R.id.address);
+        txtEmailSolicitud = view.findViewById(R.id.username);
+        txtClaveSolicitud = view.findViewById(R.id.password);
+        auth = FirebaseAuth.getInstance();
 
         buttonRegistry.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,9 +81,42 @@ public class fragment_register_company extends Fragment implements ICompanyComun
         company.setRuc(txtRuc.getText().toString());
         company.setCity(txtCity.getText().toString());
         company.setAddress(txtAddress.getText().toString());
-        company.setDateregistry(new Date().toString());
+        String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+        company.setDateregistry(date);
         company.setIsactive(false);
+        company.setUseremail(auth.getCurrentUser().getEmail());
         companyController.addCompany(company);
+        SendRegistrationRequestCompany("cbbp1997@gmail.com",
+                "Solicitud de registro de Empresa de artesanías",
+                "Solicito uno aprobación para registrar mi emprasa a Artesanías Ecuador, cuyos datos de la misma serían los siguientes: \n" +
+                        "Nombre de la empresa: " + company.getBusinessname() + "\n" +
+                        "RUC: " + company.getRuc() + "\n" +
+                        "Ciudad: " + company.getCity() + "\n" +
+                        "Dirección: " + company.getAddress() + "\n" +
+                        "Cuenta Artesanías Ecuador asociada: " + company.getUseremail());
+        /*new MailJob(txtEmailSolicitud.getText().toString(), txtClaveSolicitud.getText().toString()).execute(
+                new MailJob.Mail(txtEmailSolicitud.getText().toString(), "cbbp1997@gmail.com",
+                        "Solicitud de registro de Empresa de artesanías",
+                        "Solicito uno aprobación para registrar mi emprasa a Artesanías Ecuador, cuyos datos de la misma serían los siguientes: \n" +
+                                "Nombre de la empresa: " + company.getBusinessname() + "\n" +
+                                "RUC: " + company.getRuc() + "\n" +
+                                "Ciudad: " + company.getCity() + "\n" +
+                                "Dirección: " + company.getAddress()));
+        Toast.makeText(getActivity().getApplicationContext(), "Solicitud realizada con exito, obtendra una respuestas en los siguientes dias", Toast.LENGTH_SHORT).show();*/
+    }
+
+    public void SendRegistrationRequestCompany (String toEmail, String subject, String message) {
+        // Defino mi Intent y hago uso del objeto ACTION_SEND
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        // Defino los Strings Email, Asunto y Mensaje con la función putExtra
+        intent.putExtra(Intent.EXTRA_EMAIL,
+                new String[] { toEmail });
+        intent.putExtra(Intent.EXTRA_SUBJECT, subject);
+        intent.putExtra(Intent.EXTRA_TEXT, message);
+        // Establezco el tipo de Intent
+        intent.setType("message/rfc822");
+        // Lanzo el selector de cliente de Correo
+        getActivity().startActivity(Intent.createChooser(intent,"Elije un cliente de Correo:"));
     }
 
     public void cancel_company() {

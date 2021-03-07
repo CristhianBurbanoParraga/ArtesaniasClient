@@ -43,6 +43,9 @@
     <string name="hello_world">Hello Square World!</string>
     <string name="ingrese_sus_datos_de_registro">Ingrese sus datos de registro</string>
     <string name="registrar">Registrar</string>
+    <string name="solicitar_registro_empresa">Solicitar</string>
+    <string name="solicitar_email_empresa">Email del solicitante</string>
+    <string name="solicitar_pass_empresa">Clave del solicitante</string>
     <string name="cancelar">Cancelar</string>
     <string name="nombres">Nombres</string>
     <string name="apellidos">Apellidos</string>
