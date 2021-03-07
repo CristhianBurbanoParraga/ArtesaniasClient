@@ -53,7 +53,7 @@ public class fragment_crafts extends Fragment implements AdapterView.OnItemSelec
     ArrayAdapter<CharSequence> adapterCat;
     Spinner cbbCategories;
     private ArrayList<Craft> craftList;
-    static ArrayList<Company> ac;
+    ArrayList<Company> ac;
     ArrayAdapter<CharSequence> adp;
     String[] categories = new String[11];
 
@@ -115,6 +115,7 @@ public class fragment_crafts extends Fragment implements AdapterView.OnItemSelec
         //Definir la forma de la lista vertical
         rcvCrafts.setLayoutManager(new LinearLayoutManager(getContext()));
         // Inflate the layout for this fragment
+        getCrafts();
         return view;
     }
 
