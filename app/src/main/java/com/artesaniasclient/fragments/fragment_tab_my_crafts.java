@@ -162,6 +162,7 @@ public class fragment_tab_my_crafts extends Fragment implements AdapterView.OnIt
                                 bundle = new Bundle();
                                 Craft craftSelected = craftList.get(opcselec);
                                 bundle.putString("craftSelected", new Gson().toJson(craftSelected));
+                                bundle.putBoolean("editable", true);
                                 fragment_my_crafts.setArguments(Util.getBundleFusion(fragment_my_crafts.getArguments(), bundle));
                                 fragment_my_crafts.viewPager.setCurrentItem(1);
                             }
@@ -183,6 +184,9 @@ public class fragment_tab_my_crafts extends Fragment implements AdapterView.OnIt
 
     @Override
     public void update() {
-
+        Bundle bundle = getArguments();
+        bundle.putString("craftSelected", null);
+        bundle.putBoolean("editable", false);
+        fragment_my_crafts.setArguments(Util.getBundleFusion(fragment_my_crafts.getArguments(), bundle));
     }
 }

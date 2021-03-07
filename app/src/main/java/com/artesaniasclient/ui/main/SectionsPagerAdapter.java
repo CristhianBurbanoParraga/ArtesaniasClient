@@ -25,17 +25,13 @@ import java.util.List;
  */
 public class SectionsPagerAdapter extends FragmentStatePagerAdapter {
 
-    @StringRes
-    private static final int[] TAB_TITLES = new int[]{R.string.list_crafts, R.string.registry_crafts};
     private List<Fragment> fragmentList = new ArrayList<>();
     private List<String> titleList = new ArrayList<>();
-    private final Context mContext;
     Bundle bundle;
     fragment_my_crafts fragment_my_crafts;
 
     public SectionsPagerAdapter(Context context, FragmentManager fm, Bundle distbundle, fragment_my_crafts fragment_my_crafts) {
         super(fm);
-        mContext = context;
         bundle = distbundle;
         this.fragment_my_crafts = fragment_my_crafts;
         this.addFragment(new fragment_tab_my_crafts(fragment_my_crafts), "Mis artesanias");

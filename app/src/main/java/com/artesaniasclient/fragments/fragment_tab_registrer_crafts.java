@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -136,10 +137,29 @@ public class fragment_tab_registrer_crafts extends Fragment implements ICraft, A
             @SuppressLint("SimpleDateFormat") String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
             craft.setDateregistry(date);
             craft.setImageName(nombreimg);
+            this.resetView();
         }
-        progressDialog = ProgressDialog.show(getContext(),"Porfavor espere...",
-                "Registrando cambios...", true,false);
+        progressDialog = ProgressDialog.show(getContext(), "Porfavor espere...",
+                "Registrando cambios...", true, false);
         craftController.UploadFile(isEditCraft, craft, Util.getBytesImageView(imagen));
+    }
+
+    private void resetView() {
+        txtTitleDesc.setText(R.string.registrarart);
+        txtNameArte.setText("");
+        txtCantArte.setText("");
+        txtPrecioArte.setText("");
+        txtDescription.setText("");
+        registerbutton.setText(R.string.registrar);
+        imagen.setImageResource(R.drawable.img_base);
+    }
+
+    private void action_success(){
+        progressDialog.dismiss();
+        if (!isEditCraft) {
+            this.resetView();
+        }
+        fragment_my_crafts.viewPager.setCurrentItem(0);
     }
 
     @Override
@@ -149,14 +169,12 @@ public class fragment_tab_registrer_crafts extends Fragment implements ICraft, A
 
     @Override
     public void add_craft_success(Craft craft, String message) {
-        progressDialog.dismiss();
-        fragment_my_crafts.viewPager.setCurrentItem(0);
+        this.action_success();
     }
 
     @Override
     public void set_craft_success(Craft craft, String message) {
-        progressDialog.dismiss();
-        fragment_my_crafts.viewPager.setCurrentItem(0);
+        this.action_success();
     }
 
     @Override
@@ -181,19 +199,16 @@ public class fragment_tab_registrer_crafts extends Fragment implements ICraft, A
 
     @Override
     public void update() {
+        assert getArguments() != null;
         String craftString = getArguments().getString("craftSelected");
+        boolean editable = getArguments().getBoolean("editable");
         craft = new Gson().fromJson(craftString, Craft.class);
-        if (craft != null) {
+        if ((craft != null) && editable) {
             isEditCraft = true;
-
-            txtNameArte = this.view.findViewById(R.id.namearte);
-            txtCantArte = view.findViewById(R.id.cantarte);
-            txtPrecioArte = view.findViewById(R.id.precioarte);
-            txtDescription = view.findViewById(R.id.description);
-            imagen = view.findViewById(R.id.imgart);
-            spinner = view.findViewById(R.id.categoriaarte);
-            registerbutton = view.findViewById(R.id.register);
-            txtTitleDesc = view.findViewById(R.id.txtTitleDesc);
+            Bundle bundle = getArguments();
+            bundle.putString("craftSelected", null);
+            bundle.putBoolean("editable", false);
+            fragment_my_crafts.setArguments(Util.getBundleFusion(fragment_my_crafts.getArguments(), bundle));
 
             txtTitleDesc.setText(R.string.update_data_crafts);
             txtNameArte.setText(craft.getNamecraft());
@@ -203,6 +218,8 @@ public class fragment_tab_registrer_crafts extends Fragment implements ICraft, A
             Picasso.get().load(craft.getImageurl()).into(imagen);
             spinner.setSelection(obtenerPosicionItem(spinner, craft.getCategory()));
             registerbutton.setText(R.string.modificar);
+        } else {
+            this.resetView();
         }
     }
 
