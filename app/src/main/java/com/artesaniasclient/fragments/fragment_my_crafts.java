@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.artesaniasclient.R;
+import com.artesaniasclient.interfaces.Updateable;
 import com.artesaniasclient.ui.main.SectionsPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
 
@@ -35,11 +36,34 @@ public class fragment_my_crafts extends Fragment {
         bundle.putString("id",id);
         bundle.putString("name",name);
         //Codigo traido desde el de jose
-        sectionsPagerAdapter = new SectionsPagerAdapter(view.getContext(), getChildFragmentManager(), bundle);
+        sectionsPagerAdapter = new SectionsPagerAdapter(view.getContext(), getChildFragmentManager(), bundle, this);
         viewPager = view.findViewById(R.id.view_pager_main);
         viewPager.setAdapter(sectionsPagerAdapter);
         TabLayout tabs = view.findViewById(R.id.tabs_main);
         tabs.setupWithViewPager(viewPager);
+
+        tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                if (sectionsPagerAdapter != null) {
+                    Updateable fragment = (Updateable)sectionsPagerAdapter.getItem(tab.getPosition());
+                    if (fragment != null) {
+                        fragment. update();
+                    }
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
 
         nameCompany = view.findViewById(R.id.lblTitleCompany);
         nameCompany.setText("Empresa: " + name);

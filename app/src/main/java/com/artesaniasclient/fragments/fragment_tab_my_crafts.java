@@ -23,10 +23,12 @@ import com.artesaniasclient.R;
 import com.artesaniasclient.adapter.adpMyCrafts;
 import com.artesaniasclient.controller.CompanyController;
 import com.artesaniasclient.interfaces.ICompanyComunication;
+import com.artesaniasclient.interfaces.Updateable;
 import com.artesaniasclient.model.Company;
 import com.artesaniasclient.model.Craft;
 import com.artesaniasclient.ui.main.PlaceholderFragment;
 import com.artesaniasclient.ui.main.SectionsPagerAdapter;
+import com.artesaniasclient.utils.Util;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.tabs.TabLayout;
@@ -44,7 +46,7 @@ import java.util.ArrayList;
  * Use the {@link fragment_tab_my_crafts#//newInstance} factory method to
  * create an instance of this fragment.
  */
-public class fragment_tab_my_crafts extends Fragment implements AdapterView.OnItemSelectedListener {
+public class fragment_tab_my_crafts extends Fragment implements AdapterView.OnItemSelectedListener, Updateable {
 
     String id, name;
     private FirebaseFirestore refFireStore;
@@ -60,8 +62,10 @@ public class fragment_tab_my_crafts extends Fragment implements AdapterView.OnIt
     String[] categories = new String[11];
     Bundle bundle = new Bundle();
     TabLayout tabLayout;
+    fragment_my_crafts fragment_my_crafts;
 
-    public fragment_tab_my_crafts() {
+    public fragment_tab_my_crafts(fragment_my_crafts fragment_my_crafts) {
+        this.fragment_my_crafts = fragment_my_crafts;
     }
 
     @Override
@@ -139,11 +143,6 @@ public class fragment_tab_my_crafts extends Fragment implements AdapterView.OnIt
 
     }
 
-    private void setupViewPager(ViewPager viewPager) {
-        SectionsPagerAdapter adapter = new SectionsPagerAdapter(getContext(), getChildFragmentManager(), bundle);
-        adapter.getItem(1);
-        viewPager.setAdapter(adapter);
-    }
 
     public void getAllMyCrafts() {
         refFireStore.collection("crafts")
@@ -199,12 +198,15 @@ public class fragment_tab_my_crafts extends Fragment implements AdapterView.OnIt
                                 bundle.putDouble("price", price);
                                 bundle.putInt("quantity", quantity);
 
+                                fragment_my_crafts.setArguments(Util.getBundleFusion(fragment_my_crafts.getArguments(), bundle));
+                                fragment_my_crafts.viewPager.setCurrentItem(1);
                                 //cambiar fragment tab
-                                SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(view.getContext(), getChildFragmentManager(), bundle);
-                                Fragment pos = sectionsPagerAdapter.getItem(1);
-                                Fragment fragment = new fragment_my_crafts();
-                                fragment.setArguments(bundle);
-                                
+//                                SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(view.getContext(), getChildFragmentManager(), bundle);
+//                                Fragment pos = sectionsPagerAdapter.getItem(1);
+//                                Fragment fragment = new fragment_my_crafts();
+//                                fragment.setArguments(bundle);
+
+
                             }
                         });
                     }
@@ -219,5 +221,10 @@ public class fragment_tab_my_crafts extends Fragment implements AdapterView.OnIt
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
         cat = "Todos";
+    }
+
+    @Override
+    public void update() {
+
     }
 }

@@ -27,6 +27,7 @@ import android.widget.Spinner;
 import com.artesaniasclient.R;
 import com.artesaniasclient.controller.CraftController;
 import com.artesaniasclient.interfaces.ICraft;
+import com.artesaniasclient.interfaces.Updateable;
 import com.artesaniasclient.model.Craft;
 
 import java.text.SimpleDateFormat;
@@ -38,7 +39,7 @@ import java.util.Date;
  * Use the {@link fragment_tab_registrer_crafts#//newInstance} factory method to
  * create an instance of this fragment.
  */
-public class fragment_tab_registrer_crafts extends Fragment implements ICraft, AdapterView.OnItemSelectedListener {
+public class fragment_tab_registrer_crafts extends Fragment implements ICraft, AdapterView.OnItemSelectedListener, Updateable {
 
     private final Context mContext;
 
@@ -71,24 +72,6 @@ public class fragment_tab_registrer_crafts extends Fragment implements ICraft, A
         this.mContext = mContext;
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param //param1 Parameter 1.
-     * @param //param2 Parameter 2.
-     * @return A new instance of fragment fragment_tab_registrer_crafts.
-     */
-    // TODO: Rename and change types and number of parameters
-    /*public static fragment_tab_registrer_crafts newInstance(String param1, String param2) {
-        fragment_tab_registrer_crafts fragment = new fragment_tab_registrer_crafts();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }*/
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,9 +80,14 @@ public class fragment_tab_registrer_crafts extends Fragment implements ICraft, A
             mParam2 = getArguments().getString(ARG_PARAM2);
             id = getArguments().getString("id");
             name = getArguments().getString("name");
+
         }
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -214,5 +202,13 @@ public class fragment_tab_registrer_crafts extends Fragment implements ICraft, A
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+
+    @Override
+    public void update() {
+        String idcraft = getArguments().getString("idcraft");
+        if (idcraft != null){
+            idcraft = idcraft;
+        }
     }
 }
