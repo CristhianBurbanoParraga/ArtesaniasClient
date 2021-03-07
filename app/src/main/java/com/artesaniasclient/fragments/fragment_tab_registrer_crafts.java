@@ -2,18 +2,13 @@ package com.artesaniasclient.fragments;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Context;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,47 +17,44 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 import com.artesaniasclient.R;
-import com.artesaniasclient.certificaciones.GlideApp;
 import com.artesaniasclient.controller.CraftController;
 import com.artesaniasclient.interfaces.ICraft;
 import com.artesaniasclient.interfaces.Updateable;
 import com.artesaniasclient.model.Craft;
+import com.artesaniasclient.utils.Util;
+import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
-import java.net.URL;
-import java.net.URLConnection;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link fragment_tab_registrer_crafts#//newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class fragment_tab_registrer_crafts extends Fragment implements ICraft, AdapterView.OnItemSelectedListener, Updateable {
 
-    private final Context mContext;
-    String id, name, idcraft, namecraft, category, datedisabled, dateregistry, description, imageurl;
-    Boolean isactive;
-    Double price;
-    Integer quantity, cont = 0;
+    String id, name;
     String nombreimg;
-    static String cat = "Todos";
-    static View view = null;
-    LayoutInflater inflater;
-    ViewGroup container;
+    String cat = "Todos";
+
+    View view = null;
+
+    Craft craft;
+    boolean isEditCraft = false;
 
     private static final int PICK_IMAGE = 100;
     private CraftController craftController;
     Button btnimagen;
     ImageView imagen;
     Uri imageUri;
+    fragment_my_crafts fragment_my_crafts;
+    private ProgressDialog progressDialog;
 
     EditText txtNameArte;
     EditText txtCantArte;
@@ -71,28 +63,14 @@ public class fragment_tab_registrer_crafts extends Fragment implements ICraft, A
     Spinner spinner;
     Button registerbutton;
     TextView txtTitleDesc;
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public fragment_tab_registrer_crafts(Context mContext) {
-        this.mContext = mContext;
+    public fragment_tab_registrer_crafts(fragment_my_crafts fragment_my_crafts) {
+        this.fragment_my_crafts = fragment_my_crafts;
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-            id = getArguments().getString("id");
-            name = getArguments().getString("name");
-        }
     }
 
     @Override
@@ -100,7 +78,8 @@ public class fragment_tab_registrer_crafts extends Fragment implements ICraft, A
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_tab_registrer_crafts, container, false);
-
+        id = getArguments().getString("id");
+        name = getArguments().getString("name");
         craftController = new CraftController(this);
 
         txtTitleDesc = view.findViewById(R.id.txtTitleDesc);
@@ -122,19 +101,9 @@ public class fragment_tab_registrer_crafts extends Fragment implements ICraft, A
         txtPrecioArte = view.findViewById(R.id.precioarte);
         txtDescription = view.findViewById(R.id.description);
 
-        btnimagen.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openGallery();
-            }
-        });
+        btnimagen.setOnClickListener(v -> openGallery());
 
-        registerbutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                registrarcrafts();
-            }
-        });
+        registerbutton.setOnClickListener(v -> registrarcrafts());
         return view;
     }
 
@@ -149,26 +118,30 @@ public class fragment_tab_registrer_crafts extends Fragment implements ICraft, A
         if (resultCode == Activity.RESULT_OK && requestCode == PICK_IMAGE) {
             imageUri = data.getData();
             imagen.setImageURI(imageUri);
-            Cursor returnCursor = getContext().getContentResolver().query(imageUri, null, null, null, null);
+            @SuppressLint("Recycle") Cursor returnCursor = getContext().getContentResolver().query(imageUri, null, null, null, null);
             int nameIndex = returnCursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
             returnCursor.moveToFirst();
             nombreimg = returnCursor.getString(nameIndex);
         }
     }
 
-    public void registrarcrafts () {
-        Craft craft = new Craft();
+    public void registrarcrafts() {
+        if (craft == null) craft = new Craft();
         craft.setNamecraft(txtNameArte.getText().toString());
         craft.setCategory(cat);
         craft.setQuantity(Integer.parseInt(txtCantArte.getText().toString()));
         craft.setPrice(Double.parseDouble(txtPrecioArte.getText().toString()));
         craft.setDescription(txtDescription.getText().toString());
         craft.setCompany(id);
-        //Date date = new Date();
-        String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-        craft.setDateregistry(date);
-        //craftController.addCraft(craft);
-        craftController.UploadFile(nombreimg, craft, imageUri);
+        if (!isEditCraft) {
+            @SuppressLint("SimpleDateFormat") String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+            craft.setDateregistry(date);
+            craft.setImageName(nombreimg);
+        }
+        progressDialog = ProgressDialog.show(getContext(),"Porfavor espere...",
+                "Registrando cambios...", true,false);
+        craftController.UploadFile(isEditCraft, craft, Util.getBytesImageView(imagen));
+
     }
 
     @Override
@@ -178,12 +151,14 @@ public class fragment_tab_registrer_crafts extends Fragment implements ICraft, A
 
     @Override
     public void add_craft_success(Craft craft, String message) {
-
+        progressDialog.dismiss();
+        fragment_my_crafts.viewPager.setCurrentItem(0);
     }
 
     @Override
     public void set_craft_success(Craft craft, String message) {
-
+        progressDialog.dismiss();
+        fragment_my_crafts.viewPager.setCurrentItem(0);
     }
 
     @Override
@@ -208,35 +183,28 @@ public class fragment_tab_registrer_crafts extends Fragment implements ICraft, A
 
     @Override
     public void update() {
-        idcraft = getArguments().getString("idcraft");
-        if (idcraft != null){
-            namecraft = getArguments().getString("namecraft");
-            category = getArguments().getString("category");
-            datedisabled = getArguments().getString("datedisabled");
-            dateregistry = getArguments().getString("dateregistry");
-            description = getArguments().getString("description");
-            imageurl = getArguments().getString("imageurl");
-            isactive = getArguments().getBoolean("isactive");
-            price = getArguments().getDouble("price");
-            quantity = getArguments().getInt("quantity");
+        String craftString = getArguments().getString("craftSelected");
+        craft = new Gson().fromJson(craftString, Craft.class);
+        if (craft != null) {
+            isEditCraft = true;
 
             txtNameArte = this.view.findViewById(R.id.namearte);
-            txtCantArte = this.view.findViewById(R.id.cantarte);
-            txtPrecioArte = this.view.findViewById(R.id.precioarte);
-            txtDescription = this.view.findViewById(R.id.description);
-            imagen = this.view.findViewById(R.id.imgart);
-            spinner = this.view.findViewById(R.id.categoriaarte);
-            registerbutton = this.view.findViewById(R.id.register);
-            txtTitleDesc = this.view.findViewById(R.id.txtTitleDesc);
+            txtCantArte = view.findViewById(R.id.cantarte);
+            txtPrecioArte = view.findViewById(R.id.precioarte);
+            txtDescription = view.findViewById(R.id.description);
+            imagen = view.findViewById(R.id.imgart);
+            spinner = view.findViewById(R.id.categoriaarte);
+            registerbutton = view.findViewById(R.id.register);
+            txtTitleDesc = view.findViewById(R.id.txtTitleDesc);
 
-            txtTitleDesc.setText("Modifique datos de la artesanía");
-            txtNameArte.setText(namecraft);
-            txtCantArte.setText(quantity.toString());
-            txtPrecioArte.setText(price.toString());
-            txtDescription.setText(description);
-            Picasso.get().load(imageurl).into(imagen);
-            spinner.setSelection(obtenerPosicionItem(spinner, category));
-            registerbutton.setText("Modificar");
+            txtTitleDesc.setText(R.string.update_data_crafts);
+            txtNameArte.setText(craft.getNamecraft());
+            txtCantArte.setText(String.valueOf(craft.getQuantity()));
+            txtPrecioArte.setText(String.valueOf(craft.getPrice()));
+            txtDescription.setText(craft.getDescription());
+            Picasso.get().load(craft.getImageurl()).into(imagen);
+            spinner.setSelection(obtenerPosicionItem(spinner, craft.getCategory()));
+            registerbutton.setText(R.string.modificar);
         }
     }
 

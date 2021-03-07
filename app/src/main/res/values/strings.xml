@@ -72,4 +72,6 @@
     <string name="app_rc_correo">Correo de restauración</string>
     <string name="app_rc_btn_recuperar">Restaurar</string>
     <string name="app_rc_btn_rest">¿Olvidó su clave?</string>
+    <string name="modificar">Modificar</string>
+    <string name="update_data_crafts">Modifique datos de la artesanía</string>
 </resources>

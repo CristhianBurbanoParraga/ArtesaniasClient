@@ -1,16 +1,13 @@
 package com.artesaniasclient.controller;
 
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.util.Log;
-import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 
 import com.artesaniasclient.interfaces.ICraft;
-import com.artesaniasclient.model.Company;
 import com.artesaniasclient.model.Craft;
+import com.artesaniasclient.utils.Util;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -25,7 +22,6 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
 public class CraftController {
@@ -86,19 +82,19 @@ public class CraftController {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        getiCraft().add_craft_success(null, getMessageTask(e));
+                        getiCraft().add_craft_success(null, Util.getMessageTask(e));
                         Log.w(TAG, "Error adding document", e);
                     }
                 });
     }
 
-    public void UploadFile (String nameimage, Craft craft, Uri uri) {
+    public void UploadFile(boolean isEditCraft, Craft craft, byte[] imageBytes) {
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReference();
+        String UriImage = "images/" + craft.getImageName();
+        StorageReference riversRef = storageRef.child(UriImage);
 
-        StorageReference riversRef = storageRef.child("images/" + uri.getLastPathSegment() + nameimage);
-
-        UploadTask uploadTask = riversRef.putFile(uri);
+        UploadTask uploadTask = riversRef.putBytes(imageBytes);
 
         // Register observers to listen for when the download is done or if it fails
         uploadTask.addOnFailureListener(new OnFailureListener() {
@@ -112,7 +108,6 @@ public class CraftController {
                 if (!task.isSuccessful()) {
                     throw task.getException();
                 }
-
                 // Continue with the task to get the download URL
                 return riversRef.getDownloadUrl();
             }
@@ -122,7 +117,8 @@ public class CraftController {
                 if (task.isSuccessful()) {
                     Uri downloadUri = task.getResult();
                     craft.setImageurl(downloadUri.toString());
-                    addCraft(craft);
+                    if (isEditCraft) edit_craft(craft);
+                    else addCraft(craft);
                 } else {
                     // Handle failures
                     // ...
@@ -131,48 +127,48 @@ public class CraftController {
         });
     }
 
-     public void getAllMyCrafts(String id){
-         db.collection("crafts")
-                 .whereEqualTo("company", id)
-                 .get()
-                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                     @Override
-                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                         if (task.isSuccessful()) {
-                             craftList.clear();
-                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                 String id = document.getId();
-                                 String category = document.getString("category");
-                                 String company = document.getString("company");
-                                 String datedisabled = document.getString("datedisabled");
-                                 String dateregistry = document.getString("dateregistry");
-                                 String description = document.getString("description");
-                                 String imageurl = document.getString("imageurl");
-                                 boolean isactive = document.getBoolean("isactive");
-                                 String namecraft = document.getString("namecraft");
-                                 double price = document.getDouble("price");
-                                 Integer quantity = Integer.parseInt(document.get("quantity").toString());
-                                 craftList.add(new Craft(category,id,company, datedisabled, dateregistry,description,imageurl,
-                                         isactive,namecraft,price,quantity));
-                                 //Log.d(TAG, document.getId() + " => " + document.getData());
-                             }
-                             iCraftComunication.get_craft_by_company_success(craftList,"");
-                            /*adapter = new adpCompany(getContext(),companiesList);
-                            rcvCompanies.setAdapter(adapter);*/
-                         } else {
-                             //Log.w(TAG, "Error getting documents.", task.getException());
-                             iCraftComunication.get_craft_by_company_success(null,"No existen artesanías en la empresa");
-                         }
-                     }
-                 });
+
+    public void edit_craft(Craft craft) {
+        db.collection("crafts").document(craft.getId())
+                .set(craft)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully written!");
+                        getiCraft().set_craft_success(new Craft(), "Artesania editada exitosamente");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error writing document", e);
+                        getiCraft().set_craft_success(null, Util.getMessageTask(e));
+                    }
+                });
     }
 
-    private String getMessageTask(Exception exception) {
-        String message = null;
-        if (exception != null) {
-            message = exception.getMessage();
-        }
-        return message;
+    public void getAllMyCrafts(String id) {
+        db.collection("crafts")
+                .whereEqualTo("company", id)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            craftList.clear();
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Craft craft = document.toObject(Craft.class);
+                                craft.setId(document.getId());
+                                craftList.add(craft);
+                                //Log.d(TAG, document.getId() + " => " + document.getData());
+                            }
+                            iCraftComunication.get_craft_by_company_success(craftList, "");
+                        } else {
+                            //Log.w(TAG, "Error getting documents.", task.getException());
+                            iCraftComunication.get_craft_by_company_success(null, "No existen artesanías en la empresa");
+                        }
+                    }
+                });
     }
 
 }

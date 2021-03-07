@@ -16,6 +16,7 @@ public class Craft implements Serializable {
     private String namecraft;
     private double price;
     private Integer quantity;
+    private String imageName;
 
     public Craft() {
 
@@ -25,7 +26,9 @@ public class Craft implements Serializable {
         this.id = id;
     }
 
-    public Craft(String id, String category, String company, String datedisabled, String dateregistry, String description, String imageurl, boolean isactive, String namecraft, double price, Integer quantity) {
+    public Craft(String id, String category, String company, String datedisabled, String dateregistry,
+                 String description, String imageurl, boolean isactive, String namecraft, double price,
+                 Integer quantity, String imageName) {
         this.id = id;
         this.category = category;
         this.company = company;
@@ -37,6 +40,7 @@ public class Craft implements Serializable {
         this.namecraft = namecraft;
         this.price = price;
         this.quantity = quantity;
+        this.imageName = imageName;
     }
 
     public String getId() {
@@ -127,6 +131,10 @@ public class Craft implements Serializable {
         this.quantity = quantity;
     }
 
+    public String getImageName() { return imageName; }
+
+    public void setImageName(String imageName) { this.imageName = imageName; }
+
     @Override
     public String toString() {
         return "Craft{" +
@@ -141,6 +149,7 @@ public class Craft implements Serializable {
                 ", namecraft='" + namecraft + '\'' +
                 ", price=" + price +
                 ", quantity=" + quantity +
+                ", imageName=" + imageName +
                 '}';
     }
 }

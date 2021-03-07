@@ -102,6 +102,7 @@ public class fragment_crafts extends Fragment implements AdapterView.OnItemSelec
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_crafts, container, false);
         refFireStore = FirebaseFirestore.getInstance();
+        craftList = new ArrayList<>();
         ac = getCompany();
         llenarSpinner();
         adapterCat = new ArrayAdapter<CharSequence>(getContext(), android.R.layout.simple_spinner_item, categories);
@@ -166,27 +167,21 @@ public class fragment_crafts extends Fragment implements AdapterView.OnItemSelec
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                        for (DocumentSnapshot document : value) {
-                            String id = document.getId();
-                            String category = document.getString("category");
-                            String idcompany = document.getString("company");
-                            String company = "";
-                            for(int c = 0; c < ac.size(); c++){
-                                Company companyModel = ac.get(c);
-                                if(companyModel.getId().equals(idcompany)){
-                                    company = companyModel.getBusinessname();
+                        for (DocumentSnapshot doc : value) {
+                            if (doc.getId() != null) {
+                                String idcompany = doc.getString("company");
+                                String company = "";
+                                for(int c = 0; c < ac.size(); c++){
+                                    Company companyModel = ac.get(c);
+                                    if(companyModel.getId().equals(idcompany)){
+                                        company = companyModel.getBusinessname();
+                                    }
                                 }
+                                Craft craft = doc.toObject(Craft.class);
+                                craft.setId(doc.getId());
+                                craft.setCompany(company);
+                                craftList.add(craft);
                             }
-                            String datedisabled = document.getString("datedisabled");
-                            String dateregistry = document.getString("dateregistry");
-                            String description = document.getString("description");
-                            String imageurl = document.getString("imageurl");
-                            boolean isactive = Boolean.parseBoolean(document.get("isactive").toString());
-                            String namecraft = document.getString("namecraft");
-                            double price = document.getDouble("price");
-                            Integer quantity = Integer.parseInt(document.get("quantity").toString());
-                            craftList.add(new Craft(category,id,company, datedisabled, dateregistry,description,imageurl,
-                                    isactive,namecraft,price,quantity));
                             //Log.d(TAG, document.getId() + " => " + document.getData());
                         }
                         adapter = new adpCrafts(getContext(),craftList);
@@ -209,8 +204,6 @@ public class fragment_crafts extends Fragment implements AdapterView.OnItemSelec
                         //craftList.clear();
                         for (DocumentSnapshot doc : value) {
                             if (doc.getId() != null) {
-                                String id = doc.getId();
-                                String category = doc.getString("category");
                                 String idcompany = doc.getString("company");
                                 String company = "";
                                 for(int c = 0; c < ac.size(); c++){
@@ -219,17 +212,10 @@ public class fragment_crafts extends Fragment implements AdapterView.OnItemSelec
                                         company = companyModel.getBusinessname();
                                     }
                                 }
-                                String datedisabled = doc.getString("datedisabled");
-                                String dateregistry = doc.getString("dateregistry");
-                                String description = doc.getString("description");
-                                String imageurl = doc.getString("imageurl");
-                                boolean isactive = doc.getBoolean("isactive");
-                                String namecraft = doc.getString("namecraft");
-                                double price = doc.getDouble("price");
-                                Integer quantity = Integer.parseInt(doc.get("quantity").toString());
-
-                                craftList.add(new Craft(category, id, company, datedisabled, dateregistry,description,imageurl,
-                                        isactive,namecraft,price,quantity));
+                                Craft craft = doc.toObject(Craft.class);
+                                craft.setId(doc.getId());
+                                craft.setCompany(company);
+                                craftList.add(craft);
                             }
                         }
                         adapter = new adpCrafts(getContext(), craftList);

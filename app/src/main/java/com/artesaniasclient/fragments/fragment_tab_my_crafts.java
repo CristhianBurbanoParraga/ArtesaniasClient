@@ -38,6 +38,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
@@ -60,7 +61,7 @@ public class fragment_tab_my_crafts extends Fragment implements AdapterView.OnIt
     ArrayList<Company> ac;
     ArrayAdapter<CharSequence> adp;
     String[] categories = new String[11];
-    Bundle bundle = new Bundle();
+    Bundle bundle;
     TabLayout tabLayout;
     fragment_my_crafts fragment_my_crafts;
 
@@ -154,22 +155,11 @@ public class fragment_tab_my_crafts extends Fragment implements AdapterView.OnIt
                             System.err.println("Listen failed:" + error);
                             return;
                         }
-
                         craftList.clear();
                         for (DocumentSnapshot document : value) {
-                            String id = document.getId();
-                            String category = document.getString("category");
-                            String company = document.getString("company");
-                            String datedisabled = document.getString("datedisabled");
-                            String dateregistry = document.getString("dateregistry");
-                            String description = document.getString("description");
-                            String imageurl = document.getString("imageurl");
-                            boolean isactive = document.getBoolean("isactive");
-                            String namecraft = document.getString("namecraft");
-                            double price = document.getDouble("price");
-                            Integer quantity = Integer.parseInt(document.get("quantity").toString());
-                            craftList.add(new Craft(id, category, company, datedisabled, dateregistry, description, imageurl,
-                                    isactive, namecraft, price, quantity));
+                            Craft craft = document.toObject(Craft.class);
+                            craft.setId(document.getId());
+                            craftList.add(craft);
                         }
                         adapter = new adpMyCrafts(getContext(), craftList);
                         rcvCrafts.setAdapter(adapter);
@@ -177,36 +167,11 @@ public class fragment_tab_my_crafts extends Fragment implements AdapterView.OnIt
                             @Override
                             public void onClick(View view) {
                                 int opcselec = rcvCrafts.getChildAdapterPosition(view);
-                                String idcraft = craftList.get(opcselec).getId();
-                                String namecraft = craftList.get(opcselec).getNamecraft();
-                                String category = craftList.get(opcselec).getCategory();
-                                String datedisabled = craftList.get(opcselec).getDatedisabled();
-                                String dateregistry = craftList.get(opcselec).getDateregistry();
-                                String description = craftList.get(opcselec).getDescription();
-                                String imageurl = craftList.get(opcselec).getImageurl();
-                                Boolean isactive = craftList.get(opcselec).isIsactive();
-                                Double price = craftList.get(opcselec).getPrice();
-                                Integer quantity = craftList.get(opcselec).getQuantity();
-                                bundle.putString("idcraft", idcraft);
-                                bundle.putString("namecraft", namecraft);
-                                bundle.putString("category", category);
-                                bundle.putString("datedisabled", datedisabled);
-                                bundle.putString("dateregistry", dateregistry);
-                                bundle.putString("description", description);
-                                bundle.putString("imageurl", imageurl);
-                                bundle.putBoolean("isactive", isactive);
-                                bundle.putDouble("price", price);
-                                bundle.putInt("quantity", quantity);
-
+                                bundle = new Bundle();
+                                Craft craftSelected = craftList.get(opcselec);
+                                bundle.putString("craftSelected", new Gson().toJson(craftSelected));
                                 fragment_my_crafts.setArguments(Util.getBundleFusion(fragment_my_crafts.getArguments(), bundle));
                                 fragment_my_crafts.viewPager.setCurrentItem(1);
-                                //cambiar fragment tab
-//                                SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(view.getContext(), getChildFragmentManager(), bundle);
-//                                Fragment pos = sectionsPagerAdapter.getItem(1);
-//                                Fragment fragment = new fragment_my_crafts();
-//                                fragment.setArguments(bundle);
-
-
                             }
                         });
                     }
