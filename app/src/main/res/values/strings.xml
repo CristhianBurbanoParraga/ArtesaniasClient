@@ -91,4 +91,10 @@
     <string name="app_rc_btn_rest">¿Olvidó su clave?</string>
     <string name="modificar">Modificar</string>
     <string name="update_data_crafts">Modifique datos de la artesanía</string>
+
+    <!--
+  Detalle artesania
+   -->
+    <string name="titleart">Artesanía</string>
+
 </resources>

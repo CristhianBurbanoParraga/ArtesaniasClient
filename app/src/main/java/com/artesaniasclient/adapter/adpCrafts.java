@@ -44,10 +44,10 @@ public class adpCrafts extends RecyclerView.Adapter<adpCrafts.ViewHolder>
         ImageView imageurl;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            company = (TextView) itemView.findViewById(R.id.txtCompany);
+            //company = (TextView) itemView.findViewById(R.id.txtCompany);
             namecraft = (TextView) itemView.findViewById(R.id.txtNameCraft);
             price = (TextView) itemView.findViewById(R.id.txtPrice);
-            description = (TextView) itemView.findViewById(R.id.txtDescription);
+            //description = (TextView) itemView.findViewById(R.id.txtDescription);
             imageurl = (ImageView) itemView.findViewById(R.id.imgCraft);
         }
     }
@@ -56,7 +56,7 @@ public class adpCrafts extends RecyclerView.Adapter<adpCrafts.ViewHolder>
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflr = LayoutInflater.from(ccontext);
-        View view=inflr.inflate(R.layout.item_craft,null,false);
+        View view=inflr.inflate(R.layout.item,null,false);
         view.setOnClickListener(this);
         //lista = new ArrayList<>();
         return new ViewHolder(view);
@@ -66,10 +66,10 @@ public class adpCrafts extends RecyclerView.Adapter<adpCrafts.ViewHolder>
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         try {
             Craft craft = lista.get(position);
-            holder.company.setText(craft.getCompany());
+            //holder.company.setText(craft.getCompany());
             holder.namecraft.setText(craft.getNamecraft());
             holder.price.setText(Double.toString(craft.getPrice()));
-            holder.description.setText(craft.getDescription());
+            //holder.description.setText(craft.getDescription());
             GlideApp.with(ccontext)
                     .load(craft.getImageurl())
                     .into(holder.imageurl);

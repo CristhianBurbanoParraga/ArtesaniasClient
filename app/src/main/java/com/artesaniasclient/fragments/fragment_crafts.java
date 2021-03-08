@@ -4,6 +4,8 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,11 +21,13 @@ import com.artesaniasclient.adapter.adpCrafts;
 import com.artesaniasclient.controller.CompanyController;
 import com.artesaniasclient.model.Company;
 import com.artesaniasclient.model.Craft;
+import com.artesaniasclient.utils.Util;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
@@ -45,6 +49,9 @@ public class fragment_crafts extends Fragment implements AdapterView.OnItemSelec
     ArrayList<Company> ac;
     ArrayAdapter<CharSequence> adp;
     String[] categories = new String[11];
+    Craft craftSelected = new Craft();
+    Bundle bundle;
+    fragmet_detail_craft fragment;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -102,7 +109,7 @@ public class fragment_crafts extends Fragment implements AdapterView.OnItemSelec
         //Vincular instancia del recyclerview
         rcvCrafts = (RecyclerView)view.findViewById(R.id.rcvCrafts);
         //Definir la forma de la lista vertical
-        rcvCrafts.setLayoutManager(new LinearLayoutManager(getContext()));
+        rcvCrafts.setLayoutManager(new GridLayoutManager(getContext(),2));
         // Inflate the layout for this fragment
         return view;
     }
@@ -176,6 +183,25 @@ public class fragment_crafts extends Fragment implements AdapterView.OnItemSelec
                         }
                         adapter = new adpCrafts(getContext(),craftList);
                         rcvCrafts.setAdapter(adapter);
+                        adapter = new adpCrafts(getContext(), craftList);
+                        rcvCrafts.setAdapter(adapter);
+                        adapter.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                int opcselec = rcvCrafts.getChildAdapterPosition(view);
+                                bundle = new Bundle();
+                                craftSelected = craftList.get(opcselec);
+                                bundle.putString("craftSelec", new Gson().toJson(craftSelected));
+
+                                // Crea el nuevo fragmento y la transacción.
+                                Fragment nuevoFragmento = new fragmet_detail_craft();
+                                nuevoFragmento.setArguments(bundle);
+                                FragmentTransaction transaction = getFragmentManager().beginTransaction()
+                                        .replace(R.id.content, nuevoFragmento);
+                                // Commit a la transacción
+                                transaction.commit();
+                            }
+                        });
                     }
                 });
     }
@@ -210,6 +236,24 @@ public class fragment_crafts extends Fragment implements AdapterView.OnItemSelec
                         }
                         adapter = new adpCrafts(getContext(), craftList);
                         rcvCrafts.setAdapter(adapter);
+                        adapter.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                int opcselec = rcvCrafts.getChildAdapterPosition(view);
+                                bundle = new Bundle();
+                                craftSelected = craftList.get(opcselec);
+                                bundle.putString("craftSelec", new Gson().toJson(craftSelected));
+                                //fragment.setArguments(bundle);
+
+                                // Crea el nuevo fragmento y la transacción.
+                                Fragment nuevoFragmento = new fragmet_detail_craft();
+                                nuevoFragmento.setArguments(bundle);
+                                FragmentTransaction transaction = getFragmentManager().beginTransaction()
+                                        .replace(R.id.content, nuevoFragmento);
+                                // Commit a la transacción
+                                transaction.commit();
+                            }
+                        });
                     }
                 });
     }
