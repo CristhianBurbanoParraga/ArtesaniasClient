@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#D8D5D5"
     tools:context=".fragments.fragment_pasar_premium">
 
     <ScrollView
@@ -24,7 +25,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
-                android:background="@drawable/border1"
+                android:background="@drawable/border4"
                 android:padding="10dp">
 
                 <ImageView
