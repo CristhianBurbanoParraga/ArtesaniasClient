@@ -21,6 +21,7 @@ import com.artesaniasclient.adapter.adpCrafts;
 import com.artesaniasclient.controller.CompanyController;
 import com.artesaniasclient.model.Company;
 import com.artesaniasclient.model.Craft;
+import com.artesaniasclient.model.User;
 import com.artesaniasclient.utils.Util;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -40,7 +41,6 @@ public class fragment_crafts extends Fragment implements AdapterView.OnItemSelec
 
     private FirebaseFirestore refFireStore;
     private adpCrafts adapter;
-    CompanyController controller;
     RecyclerView rcvCrafts;
     static String cat = "Todos";
     ArrayAdapter<CharSequence> adapterCat;
@@ -51,7 +51,8 @@ public class fragment_crafts extends Fragment implements AdapterView.OnItemSelec
     String[] categories = new String[11];
     Craft craftSelected = new Craft();
     Bundle bundle;
-    fragmet_detail_craft fragment;
+    String datos;
+    User user;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -160,9 +161,14 @@ public class fragment_crafts extends Fragment implements AdapterView.OnItemSelec
 
     public void getAllCrafts(){
         refFireStore.collection("crafts")
+                .whereNotEqualTo("quantity",0)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if (error != null) {
+                            System.err.println("Listen failed:" + error);
+                            return;
+                        }
                         if(craftList != null) craftList.clear();
                         for (DocumentSnapshot doc : value) {
                             if (doc.getId() != null) {
@@ -185,21 +191,30 @@ public class fragment_crafts extends Fragment implements AdapterView.OnItemSelec
                         rcvCrafts.setAdapter(adapter);
                         adapter = new adpCrafts(getContext(), craftList);
                         rcvCrafts.setAdapter(adapter);
+                        if (getArguments() != null) {
+                            user = new User();
+                            datos = getArguments().getString("datos");
+                            user = new Gson().fromJson(datos, User.class);
+                        }
                         adapter.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
                                 int opcselec = rcvCrafts.getChildAdapterPosition(view);
-                                bundle = new Bundle();
                                 craftSelected = craftList.get(opcselec);
-                                bundle.putString("craftSelec", new Gson().toJson(craftSelected));
+                                if (user != null) {
+                                    if (user.getUsertype().equals("Cliente")) {
+                                        bundle = new Bundle();
+                                        bundle.putString("craftSelec", new Gson().toJson(craftSelected));
 
-                                // Crea el nuevo fragmento y la transacción.
-                                Fragment nuevoFragmento = new fragmet_detail_craft();
-                                nuevoFragmento.setArguments(bundle);
-                                FragmentTransaction transaction = getFragmentManager().beginTransaction()
-                                        .replace(R.id.content, nuevoFragmento);
-                                // Commit a la transacción
-                                transaction.commit();
+                                        // Crea el nuevo fragmento y la transacción.
+                                        Fragment nuevoFragmento = new fragmet_detail_craft();
+                                        nuevoFragmento.setArguments(bundle);
+                                        FragmentTransaction transaction = getFragmentManager().beginTransaction()
+                                                .replace(R.id.content, nuevoFragmento);
+                                        // Commit a la transacción
+                                        transaction.commit();
+                                    }
+                                }
                             }
                         });
                     }
@@ -209,6 +224,7 @@ public class fragment_crafts extends Fragment implements AdapterView.OnItemSelec
     private void getCraftsbyCategory(){
         refFireStore.collection("crafts")
                 .whereEqualTo("category", cat)
+                .whereNotEqualTo("quantity",0)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value,
@@ -236,22 +252,30 @@ public class fragment_crafts extends Fragment implements AdapterView.OnItemSelec
                         }
                         adapter = new adpCrafts(getContext(), craftList);
                         rcvCrafts.setAdapter(adapter);
+                        if (getArguments() != null) {
+                            user = new User();
+                            datos = getArguments().getString("datos");
+                            user = new Gson().fromJson(datos, User.class);
+                        }
                         adapter.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
                                 int opcselec = rcvCrafts.getChildAdapterPosition(view);
-                                bundle = new Bundle();
                                 craftSelected = craftList.get(opcselec);
-                                bundle.putString("craftSelec", new Gson().toJson(craftSelected));
-                                //fragment.setArguments(bundle);
+                                if (user != null) {
+                                    if (user.getUsertype().equals("Cliente")) {
+                                        bundle = new Bundle();
+                                        bundle.putString("craftSelec", new Gson().toJson(craftSelected));
 
-                                // Crea el nuevo fragmento y la transacción.
-                                Fragment nuevoFragmento = new fragmet_detail_craft();
-                                nuevoFragmento.setArguments(bundle);
-                                FragmentTransaction transaction = getFragmentManager().beginTransaction()
-                                        .replace(R.id.content, nuevoFragmento);
-                                // Commit a la transacción
-                                transaction.commit();
+                                        // Crea el nuevo fragmento y la transacción.
+                                        Fragment nuevoFragmento = new fragmet_detail_craft();
+                                        nuevoFragmento.setArguments(bundle);
+                                        FragmentTransaction transaction = getFragmentManager().beginTransaction()
+                                                .replace(R.id.content, nuevoFragmento);
+                                        // Commit a la transacción
+                                        transaction.commit();
+                                    }
+                                }
                             }
                         });
                     }

@@ -96,6 +96,12 @@
   Detalle artesania
    -->
     <string name="titleart">Artesanía</string>
+    <string name="categart">Categoría:</string>
+    <string name="nameart">Nombre:</string>
+    <string name="cantactart">Cantidad Actual:</string>
+    <string name="priceart">Precio:</string>
+    <string name="descart">Descripción:</string>
+    <string name="comprar">Comprar</string>
 
     <!--
     Premium

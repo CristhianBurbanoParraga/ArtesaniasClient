@@ -69,8 +69,6 @@ public class activity_principal extends AppCompatActivity implements NavigationV
 
         navView = findViewById(R.id.nav_view);
         navView.setNavigationItemSelectedListener(this);
-        fragment = new fragment_crafts();
-        getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_crafts);
     }
@@ -89,6 +87,7 @@ public class activity_principal extends AppCompatActivity implements NavigationV
                 break;
             case itemVerCatalogo:
                 fragment = new fragment_crafts();
+                fragment.setArguments(bundle);
                 fragmentTransaction = true;
                 titulo = "Catálogo";
                 break;
@@ -142,6 +141,9 @@ public class activity_principal extends AppCompatActivity implements NavigationV
             Util.countCraftsOfUser = user.getCountcrafts();
             Util.countCompaniesOfUser = user.getCountcompanies();
             bundle.putString("datos", new Gson().toJson(user));
+            fragment = new fragment_crafts();
+            fragment.setArguments(bundle);
+            getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
             if (user != null) {
                 txtUserFooter.setText("Usuario: " + user.getUsername());
                 if (user.getUsertype() != null && user.getUsertype().equals("Artesano")) {
@@ -164,6 +166,8 @@ public class activity_principal extends AppCompatActivity implements NavigationV
             imgToolbar.setImageResource(R.drawable.iconarte2);
             imgToolbar.setPadding(5,5,5,5);
             imgToolbar.setTranslationX(-16);
+            fragment = new fragment_crafts();
+            getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
             ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                     this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
             drawerLayout.addDrawerListener(toggle);

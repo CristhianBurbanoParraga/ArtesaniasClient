@@ -46,7 +46,7 @@
 
                 <ImageView
                     android:id="@+id/imgartesania"
-                    android:layout_width="230dp"
+                    android:layout_width="match_parent"
                     android:layout_height="150dp"
                     android:layout_below="@id/title"
                     android:layout_centerHorizontal="true"
@@ -54,6 +54,7 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="24dp"
                     android:contentDescription="@string/descr"
+                    android:scaleType="fitXY"
                     app:srcCompat="@drawable/img_base" />
 
                 <TextView
@@ -65,7 +66,7 @@
                     android:fontFamily="@font/alfa_slab_one"
                     android:inputType="text"
                     android:selectAllOnFocus="true"
-                    android:text="Categoría:" />
+                    android:text="@string/categart" />
 
                 <TextView
                     android:id="@+id/catartesania"
@@ -73,7 +74,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/imgartesania"
                     android:layout_marginStart="15dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="22dp"
                     android:layout_toEndOf="@+id/catartesania1"
                     android:inputType="text"
                     android:selectAllOnFocus="true"
@@ -88,7 +89,7 @@
                     android:fontFamily="@font/alfa_slab_one"
                     android:inputType="text"
                     android:selectAllOnFocus="true"
-                    android:text="Nombre:" />
+                    android:text="@string/nameart" />
 
                 <TextView
                     android:id="@+id/nameartesania"
@@ -96,7 +97,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/catartesania"
                     android:layout_marginStart="15dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="22dp"
                     android:layout_toEndOf="@+id/nameartesania1"
                     android:inputType="text"
                     android:selectAllOnFocus="true"
@@ -111,7 +112,7 @@
                     android:fontFamily="@font/alfa_slab_one"
                     android:inputType="text"
                     android:selectAllOnFocus="true"
-                    android:text="Cantidad Actual:" />
+                    android:text="@string/cantactart" />
 
                 <TextView
                     android:id="@+id/cantartesania"
@@ -119,7 +120,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/nameartesania"
                     android:layout_marginStart="15dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="22dp"
                     android:layout_toEndOf="@+id/cantartesania1"
                     android:inputType="text"
                     android:selectAllOnFocus="true"
@@ -134,15 +135,15 @@
                     android:fontFamily="@font/alfa_slab_one"
                     android:inputType="textEmailAddress"
                     android:selectAllOnFocus="true"
-                    android:text="Precio:" />
+                    android:text="@string/priceart" />
 
                 <TextView
                     android:id="@+id/precioartesania"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/cantartesania"
-                    android:layout_marginTop="20dp"
                     android:layout_marginStart="15dp"
+                    android:layout_marginTop="22dp"
                     android:layout_toEndOf="@+id/precioartesania1"
                     android:inputType="textEmailAddress"
                     android:selectAllOnFocus="true"
@@ -161,15 +162,15 @@
                     android:scrollbarStyle="insideInset"
                     android:scrollbars="vertical"
                     android:selectAllOnFocus="true"
-                    android:text="Descripción:" />
+                    android:text="@string/descart" />
 
                 <TextView
                     android:id="@+id/description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/precioartesania"
-                    android:layout_marginTop="20dp"
                     android:layout_marginStart="15dp"
+                    android:layout_marginTop="22dp"
                     android:layout_toEndOf="@+id/description1"
                     android:gravity="top"
                     android:inputType="textMultiLine"
@@ -184,15 +185,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/description"
-                    android:layout_centerInParent="false"
+                    android:layout_centerHorizontal="true"
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="30dp"
                     android:layout_marginEnd="24dp"
                     android:backgroundTint="#0669b2"
                     android:fontFamily="@font/alfa_slab_one"
-                    android:text="Comprar"
+                    android:text="@string/comprar"
                     android:textColor="@color/white"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    app:icon="@drawable/icon_buy"
+                    app:iconGravity="textStart" />
 
             </RelativeLayout>
 
@@ -200,7 +203,7 @@
 
     </ScrollView>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <!-- <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabNext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -214,7 +217,7 @@
         android:tint="@color/white"
         app:backgroundTint="#0669b2"
         app:maxImageSize="40dp"
-        app:srcCompat="@drawable/icon_return" />
+        app:srcCompat="@drawable/icon_return" /> -->
 
     <ProgressBar
         android:id="@+id/loading"

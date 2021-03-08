@@ -44,6 +44,8 @@ public class LoginActivity extends AppCompatActivity implements ILogin {
     private FirebaseAuth mAuth;
     private ProgressBar loadingProgressBar;
     private UserController userController;
+    EditText usernameEditText;
+    EditText passwordEditText;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -56,8 +58,8 @@ public class LoginActivity extends AppCompatActivity implements ILogin {
 
         userController = new UserController(this);
 
-        final EditText usernameEditText = findViewById(R.id.username);
-        final EditText passwordEditText = findViewById(R.id.password);
+        usernameEditText = findViewById(R.id.username);
+        passwordEditText = findViewById(R.id.password);
         final Button loginButton = findViewById(R.id.login);
         final Button restaurarBotton = findViewById(R.id.restaurarclave);
         loadingProgressBar = findViewById(R.id.loading);
@@ -219,6 +221,8 @@ public class LoginActivity extends AppCompatActivity implements ILogin {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(getString(R.string.CURRENT_USER_KEY_STORE), userJson);
         boolean commit = editor.commit();
+        usernameEditText.setText("");
+        passwordEditText.setText("");
         if (commit) {
             loadingProgressBar.setVisibility(View.GONE);
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
