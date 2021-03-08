@@ -20,8 +20,6 @@ import com.artesaniasclient.R;
  */
 public class fragment_pasar_premium extends Fragment implements AdapterView.OnItemSelectedListener {
 
-    String[] formas = new String[4];
-    ArrayAdapter<CharSequence> adp;
     ArrayAdapter<CharSequence> adapterFormaPago;
     Spinner cbbFormaPago;
     static String fp = "Mensual";
@@ -71,22 +69,12 @@ public class fragment_pasar_premium extends Fragment implements AdapterView.OnIt
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_pasar_premium, container, false);
-        llenarSpinner();
-        adapterFormaPago = new ArrayAdapter<CharSequence>(getContext(), android.R.layout.simple_spinner_item, formas);
+        adapterFormaPago = ArrayAdapter.createFromResource(getContext(),R.array.formapago, android.R.layout.simple_spinner_item);
         cbbFormaPago = (Spinner)view.findViewById(R.id.formapago);
         adapterFormaPago.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); //como se muestran los datos
         cbbFormaPago.setAdapter(adapterFormaPago);
         cbbFormaPago.setOnItemSelectedListener(this);
         return view;
-    }
-
-    private void llenarSpinner(){
-        adp = ArrayAdapter.createFromResource(getContext(),R.array.formapago, android.R.layout.simple_spinner_item);
-        int i = 1;
-        while(i<formas.length){
-            formas[i] = (String) adp.getItem(i-1);
-            i=i+1;
-        }
     }
 
     @Override

@@ -105,7 +105,13 @@ public class fragment_my_info extends Fragment {
         btnPremium.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Crea el nuevo fragmento y la transacción.
+                Fragment nuevoFragmento = new fragment_pasar_premium();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction()
+                        .replace(R.id.content, nuevoFragmento);
 
+                // Commit a la transacción
+                transaction.commit();
             }
         });
 
