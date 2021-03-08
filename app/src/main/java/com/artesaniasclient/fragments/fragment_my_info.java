@@ -11,19 +11,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.artesaniasclient.R;
+import com.artesaniasclient.controller.UserController;
+import com.artesaniasclient.interfaces.IUserComunication;
 import com.artesaniasclient.model.Craft;
 import com.artesaniasclient.model.User;
 import com.artesaniasclient.ui.login.LoginActivity;
+import com.artesaniasclient.utils.Util;
 import com.google.gson.Gson;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link fragment_my_info#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class fragment_my_info extends Fragment {
+public class fragment_my_info extends Fragment implements IUserComunication {
 
     TextView txtUserName;
     TextView txtUserLastName;
@@ -32,6 +38,7 @@ public class fragment_my_info extends Fragment {
     Button btnPremium;
     Button btnModificar;
     Button btnCambiarClave;
+    UserController userController;
 
     User user;
     Bundle bundle  = new Bundle();
@@ -96,10 +103,11 @@ public class fragment_my_info extends Fragment {
         btnPremium = view.findViewById(R.id.premium);
         btnModificar = view.findViewById(R.id.modify_myinfo);
         btnCambiarClave = view.findViewById(R.id.cambiarclave);
-
-        user = new User();
+        userController = new UserController(this);
+        /*user = new User();
         String datos = getArguments().getString("datos");
-        user = new Gson().fromJson(datos, User.class);
+        user = new Gson().fromJson(datos, User.class);*/
+        user = Util.getUserConnect(getContext());
         bundle.putString("datos", new Gson().toJson(user));
 
         btnPremium.setOnClickListener(new View.OnClickListener() {
@@ -129,7 +137,42 @@ public class fragment_my_info extends Fragment {
             }
         });
 
+        btnModificar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                modificarMisDatos(txtUserName.getText().toString(),txtUserLastName.getText().toString(),txtUserAddress.getText().toString(),txtUserPhone.getText().toString(),user);
+            }
+        });
+
         // Inflate the layout for this fragment
         return view;
+    }
+
+    private void modificarMisDatos(String nombre, String apellido, String direccion, String telefono, User user) {
+        user.setFirstname(nombre);
+        user.setLastname(apellido);
+        user.setAddress(direccion);
+        user.setPhone(telefono);
+        userController.updateUser(user);
+    }
+
+    @Override
+    public void get_users_success(ArrayList<User> users, String message) {
+
+    }
+
+    @Override
+    public void add_user_success(User u, String message) {
+
+    }
+
+    @Override
+    public void set_user_success(User u, String message) {
+        Toast.makeText(getContext(),message,Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void delete_user_success(User u, String message) {
+
     }
 }

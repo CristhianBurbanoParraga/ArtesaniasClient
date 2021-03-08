@@ -3,6 +3,7 @@ package com.artesaniasclient;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -26,6 +27,7 @@ public class activity_register_user extends AppCompatActivity implements IUserCo
     private EditText textPassword;
     private EditText textPhone;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +42,8 @@ public class activity_register_user extends AppCompatActivity implements IUserCo
         textUsername = findViewById(R.id.username);
         textPassword = findViewById(R.id.password);
         textPhone = findViewById(R.id.phone);
+
+
     }
 
     public void onRegisterUserClick(View v) {

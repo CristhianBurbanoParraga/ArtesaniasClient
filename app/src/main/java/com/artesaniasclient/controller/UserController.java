@@ -161,6 +161,22 @@ public class UserController {
                 });
     }
 
+    public void updateUser(User user) {
+        db.collection("user").document(user.getId())
+            .set(user)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                  @Override
+                  public void onSuccess(Void aVoid) {
+                      iUserComunication.set_user_success(user,"Se han actualizado los datos correctamente");
+                  }
+              }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    iUserComunication.set_user_success(null,"Error al actualizar los datos");
+                }
+            });
+    }
+
     public void getUserForEmail(@NotNull String email) {
         // [START listen_for_users]
         // Listen for users born before 1900.

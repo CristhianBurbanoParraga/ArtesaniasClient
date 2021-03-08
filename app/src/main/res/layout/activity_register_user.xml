@@ -217,6 +217,7 @@
                         android:text="@string/registrar"
                         android:textColor="@color/white"
                         android:textSize="12sp"
+                        android:onClick="onRegisterUserClick"
                         tools:ignore="ButtonStyle" />
 
                     <Button
@@ -229,6 +230,7 @@
                         android:text="@string/cancelar"
                         android:textColor="@color/white"
                         android:textSize="12sp"
+                        android:onClick="onCancelActivityClick"
                         tools:ignore="ButtonStyle" />
 
                 </LinearLayout>
