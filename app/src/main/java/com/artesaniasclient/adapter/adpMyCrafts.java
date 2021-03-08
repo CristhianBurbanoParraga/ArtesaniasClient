@@ -55,7 +55,7 @@ public class adpMyCrafts extends RecyclerView.Adapter<adpMyCrafts.ViewHolder>
     @Override
     public adpMyCrafts.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflr = LayoutInflater.from(ccontext);
-        View view = inflr.inflate(R.layout.item_mycrafts,null,false);
+        View view = inflr.inflate(R.layout.item_my_crafts,null,false);
         view.setOnClickListener(this);
         return new adpMyCrafts.ViewHolder(view);
     }

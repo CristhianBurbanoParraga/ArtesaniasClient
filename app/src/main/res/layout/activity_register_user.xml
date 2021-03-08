@@ -48,12 +48,12 @@
 
                 <TextView
                     android:id="@+id/title"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
                     android:layout_marginTop="20dp"
                     android:fontFamily="@font/alfa_slab_one"
                     android:text="@string/new_user"
-                    android:textAlignment="center"
                     android:textColor="#525966"
                     android:textSize="25sp"
                     android:textStyle="bold"
@@ -65,7 +65,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/title"
-                    android:layout_centerInParent="true"
+                    android:layout_centerInParent="false"
+                    android:layout_centerHorizontal="true"
                     android:text="@string/ingrese_sus_datos_de_registro"
                     android:textColor="#525966"
                     android:textSize="18sp" />
@@ -101,7 +102,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/mainfirstname"
                     android:layout_marginStart="24dp"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="20dp"
                     android:layout_marginEnd="24dp"
                     android:hint="@string/apellidos"
                     tools:ignore="MissingConstraints">
@@ -125,7 +126,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/mainlastname"
                     android:layout_marginStart="24dp"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="20dp"
                     android:layout_marginEnd="24dp"
                     android:hint="@string/prompt_email"
                     tools:ignore="MissingConstraints">
@@ -149,7 +150,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/mainusername"
                     android:layout_marginStart="24dp"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="20dp"
                     android:layout_marginEnd="24dp"
                     android:hint="@string/prompt_password"
                     android:imeActionLabel="@string/action_sign_in_short"
@@ -178,7 +179,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/mainpassword"
                     android:layout_marginStart="24dp"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="20dp"
                     android:layout_marginEnd="24dp"
                     android:hint="@string/telefono"
                     tools:ignore="MissingConstraints">

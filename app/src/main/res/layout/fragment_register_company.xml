@@ -30,12 +30,12 @@
 
                 <TextView
                     android:id="@+id/title"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
                     android:layout_marginTop="20dp"
                     android:fontFamily="@font/alfa_slab_one"
                     android:text="@string/new_bussines"
-                    android:textAlignment="center"
                     android:textColor="#525966"
                     android:textSize="25sp"
                     android:textStyle="bold"
@@ -47,7 +47,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/title"
-                    android:layout_centerInParent="true"
+                    android:layout_centerHorizontal="true"
                     android:text="@string/datos_bussines"
                     android:textColor="#525966"
                     android:textSize="18sp" />
@@ -83,7 +83,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/mainnamebussines"
                     android:layout_marginStart="24dp"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="20dp"
                     android:layout_marginEnd="24dp"
                     android:hint="@string/prompt_ruc"
                     android:imeActionLabel="@string/action_sign_in_short"
@@ -108,7 +108,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/mainruc"
                     android:layout_marginStart="24dp"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="20dp"
                     android:layout_marginEnd="24dp"
                     android:hint="@string/prompt_city"
                     android:imeActionLabel="@string/action_sign_in_short"
@@ -133,7 +133,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/maincity"
                     android:layout_marginStart="24dp"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="20dp"
                     android:layout_marginEnd="24dp"
                     android:hint="@string/prompt_addressbussines"
                     android:imeActionLabel="@string/action_sign_in_short"
@@ -156,9 +156,9 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/mainaddress"
                     android:layout_marginStart="20dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="30dp"
                     android:layout_marginEnd="20dp"
-                    android:layout_marginBottom="10dp"
+                    android:layout_marginBottom="15dp"
                     android:weightSum="2">
 
                     <Button

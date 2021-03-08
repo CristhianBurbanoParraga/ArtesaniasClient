@@ -47,12 +47,12 @@
 
                 <TextView
                     android:id="@+id/title"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
                     android:layout_marginTop="20dp"
                     android:fontFamily="@font/alfa_slab_one"
                     android:text="Recuperar Clave"
-                    android:textAlignment="center"
                     android:textColor="#525966"
                     android:textSize="30sp"
                     android:textStyle="bold"
@@ -64,7 +64,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/title"
-                    android:layout_centerInParent="true"
+                    android:layout_centerInParent="false"
+                    android:layout_centerHorizontal="true"
                     android:text="Ingrese su correo para continuar"
                     android:textColor="#525966"
                     android:textSize="18sp" />

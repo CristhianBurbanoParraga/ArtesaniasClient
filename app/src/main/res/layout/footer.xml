@@ -4,35 +4,29 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="bottom"
-    android:background="#FFFFFF">
+    android:background="#0669b2">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/txtUserFooter"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="#0669b2">
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_weight="1"
+        android:text="Username"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large.Inverse"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        android:textStyle="bold|italic" />
 
-        <TextView
-            android:id="@+id/txtUserFooter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp"
-            android:text="Username"
-            android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large.Inverse"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            android:textStyle="bold|italic" />
-
-        <ImageView
-            android:id="@+id/profile_image"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="20dp"
-            app:srcCompat="@drawable/loginicon"
-            app:tint="@color/white" />
-
-    </RelativeLayout>
+    <ImageView
+        android:id="@+id/profile_image"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_weight="0"
+        app:srcCompat="@drawable/loginicon"
+        app:tint="@color/white" />
 
 </LinearLayout>
