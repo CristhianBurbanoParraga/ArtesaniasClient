@@ -142,6 +142,25 @@ public class UserController {
                 });
     }
 
+    public void updatePasswordOfUser(String iduser, String newPassword) {
+        db.collection("user").document(iduser)
+                .update("password", newPassword)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        /*Log.d(TAG, "DocumentSnapshot successfully written!");
+                        getiCraft().set_craft_success(new Craft(), "Artesania editada exitosamente");*/
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        /*Log.w(TAG, "Error writing document", e);
+                        getiCraft().set_craft_success(null, Util.getMessageTask(e));*/
+                    }
+                });
+    }
+
     public void getUserForEmail(@NotNull String email) {
         // [START listen_for_users]
         // Listen for users born before 1900.

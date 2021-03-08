@@ -1,18 +1,32 @@
 package com.artesaniasclient.fragments;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.artesaniasclient.R;
+import com.artesaniasclient.controller.UserController;
 import com.artesaniasclient.model.User;
+import com.artesaniasclient.ui.login.LoginActivity;
+import com.artesaniasclient.utils.Util;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.gson.Gson;
 
 /**
@@ -24,7 +38,13 @@ public class fragment_cambiar_clave extends Fragment {
 
     User user;
     TextView txtUserEmail;
+    EditText txtClaveActual;
+    EditText txtClaveNueva;
+    EditText txtRepClave;
     Button btnCambiarClave;
+    FirebaseUser uss;
+    UserController userController;
+    private FirebaseAuth mAuth;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -76,19 +96,58 @@ public class fragment_cambiar_clave extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_cambiar_clave, container, false);;
-        user = new User();
-        String datos = getArguments().getString("datos");
-        user = new Gson().fromJson(datos, User.class);
+        userController = new UserController();
+        mAuth = FirebaseAuth.getInstance();
+        user = Util.getUserConnect(getContext());
+        /*String datos = getArguments().getString("datos");
+        user = new Gson().fromJson(datos, User.class);*/
         txtUserEmail = view.findViewById(R.id.email);
+        txtClaveActual = view.findViewById(R.id.claveactual);
+        txtClaveNueva = view.findViewById(R.id.clavenueva);
+        txtRepClave = view.findViewById(R.id.repnueva);
         btnCambiarClave = view.findViewById(R.id.fcambiarclave);
 
         btnCambiarClave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                comparacionYcambio(uss, txtClaveNueva.getText().toString(), txtClaveActual.getText().toString(), user);
             }
         });
         // Inflate the layout for this fragment
         return view;
     }
+
+    private void updatePassword(FirebaseUser user, String newPassword, User userclas) {
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        user.updatePassword(newPassword)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            userController.updatePasswordOfUser(userclas.getId(), newPassword);
+                            mAuth.signOut();
+                            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.remove(getString(R.string.CURRENT_USER_KEY_STORE));
+                            editor.apply();
+                            Toast.makeText(getContext(),"Clave de usuario actualizada",Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(getContext(), LoginActivity.class);
+                            startActivity(intent);
+                        }
+                    }
+                });
+    }
+
+    private void comparacionYcambio(FirebaseUser user, String newPassword, String claveActual, User us) {
+        if (us.getPassword().equals(claveActual)){
+            if (txtRepClave.getText().toString().equals(newPassword)) {
+                updatePassword(user, newPassword, us);
+            } else {
+                Toast.makeText(getContext(),"La nueva clave no coincide",Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            Toast.makeText(getContext(),"La clave que ha escrito no es la suya",Toast.LENGTH_SHORT).show();
+        }
+    }
+
 }

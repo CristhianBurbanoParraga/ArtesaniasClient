@@ -73,6 +73,7 @@
                         android:drawablePadding="10dp"
                         android:drawableTint="#0669b2"
                         android:inputType="text"
+                        android:enabled="false"
                         android:selectAllOnFocus="true" />
                 </com.google.android.material.textfield.TextInputLayout>
 
