@@ -24,8 +24,6 @@ import java.net.URLEncoder;
  */
 public class fragment_my_sales extends Fragment {
 
-    Button btn;
-
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -71,13 +69,6 @@ public class fragment_my_sales extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my_sales, container, false);
         // Inflate the layout for this fragment
-        btn = view.findViewById(R.id.button2);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openWhatsApp("995040419","Si Jose lee esto de nuevo, significa que funciona\nOe ponte a programar jajaja...");
-            }
-        });
         return view;
     }
 
