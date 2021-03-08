@@ -1,5 +1,6 @@
 package com.artesaniasclient.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import com.artesaniasclient.R;
 import com.artesaniasclient.model.Craft;
 import com.artesaniasclient.model.User;
+import com.artesaniasclient.ui.login.LoginActivity;
 import com.google.gson.Gson;
 
 /**
@@ -103,7 +105,8 @@ public class fragment_my_info extends Fragment {
         btnPremium.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(getContext(), fragment_pasar_premium.class);
+                startActivity(intent);
             }
         });
 
@@ -118,13 +121,6 @@ public class fragment_my_info extends Fragment {
 
                 // Commit a la transacción
                 transaction.commit();
-            }
-        });
-
-        btnPremium.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
             }
         });
 

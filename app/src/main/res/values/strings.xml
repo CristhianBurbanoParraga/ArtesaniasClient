@@ -97,4 +97,12 @@
    -->
     <string name="titleart">Artesanía</string>
 
+    <!--
+    Premium
+    -->
+    <string name="premium_number_card">Número de tarjeta</string>
+    <string name="premium_date_expiration">Fecha de expiración</string>
+    <string name="premium_cvc">CVC</string>
+    <string name="premium_btn">Cambiar a premium</string>
+
 </resources>

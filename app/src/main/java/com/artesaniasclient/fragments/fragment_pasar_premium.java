@@ -7,6 +7,9 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 import com.artesaniasclient.R;
 
@@ -15,7 +18,13 @@ import com.artesaniasclient.R;
  * Use the {@link fragment_pasar_premium#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class fragment_pasar_premium extends Fragment {
+public class fragment_pasar_premium extends Fragment implements AdapterView.OnItemSelectedListener {
+
+    String[] formas = new String[4];
+    ArrayAdapter<CharSequence> adp;
+    ArrayAdapter<CharSequence> adapterFormaPago;
+    Spinner cbbFormaPago;
+    static String fp = "Mensual";
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -61,6 +70,32 @@ public class fragment_pasar_premium extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_pasar_premium, container, false);
+        View view = inflater.inflate(R.layout.fragment_pasar_premium, container, false);
+        llenarSpinner();
+        adapterFormaPago = new ArrayAdapter<CharSequence>(getContext(), android.R.layout.simple_spinner_item, formas);
+        cbbFormaPago = (Spinner)view.findViewById(R.id.formapago);
+        adapterFormaPago.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); //como se muestran los datos
+        cbbFormaPago.setAdapter(adapterFormaPago);
+        cbbFormaPago.setOnItemSelectedListener(this);
+        return view;
+    }
+
+    private void llenarSpinner(){
+        adp = ArrayAdapter.createFromResource(getContext(),R.array.formapago, android.R.layout.simple_spinner_item);
+        int i = 1;
+        while(i<formas.length){
+            formas[i] = (String) adp.getItem(i-1);
+            i=i+1;
+        }
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        fp = parent.getItemAtPosition(position).toString();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }
