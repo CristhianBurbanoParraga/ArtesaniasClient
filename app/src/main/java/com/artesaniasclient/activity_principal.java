@@ -1,6 +1,7 @@
 package com.artesaniasclient;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -8,6 +9,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -24,8 +26,12 @@ import com.artesaniasclient.fragments.fragment_my_info;
 import com.artesaniasclient.fragments.fragment_my_orders;
 import com.artesaniasclient.fragments.fragment_my_sales;
 import com.artesaniasclient.fragments.fragment_register_company;
+import com.artesaniasclient.fragments.fragment_pasar_premium;
 import com.artesaniasclient.model.User;
 import com.artesaniasclient.ui.login.LoginActivity;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.wallet.AutoResolveHelper;
+import com.google.android.gms.wallet.PaymentData;
 import com.google.android.material.navigation.NavigationView;
 import com.artesaniasclient.utils.Util;
 import com.google.firebase.auth.FirebaseAuth;
@@ -228,5 +234,13 @@ public class activity_principal extends AppCompatActivity implements NavigationV
         //startActivity(intent);
         finish();
         startActivity(getIntent());
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        for (Fragment fragment : getSupportFragmentManager().getFragments()) {
+            fragment.onActivityResult(requestCode, resultCode, data);
+        }
     }
 }

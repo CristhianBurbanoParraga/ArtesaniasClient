@@ -63,7 +63,7 @@ public class Constants {
      *
      * @value #COUNTRY_CODE Your local country
      */
-    public static final String COUNTRY_CODE = "US";
+    public static final String COUNTRY_CODE = "EC";
 
     /**
      * Required by the API, but not visible to the user.
@@ -78,7 +78,7 @@ public class Constants {
      *
      * @value #SHIPPING_SUPPORTED_COUNTRIES
      */
-    public static final List<String> SHIPPING_SUPPORTED_COUNTRIES = Arrays.asList("US", "GB");
+    public static final List<String> SHIPPING_SUPPORTED_COUNTRIES = Arrays.asList("EC","US", "GB");
 
     /**
      * The name of your payment processor/gateway. Please refer to their documentation for more

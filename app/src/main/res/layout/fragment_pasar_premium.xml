@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#D8D5D5"
-    tools:context=".fragments.fragment_pasar_premium">
+    tools:context=".fragments.fragment_pasar_premium"
+    android:id="@+id/fragment_pasar_premium">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -36,7 +37,8 @@
                     android:layout_marginEnd="4dp"
                     app:srcCompat="@drawable/icon_info"
                     app:tint="#0669b2"
-                    tools:ignore="VectorDrawableCompat" />
+                    tools:ignore="VectorDrawableCompat"
+                    android:contentDescription="@string/todo" />
 
                 <com.codesgood.views.JustifiedTextView
                     android:id="@+id/txtIn"
@@ -46,7 +48,7 @@
                     android:layout_marginStart="35dp"
                     android:layout_marginTop="0dp"
                     android:layout_marginEnd="10dp"
-                    android:text="Pásate a Premium"
+                    android:text="@string/pasar_a_premiun"
                     android:textAlignment="textStart"
                     android:textColor="#0669b2"
                     android:textStyle="bold|italic" />
@@ -59,7 +61,7 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="10dp"
-                    android:text="* Beneficios de pasarse a premium:\n-  Puedes  registrar  un número ilimitado de artesanías, con una cuenta Free solo puedes registrar hasta 5 items.\n-  Puedes registrar las empresas o tiendas de artesanías que creas conveniente para promocionar tus productos. Con un cuenta Free solo puedes tener una.\n*  Costos de pasarse a premium:\n-  Pagos mensuales de $6.99\n-  Pagos trimestral de $17.99\n-  Pagos semestrales de $38.99\n-  Pagos anuales de $53.99"
+                    android:text="@string/texto_info_pago"
                     android:textAlignment="textStart"
                     android:textColor="#3C3B3B"
                     android:textStyle="italic" />
@@ -163,7 +165,6 @@
                         android:id="@+id/lblformapago"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
                         android:layout_marginStart="10dp"
                         android:text="Forma de pago:"
                         android:textSize="18sp"
@@ -173,14 +174,12 @@
                         android:id="@+id/formapago"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:layout_toEndOf="@+id/lblformapago"
                         android:textSize="14sp" />
 
                 </LinearLayout>
 
                 <Button
-                    android:id="@+id/seleccionarimg"
+                    android:id="@+id/pasar_premiun"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/mainformapago"

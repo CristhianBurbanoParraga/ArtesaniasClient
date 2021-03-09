@@ -110,5 +110,10 @@
     <string name="premium_date_expiration">Fecha de expiración</string>
     <string name="premium_cvc">CVC</string>
     <string name="premium_btn">Cambiar a premium</string>
+    <string name="googlepay_status_unavailable">Google play es invalido</string>
+    <string name="texto_info_pago">* Beneficios de pasarse a premium:\n- Puedes registrar un número ilimitado de artesanías, con una cuenta Free solo puedes registrar hasta 5 items.\n- Puedes registrar las empresas o tiendas de artesanías que creas conveniente para promocionar tus productos. Con un cuenta Free solo puedes tener una.\n* Costos de pasarse a premium:\n- Pagos mensuales de $6.99\n- Pagos trimestral de $17.99\n- Pagos semestrales de $38.99\n- Pagos anuales de $53.99</string>
+    <string name="pasar_a_premiun">Pásate a Premium</string>
+    <string name="todo">TODO</string>
+    <string name="payments_show_name">Pago recibido correctamente por %s!</string>
 
 </resources>
