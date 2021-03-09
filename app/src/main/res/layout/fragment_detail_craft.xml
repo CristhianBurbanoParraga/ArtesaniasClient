@@ -14,211 +14,213 @@
         android:scrollbars="vertical"
         tools:ignore="UselessParent">
 
-    </ScrollView>
-
-    <!-- <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabNext"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_gravity="bottom|left"
-        android:layout_marginStart="30dp"
-        android:layout_marginBottom="24dp"
-        android:contentDescription="NavView"
-        android:onClick="regresar"
-        android:tint="@color/white"
-        app:backgroundTint="#0669b2"
-        app:maxImageSize="40dp"
-        app:srcCompat="@drawable/icon_return" /> -->
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout
-            android:layout_width="match_parent"
+        <!-- <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabNext"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/fondo2"
-            android:orientation="vertical"
-            android:padding="15dp">
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="bottom|left"
+            android:layout_marginStart="30dp"
+            android:layout_marginBottom="24dp"
+            android:contentDescription="NavView"
+            android:onClick="regresar"
+            android:tint="@color/white"
+            app:backgroundTint="#0669b2"
+            app:maxImageSize="40dp"
+            app:srcCompat="@drawable/icon_return" /> -->
 
-            <TextView
-                android:id="@+id/title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:fontFamily="@font/alfa_slab_one"
-                android:text="@string/titleart"
-                android:textAlignment="center"
-                android:textAllCaps="true"
-                android:textColor="#525966"
-                android:textSize="25sp"
-                android:textStyle="bold"
-                tools:ignore="MissingConstraints"
-                tools:layout_editor_absoluteY="88dp" />
-
-            <ImageView
-                android:id="@+id/imgartesania"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:layout_below="@id/title"
-                android:layout_centerHorizontal="true"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="24dp"
-                android:layout_marginBottom="20dp"
-                android:contentDescription="@string/descr"
-                android:scaleType="fitXY"
-                app:srcCompat="@drawable/img_base" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
                 android:layout_marginBottom="10dp"
-                android:orientation="horizontal">
+                android:background="@drawable/fondo2"
+                android:orientation="vertical"
+                android:padding="15dp">
 
                 <TextView
-                    android:id="@+id/catartesania1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/alfa_slab_one"
-                    android:inputType="text"
-                    android:selectAllOnFocus="true"
-                    android:text="@string/categart" />
-
-                <TextView
-                    android:id="@+id/catartesania"
+                    android:id="@+id/title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:inputType="text"
-                    android:selectAllOnFocus="true"
-                    android:text="Categoría:" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/nameartesania1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
                     android:fontFamily="@font/alfa_slab_one"
-                    android:inputType="text"
-                    android:selectAllOnFocus="true"
-                    android:text="@string/nameart" />
+                    android:text="@string/titleart"
+                    android:textAlignment="center"
+                    android:textAllCaps="true"
+                    android:textColor="#525966"
+                    android:textSize="25sp"
+                    android:textStyle="bold"
+                    tools:ignore="MissingConstraints"
+                    tools:layout_editor_absoluteY="88dp" />
 
-                <TextView
-                    android:id="@+id/nameartesania"
+                <ImageView
+                    android:id="@+id/imgartesania"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_below="@id/title"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="24dp"
+                    android:layout_marginBottom="20dp"
+                    android:contentDescription="@string/descr"
+                    android:scaleType="fitXY"
+                    app:srcCompat="@drawable/img_base" />
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:inputType="text"
-                    android:selectAllOnFocus="true"
-                    android:text="Nombre:" />
-            </LinearLayout>
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/catartesania1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/alfa_slab_one"
+                        android:text="@string/categart" />
 
-                <TextView
-                    android:id="@+id/cantartesania1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/alfa_slab_one"
-                    android:inputType="text"
-                    android:selectAllOnFocus="true"
-                    android:text="@string/cantactart" />
+                    <TextView
+                        android:id="@+id/catartesania"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:text="Categoría:" />
 
-                <TextView
-                    android:id="@+id/cantartesania"
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:inputType="text"
-                    android:selectAllOnFocus="true"
-                    android:text="Cantidad Actual:" />
-            </LinearLayout>
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/nameartesania1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/alfa_slab_one"
+                        android:text="@string/nameart" />
 
-                <TextView
-                    android:id="@+id/precioartesania1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/alfa_slab_one"
-                    android:inputType="textEmailAddress"
-                    android:selectAllOnFocus="true"
-                    android:text="@string/priceart" />
+                    <TextView
+                        android:id="@+id/nameartesania"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:text="Nombre:" />
+                </LinearLayout>
 
-                <TextView
-                    android:id="@+id/precioartesania"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:inputType="textEmailAddress"
-                    android:selectAllOnFocus="true"
-                    android:text="Precio:" />
-            </LinearLayout>
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/cantartesania1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/alfa_slab_one"
+                        android:text="@string/cantactart" />
 
-                <TextView
-                    android:id="@+id/description1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/alfa_slab_one"
-                    android:selectAllOnFocus="true"
-                    android:text="@string/descart" />
+                    <TextView
+                        android:id="@+id/cantartesania"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:text="Cantidad Actual:" />
+                </LinearLayout>
 
-                <TextView
-                    android:id="@+id/description"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:inputType="textMultiLine"
-                    android:selectAllOnFocus="true"
-                    android:text="Descripción" />
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/precioartesania1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/alfa_slab_one"
+                        android:text="@string/priceart" />
+
+                    <TextView
+                        android:id="@+id/precioartesania"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:text="Precio:" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/description1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/alfa_slab_one"
+                        android:text="@string/descart" />
+
+                    <TextView
+                        android:id="@+id/description"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:inputType="textMultiLine"
+                        android:text="Descripción" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/alfa_slab_one"
+                        android:text="@string/order_cantidad_escoger" />
+
+                    <EditText
+                        android:id="@+id/cantidadrequerida"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:selectAllOnFocus="true"
+                        android:inputType="number"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginEnd="70dp"/>
+
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/comprar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="24dp"
+                    android:backgroundTint="#0669b2"
+                    android:fontFamily="@font/alfa_slab_one"
+                    android:text="@string/comprar"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    app:icon="@drawable/icon_buy"
+                    app:iconGravity="textStart" />
+
             </LinearLayout>
-
-            <Button
-                android:id="@+id/comprar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="24dp"
-                android:backgroundTint="#0669b2"
-                android:fontFamily="@font/alfa_slab_one"
-                android:text="@string/comprar"
-                android:textColor="@color/white"
-                android:textSize="12sp"
-                app:icon="@drawable/icon_buy"
-                app:iconGravity="textStart" />
-
-        </LinearLayout>
-    </RelativeLayout>
+        </RelativeLayout>
+    </ScrollView>
 
     <ProgressBar
         android:id="@+id/loading"

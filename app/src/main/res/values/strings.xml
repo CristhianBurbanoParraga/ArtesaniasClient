@@ -101,7 +101,7 @@
     <string name="cantactart">Cantidad Actual:</string>
     <string name="priceart">Precio:</string>
     <string name="descart">Descripción:</string>
-    <string name="comprar">Comprar</string>
+    <string name="comprar">Realizar pedido</string>
 
     <!--
     Premium
@@ -110,5 +110,10 @@
     <string name="premium_date_expiration">Fecha de expiración</string>
     <string name="premium_cvc">CVC</string>
     <string name="premium_btn">Cambiar a premium</string>
+
+    <!--
+    Order
+    -->
+    <string name="order_cantidad_escoger">Cantidad solicitada</string>
 
 </resources>

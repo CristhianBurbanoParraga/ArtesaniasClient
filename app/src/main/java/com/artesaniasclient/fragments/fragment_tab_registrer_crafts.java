@@ -155,6 +155,7 @@ public class fragment_tab_registrer_crafts extends Fragment implements ICraft, A
         craft.setPrice(Double.parseDouble(txtPrecioArte.getText().toString()));
         craft.setDescription(txtDescription.getText().toString());
         craft.setCompany(id);
+        craft.setUsercraftsman(Util.getUserConnect(getContext()).getEmail());
         if (!isEditCraft) {
             @SuppressLint("SimpleDateFormat") String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
             craft.setDateregistry(date);
