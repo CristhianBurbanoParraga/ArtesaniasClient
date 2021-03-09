@@ -259,10 +259,11 @@ public class UserController {
         // [END delete_document]
     }
 
-    public void updatePaymentData (String iduser, String datepayment, int countmonth) {
+    public void updatePaymentData (String iduser, String datepayment, int countmonth, String typesuscryption) {
         Map<String, Object> data = new HashMap<>();
         data.put("datepayment", datepayment);
         data.put("countmonth", countmonth);
+        data.put("suscriptiontype", typesuscryption);
         db.collection("user").document(iduser)
                 .update(data)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {

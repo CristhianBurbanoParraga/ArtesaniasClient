@@ -22,6 +22,8 @@ public class Util {
     public static int countCraftsOfUser = 0;
     public static int countCompaniesOfUser = 0;
     public static String typeSuscriptionOfUser = "";
+    public static final String premiumSuscription = "Premium";
+    public static final String freeSuscription = "Free";
 
     public static Bundle getBundleFusion(Bundle bundleOld, Bundle bundleNew) {
         if (bundleOld == null) return bundleNew;

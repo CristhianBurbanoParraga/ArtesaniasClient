@@ -225,7 +225,7 @@ public class fragment_pasar_premium extends Fragment {
             Toast.makeText(
                     getActivity(), getString(R.string.payments_show_name, billingName),
                     Toast.LENGTH_LONG).show();
-            new UserController().updatePaymentData(Util.getUserConnect(getContext()).getId(), new SimpleDateFormat("yyyy-MM-DD").format(new Date()), FormPaySelected());
+            new UserController().updatePaymentData(Util.getUserConnect(getContext()).getId(), new SimpleDateFormat("yyyy-MM-DD").format(new Date()), FormPaySelected(), Util.premiumSuscription);
             mAuth.signOut();
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
             SharedPreferences.Editor editor = sharedPreferences.edit();
