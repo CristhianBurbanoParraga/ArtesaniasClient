@@ -56,6 +56,7 @@ public class fragment_my_orders extends Fragment implements AdapterView.OnItemSe
     ArrayAdapter<CharSequence> adp;
     Spinner spinner;
     String state = "Todos";
+    Bundle bundle;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -204,15 +205,18 @@ public class fragment_my_orders extends Fragment implements AdapterView.OnItemSe
                             public void onClick(View v) {
                                 int itemSelect = rcvOrders.getChildAdapterPosition(v);
                                 Order o = orderList.get(itemSelect);
+                                String namecraft = "";
+                                String numberUser = "";
+
                                 if (o.getState().equals("Pendiente")) {
-                                    String namecraft = "";
+
                                     for (int c = 0; c < craft.size(); c++) {
                                         Craft craftModel = craft.get(c);
                                         if (craftModel.getId().equals(o.getCraft())) {
                                             namecraft = craftModel.getNamecraft();
                                         }
                                     }
-                                    String numberUser = "";
+
                                     for (int c = 0; c < users.size(); c++) {
                                         User userModel = users.get(c);
                                         if (userModel.getEmail().equals(o.getUsercraftsman())) {
@@ -229,6 +233,20 @@ public class fragment_my_orders extends Fragment implements AdapterView.OnItemSe
                                 } else {
                                     Toast.makeText(getContext(), "El producto ya fue entregado", Toast.LENGTH_SHORT).show();
                                 }
+
+                                bundle = new Bundle();
+                                bundle.putString("oderSelec", new Gson().toJson(o));
+                                bundle.putString("namecraft", namecraft);
+                                bundle.putString("numberUser", numberUser);
+                                // Crea el nuevo fragmento y la transacción.
+                                Fragment nuevoFragmento = new fragment_detail_order();
+                                nuevoFragmento.setArguments(bundle);
+                                FragmentTransaction transaction = getFragmentManager().beginTransaction()
+                                        .replace(R.id.content, nuevoFragmento);
+                                // Commit a la transacción
+                                transaction.commit();
+
+
                             }
                         });
                     }
@@ -250,7 +268,19 @@ public class fragment_my_orders extends Fragment implements AdapterView.OnItemSe
             public void onClick(View view) {
                 int itemSelect = rcvOrders.getChildAdapterPosition(view);
                 Order o = order.get(itemSelect);
-
+                String namecraft = "";
+                String numberUser = "";
+                bundle = new Bundle();
+                bundle.putString("oderSelec", new Gson().toJson(o));
+                bundle.putString("namecraft", namecraft);
+                bundle.putString("numberUser", numberUser);
+                // Crea el nuevo fragmento y la transacción.
+                Fragment nuevoFragmento = new fragment_detail_order();
+                nuevoFragmento.setArguments(bundle);
+                FragmentTransaction transaction = getFragmentManager().beginTransaction()
+                        .replace(R.id.content, nuevoFragmento);
+                // Commit a la transacción
+                transaction.commit();
             }
         });
     }

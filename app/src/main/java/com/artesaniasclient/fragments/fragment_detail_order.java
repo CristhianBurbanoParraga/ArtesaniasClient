@@ -11,6 +11,9 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.artesaniasclient.R;
+import com.artesaniasclient.model.Craft;
+import com.artesaniasclient.model.Order;
+import com.google.gson.Gson;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,6 +28,10 @@ public class fragment_detail_order extends Fragment {
     TextView txtFecha;
     Button btnComprar;
     Button btnCancelar;
+    Order order;
+    String oderSelec;
+    String namecraft = "";
+    String numberUser = "";
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -67,6 +74,15 @@ public class fragment_detail_order extends Fragment {
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        txtNombreArtesania.setText(namecraft);
+        txtCantidad.setText(order.getQuantity().toString());
+        txtPrecio.setText(order.getPrice().toString());
+        txtFecha.setText(order.getOrderdate());
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -77,6 +93,13 @@ public class fragment_detail_order extends Fragment {
         txtFecha = view.findViewById(R.id.fecha);
         btnComprar = view.findViewById(R.id.comprar);
         btnCancelar = view.findViewById(R.id.cancelar);
+
+        order = new Order();
+        oderSelec = getArguments().getString("oderSelec");
+        order = new Gson().fromJson(oderSelec, Order.class);
+        namecraft = getArguments().getString("namecraft");
+        numberUser = getArguments().getString("numberUser");
+
         return view;
     }
 }
