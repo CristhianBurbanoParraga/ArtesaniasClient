@@ -16,6 +16,7 @@ public class Craft implements Serializable {
     private double price;
     private Integer quantity;
     private String imageName;
+    private String usercraftsman;
 
     public Craft() {
 
@@ -27,7 +28,7 @@ public class Craft implements Serializable {
 
     public Craft(String id, String category, String company, String datedisabled, String dateregistry,
                  String description, String imageurl, boolean isactive, String namecraft, double price,
-                 Integer quantity, String imageName) {
+                 Integer quantity, String imageName, String usercraftsman) {
         this.id = id;
         this.category = category;
         this.company = company;
@@ -40,6 +41,7 @@ public class Craft implements Serializable {
         this.price = price;
         this.quantity = quantity;
         this.imageName = imageName;
+        this.usercraftsman = usercraftsman;
     }
 
     public String getId() {
@@ -134,21 +136,30 @@ public class Craft implements Serializable {
 
     public void setImageName(String imageName) { this.imageName = imageName; }
 
+    public String getUsercraftsman() {
+        return usercraftsman;
+    }
+
+    public void setUsercraftsman(String usercraftsman) {
+        this.usercraftsman = usercraftsman;
+    }
+
     @Override
     public String toString() {
         return "Craft{" +
                 "id='" + id + '\'' +
                 ", category='" + category + '\'' +
                 ", company='" + company + '\'' +
-                ", datedisabled=" + datedisabled +
-                ", dateregistry=" + dateregistry +
+                ", datedisabled='" + datedisabled + '\'' +
+                ", dateregistry='" + dateregistry + '\'' +
                 ", description='" + description + '\'' +
                 ", imageurl='" + imageurl + '\'' +
                 ", isactive=" + isactive +
                 ", namecraft='" + namecraft + '\'' +
                 ", price=" + price +
                 ", quantity=" + quantity +
-                ", imageName=" + imageName +
+                ", imageName='" + imageName + '\'' +
+                ", usercraftsman='" + usercraftsman + '\'' +
                 '}';
     }
 }

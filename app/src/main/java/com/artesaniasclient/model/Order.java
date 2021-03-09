@@ -1,30 +1,35 @@
 package com.artesaniasclient.model;
 
-import java.util.ArrayList;
-
 public class Order {
     private String id;
     private String deliverydate;
     private String deliverytime;
     private String observations;
     private String orderdate;
-    private int ordernumber;
     private String ordertime;
     private String state;
-    private String user;
-    ArrayList<String> detail;
+    private String usercraftsman;
+    private String userclient;
+    private String craft;
+    private Double price;
+    private Integer quantity;
 
-    public Order(String id, String deliverydate, String deliverytime, String observations, String orderdate, int ordernumber, String ordertime, String state, String user, ArrayList<String> detail) {
+    public Order() {
+    }
+
+    public Order(String id, String deliverydate, String deliverytime, String observations, String orderdate, String ordertime, String state, String usercraftsman, String userclient, String craft, Double price, Integer quantity) {
         this.id = id;
         this.deliverydate = deliverydate;
         this.deliverytime = deliverytime;
         this.observations = observations;
         this.orderdate = orderdate;
-        this.ordernumber = ordernumber;
         this.ordertime = ordertime;
         this.state = state;
-        this.user = user;
-        this.detail = detail;
+        this.usercraftsman = usercraftsman;
+        this.userclient = userclient;
+        this.craft = craft;
+        this.price = price;
+        this.quantity = quantity;
     }
 
     public String getId() {
@@ -67,14 +72,6 @@ public class Order {
         this.orderdate = orderdate;
     }
 
-    public int getOrdernumber() {
-        return ordernumber;
-    }
-
-    public void setOrdernumber(int ordernumber) {
-        this.ordernumber = ordernumber;
-    }
-
     public String getOrdertime() {
         return ordertime;
     }
@@ -91,19 +88,61 @@ public class Order {
         this.state = state;
     }
 
-    public String getUser() {
-        return user;
+    public String getUsercraftsman() {
+        return usercraftsman;
     }
 
-    public void setUser(String user) {
-        this.user = user;
+    public void setUsercraftsman(String usercraftsman) {
+        this.usercraftsman = usercraftsman;
     }
 
-    public ArrayList<String> getDetail() {
-        return detail;
+    public String getUserclient() {
+        return userclient;
     }
 
-    public void setDetail(ArrayList<String> detail) {
-        this.detail = detail;
+    public void setUserclient(String userclient) {
+        this.userclient = userclient;
+    }
+
+    public String getCraft() {
+        return craft;
+    }
+
+    public void setCraft(String craft) {
+        this.craft = craft;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id='" + id + '\'' +
+                ", deliverydate='" + deliverydate + '\'' +
+                ", deliverytime='" + deliverytime + '\'' +
+                ", observations='" + observations + '\'' +
+                ", orderdate='" + orderdate + '\'' +
+                ", ordertime='" + ordertime + '\'' +
+                ", state='" + state + '\'' +
+                ", usercraftsman='" + usercraftsman + '\'' +
+                ", userclient='" + userclient + '\'' +
+                ", craft='" + craft + '\'' +
+                ", price=" + price +
+                ", quantity=" + quantity +
+                '}';
     }
 }

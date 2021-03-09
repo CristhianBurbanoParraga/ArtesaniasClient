@@ -101,7 +101,7 @@
     <string name="cantactart">Cantidad Actual:</string>
     <string name="priceart">Precio:</string>
     <string name="descart">Descripción:</string>
-    <string name="comprar">Comprar</string>
+    <string name="comprar">Realizar pedido</string>
 
     <!--
     Premium
@@ -115,5 +115,10 @@
     <string name="pasar_a_premiun">Pásate a Premium</string>
     <string name="todo">TODO</string>
     <string name="payments_show_name">Pago recibido correctamente por %s!</string>
+
+    <!--
+    Order
+    -->
+    <string name="order_cantidad_escoger">Cantidad solicitada</string>
 
 </resources>
