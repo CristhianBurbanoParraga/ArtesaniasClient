@@ -1,6 +1,8 @@
 package com.artesaniasclient.fragments;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -25,6 +27,7 @@ import com.artesaniasclient.model.Company;
 import com.artesaniasclient.model.Craft;
 import com.artesaniasclient.model.Order;
 import com.artesaniasclient.model.User;
+import com.artesaniasclient.utils.Util;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -32,6 +35,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.gson.Gson;
 
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -47,6 +51,7 @@ public class fragment_my_orders extends Fragment implements AdapterView.OnItemSe
     RecyclerView rcvOrders;
     private ArrayList<Order> orderList;
     ArrayList<Craft> craft;
+    ArrayList<User> users;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -98,6 +103,7 @@ public class fragment_my_orders extends Fragment implements AdapterView.OnItemSe
         rcvOrders.setLayoutManager(new LinearLayoutManager(getContext()));
         refFireStore = FirebaseFirestore.getInstance();
         orderList = new ArrayList<>();
+        users = getUsers();
         craft = getCraft();
         getAllMyOrders();
         // Inflate the layout for this fragment
@@ -126,9 +132,31 @@ public class fragment_my_orders extends Fragment implements AdapterView.OnItemSe
         return list;
     }
 
+    public ArrayList<User> getUsers(){
+        ArrayList<User> list = new ArrayList<>();
+        refFireStore.collection("user")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if (error != null) {
+                            System.err.println("Listen failed:" + error);
+                            return;
+                        }
+                        for (DocumentSnapshot doc : value) {
+                            if (doc.getId() != null) {
+                                User user = doc.toObject(User.class);
+                                user.setId(doc.getId());
+                                list.add(user);
+                            }
+                        }
+                    }
+                });
+        return list;
+    }
+
     public void getAllMyOrders(){
         refFireStore.collection("orders")
-                .whereEqualTo("userclient","jgarcia24121996@gmail.com")
+                .whereEqualTo("userclient", Util.getUserConnect(getContext()).getEmail())
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -140,7 +168,7 @@ public class fragment_my_orders extends Fragment implements AdapterView.OnItemSe
                         for (DocumentSnapshot doc : value) {
                             if (doc.getId() != null) {
                                 String idcraft = doc.getString("craft");
-                                String namecraft = "";
+
                                 /*for(int c = 0; c < craft.size(); c++){
                                     Craft craftModel = craft.get(c);
                                     if(craftModel.getId().equals(idcraft)){
@@ -155,8 +183,49 @@ public class fragment_my_orders extends Fragment implements AdapterView.OnItemSe
                         }
                         adapter = new adpMyOrders(getContext(), orderList, craft);
                         rcvOrders.setAdapter(adapter);
+                        adapter.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                String namecraft = "";
+                                int itemSelect = rcvOrders.getChildAdapterPosition(v);
+                                Order o = orderList.get(itemSelect);
+                                for(int c = 0; c < craft.size(); c++) {
+                                    Craft craftModel = craft.get(c);
+                                    if (craftModel.getId().equals(o.getCraft())) {
+                                        namecraft = craftModel.getNamecraft();
+                                    }
+                                }
+                                String numberUser = "";
+                                for(int c = 0; c < users.size(); c++) {
+                                    User userModel = users.get(c);
+                                    if (userModel.getEmail().equals(o.getUsercraftsman())) {
+                                        numberUser = userModel.getPhone();
+                                    }
+                                }
+                                openWhatsApp(numberUser, "Hola! ");
+                            }
+                        });
                     }
                 });
+    }
+
+    private void openWhatsApp(String numero, String mensaje) {
+        try{
+            PackageManager packageManager = getActivity().getPackageManager();
+            Intent i = new Intent(Intent.ACTION_VIEW);
+            String url = "https://api.whatsapp.com/send?phone=+593 "+ numero +"&text=" + URLEncoder.encode(mensaje, "UTF-8");
+            i.setPackage("com.whatsapp");
+            i.setData(Uri.parse(url));
+            //i.putExtra(Intent.EXTRA_STREAM, Uri.parse("https://firebasestorage.googleapis.com/v0/b/artesanias-304016.appspot.com/o/images%2F36070IMG-20210207-WA0000.jpeg?alt=media&token=81b5233c-94d7-4a4e-b8bd-faade8fa3ef8"));
+            if (i.resolveActivity(packageManager) != null) {
+                startActivity(i);
+            }else {
+                Toast.makeText(getContext(), "Error NO whatsapp", Toast.LENGTH_SHORT).show();
+            }
+        } catch(Exception e) {
+            System.out.println("ERROR WHATSAPP" + e.toString());
+            Toast.makeText(getContext(), "Error NO whatsapp", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override

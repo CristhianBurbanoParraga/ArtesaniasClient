@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -41,6 +42,54 @@
             android:orientation="horizontal">
 
         </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/border4"
+            android:padding="10dp">
+
+            <ImageView
+                android:id="@+id/icoinfo"
+                android:layout_width="20dp"
+                android:layout_height="21dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="4dp"
+                app:srcCompat="@drawable/icon_info"
+                app:tint="#0669b2"
+                tools:ignore="VectorDrawableCompat"
+                android:contentDescription="@string/todo" />
+
+            <com.codesgood.views.JustifiedTextView
+                android:id="@+id/txtIn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="35dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginEnd="10dp"
+                android:text="Importante"
+                android:textAlignment="textStart"
+                android:textColor="#0669b2"
+                android:textStyle="bold|italic" />
+
+            <com.codesgood.views.JustifiedTextView
+                android:id="@+id/txtInf"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="10dp"
+                android:text="Debe hacer clic en cada Orden item para efectuar su pago directamente con el vendedor."
+                android:textAlignment="textStart"
+                android:textColor="#3C3B3B"
+                android:textStyle="italic" />
+
+        </RelativeLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcvOrders"
