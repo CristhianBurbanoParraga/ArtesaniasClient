@@ -188,6 +188,18 @@ public class fragment_tab_my_crafts extends Fragment implements AdapterView.OnIt
         }
         adapter = new adpMyCrafts(getContext(), list);
         rcvCrafts.setAdapter(adapter);
+        adapter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int opcselec = rcvCrafts.getChildAdapterPosition(view);
+                bundle = new Bundle();
+                Craft craftSelected = craftList.get(opcselec);
+                bundle.putString("craftSelected", new Gson().toJson(craftSelected));
+                bundle.putBoolean("editable", true);
+                fragment_my_crafts.setArguments(Util.getBundleFusion(fragment_my_crafts.getArguments(), bundle));
+                fragment_my_crafts.viewPager.setCurrentItem(1);
+            }
+        });
     }
 
     @Override

@@ -11,6 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 import com.artesaniasclient.R;
 import com.artesaniasclient.adapter.adpMyOrders;
@@ -41,6 +43,9 @@ public class fragment_my_sales extends Fragment implements AdapterView.OnItemSel
     private ArrayList<Order> orderList;
     ArrayList<Craft> craft;
     ArrayList<User> users;
+    ArrayAdapter<CharSequence> adp;
+    Spinner spinner;
+    String state = "Todos";
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -92,11 +97,29 @@ public class fragment_my_sales extends Fragment implements AdapterView.OnItemSel
         rcvSales.setLayoutManager(new LinearLayoutManager(getContext()));
         refFireStore = FirebaseFirestore.getInstance();
         orderList = new ArrayList<>();
+        spinner = view.findViewById(R.id.cbbState);
+        adp = new ArrayAdapter<CharSequence>(getContext(), android.R.layout.simple_spinner_item);
+        adp.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adp.add("Todos");
+        adp.add("Pendiente");
+        adp.add("Finalizado");
+        //adp.add("Cancelado");
+        spinner.setAdapter(adp);
+        spinner.setOnItemSelectedListener(this);
         //users = getUsers();
         craft = getCraft();
-        getAllMySales();
+        //getAllMySales();
         // Inflate the layout for this fragment
         return view;
+    }
+
+    private void getSales(){
+        if (state.equals("Todos")){
+            getAllMySales();
+        }
+        else {
+            getMySalesByState();
+        }
     }
 
     public ArrayList<Craft> getCraft(){
@@ -153,9 +176,32 @@ public class fragment_my_sales extends Fragment implements AdapterView.OnItemSel
                 });
     }
 
+    private void getMySalesByState(){
+        ArrayList<Order> order = new ArrayList<>();
+        for (int i = 0; i < orderList.size(); i++){
+            Order ord = orderList.get(i);
+            if (orderList.get(i).getState().equals(state)){
+                order.add(ord);
+            }
+        }
+        adapter = new adpMySales(getContext(), order, craft);
+        rcvSales.setAdapter(adapter);
+        adapter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int itemSelect = rcvSales.getChildAdapterPosition(view);
+                Order o = order.get(itemSelect);
+                o.setState("Finalizado");
+                //llamar método update state
+
+            }
+        });
+    }
+
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
+        state = adapterView.getItemAtPosition(i).toString();
+        getSales();
     }
 
     @Override
