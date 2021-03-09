@@ -186,9 +186,9 @@ public class fragment_my_orders extends Fragment implements AdapterView.OnItemSe
                         adapter.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                String namecraft = "";
                                 int itemSelect = rcvOrders.getChildAdapterPosition(v);
                                 Order o = orderList.get(itemSelect);
+                                String namecraft = "";
                                 for(int c = 0; c < craft.size(); c++) {
                                     Craft craftModel = craft.get(c);
                                     if (craftModel.getId().equals(o.getCraft())) {
@@ -202,7 +202,13 @@ public class fragment_my_orders extends Fragment implements AdapterView.OnItemSe
                                         numberUser = userModel.getPhone();
                                     }
                                 }
-                                openWhatsApp(numberUser, "Hola! ");
+                                openWhatsApp(numberUser, "Hola! He realizado un pedido en ARTESANÍAS ECUADOR, con el detalle:\n\n" +
+                                        "CÓDIGO PEDIDO: " + o.getId() +
+                                        "\nFECHA: " + o.getOrderdate() +
+                                        "\nARTESANÍA: " + namecraft +
+                                        "\nCANTIDAD: " + o.getQuantity() +
+                                        "\nVALOR TOTAL: " + o.getPrice() +
+                                        "\n\nCUENTA ARTESANÍAS ECUADOR:\n" + o.getUserclient());
                             }
                         });
                     }
