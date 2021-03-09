@@ -205,12 +205,38 @@ public class fragment_my_orders extends Fragment implements AdapterView.OnItemSe
                             public void onClick(View v) {
                                 int itemSelect = rcvOrders.getChildAdapterPosition(v);
                                 Order o = orderList.get(itemSelect);
-                                String namecraft = "";
-                                String numberUser = "";
 
                                 if (o.getState().equals("Pendiente")) {
-
+                                    String namecraft = "";
+                                    String numberUser = "";
+                                    int cantidadcraft = 0;
                                     for (int c = 0; c < craft.size(); c++) {
+                                        Craft craftModel = craft.get(c);
+                                        if (craftModel.getId().equals(o.getCraft())) {
+                                            namecraft = craftModel.getNamecraft();
+                                            cantidadcraft = craftModel.getQuantity();
+                                        }
+                                    }
+
+                                    for (int c = 0; c < users.size(); c++) {
+                                        User userModel = users.get(c);
+                                        if (userModel.getEmail().equals(o.getUsercraftsman())) {
+                                            numberUser = userModel.getPhone();
+                                        }
+                                    }
+                                    bundle = new Bundle();
+                                    bundle.putString("oderSelec", new Gson().toJson(o));
+                                    bundle.putString("namecraft", namecraft);
+                                    bundle.putString("numberUser", numberUser);
+                                    bundle.putInt("cantidadcraft",cantidadcraft);
+                                    // Crea el nuevo fragmento y la transacción.
+                                    Fragment nuevoFragmento = new fragment_detail_order();
+                                    nuevoFragmento.setArguments(bundle);
+                                    FragmentTransaction transaction = getFragmentManager().beginTransaction()
+                                            .replace(R.id.content, nuevoFragmento);
+                                    // Commit a la transacción
+                                    transaction.commit();
+                                    /*for (int c = 0; c < craft.size(); c++) {
                                         Craft craftModel = craft.get(c);
                                         if (craftModel.getId().equals(o.getCraft())) {
                                             namecraft = craftModel.getNamecraft();
@@ -222,19 +248,19 @@ public class fragment_my_orders extends Fragment implements AdapterView.OnItemSe
                                         if (userModel.getEmail().equals(o.getUsercraftsman())) {
                                             numberUser = userModel.getPhone();
                                         }
-                                    }
-                                    openWhatsApp(numberUser, "Hola! He realizado un pedido en ARTESANÍAS ECUADOR, con el detalle:\n\n" +
+                                    }*/
+                                    /*openWhatsApp(numberUser, "Hola! He realizado un pedido en ARTESANÍAS ECUADOR, con el detalle:\n\n" +
                                             "CÓDIGO PEDIDO: " + o.getId() +
                                             "\nFECHA: " + o.getOrderdate() +
                                             "\nARTESANÍA: " + namecraft +
                                             "\nCANTIDAD: " + o.getQuantity() +
                                             "\nVALOR TOTAL: $" + o.getPrice() +
-                                            "\n\nCUENTA ARTESANÍAS ECUADOR:\n" + o.getUserclient());
+                                            "\n\nCUENTA ARTESANÍAS ECUADOR:\n" + o.getUserclient());*/
                                 } else {
                                     Toast.makeText(getContext(), "El producto ya fue entregado", Toast.LENGTH_SHORT).show();
                                 }
 
-                                bundle = new Bundle();
+                                /*bundle = new Bundle();
                                 bundle.putString("oderSelec", new Gson().toJson(o));
                                 bundle.putString("namecraft", namecraft);
                                 bundle.putString("numberUser", numberUser);
@@ -244,9 +270,7 @@ public class fragment_my_orders extends Fragment implements AdapterView.OnItemSe
                                 FragmentTransaction transaction = getFragmentManager().beginTransaction()
                                         .replace(R.id.content, nuevoFragmento);
                                 // Commit a la transacción
-                                transaction.commit();
-
-
+                                transaction.commit();*/
                             }
                         });
                     }
@@ -268,24 +292,45 @@ public class fragment_my_orders extends Fragment implements AdapterView.OnItemSe
             public void onClick(View view) {
                 int itemSelect = rcvOrders.getChildAdapterPosition(view);
                 Order o = order.get(itemSelect);
-                String namecraft = "";
-                String numberUser = "";
-                bundle = new Bundle();
-                bundle.putString("oderSelec", new Gson().toJson(o));
-                bundle.putString("namecraft", namecraft);
-                bundle.putString("numberUser", numberUser);
-                // Crea el nuevo fragmento y la transacción.
-                Fragment nuevoFragmento = new fragment_detail_order();
-                nuevoFragmento.setArguments(bundle);
-                FragmentTransaction transaction = getFragmentManager().beginTransaction()
-                        .replace(R.id.content, nuevoFragmento);
-                // Commit a la transacción
-                transaction.commit();
+
+                if (o.getState().equals("Pendiente")) {
+                    String namecraft = "";
+                    String numberUser = "";
+                    int cantidadcraft = 0;
+                    for (int c = 0; c < craft.size(); c++) {
+                        Craft craftModel = craft.get(c);
+                        if (craftModel.getId().equals(o.getCraft())) {
+                            namecraft = craftModel.getNamecraft();
+                            cantidadcraft = craftModel.getQuantity();
+                        }
+                    }
+
+                    for (int c = 0; c < users.size(); c++) {
+                        User userModel = users.get(c);
+                        if (userModel.getEmail().equals(o.getUsercraftsman())) {
+                            numberUser = userModel.getPhone();
+                        }
+                    }
+                    bundle = new Bundle();
+                    bundle.putString("oderSelec", new Gson().toJson(o));
+                    bundle.putString("namecraft", namecraft);
+                    bundle.putString("numberUser", numberUser);
+                    bundle.putInt("cantidadcraft",cantidadcraft);
+                    // Crea el nuevo fragmento y la transacción.
+                    Fragment nuevoFragmento = new fragment_detail_order();
+                    nuevoFragmento.setArguments(bundle);
+                    FragmentTransaction transaction = getFragmentManager().beginTransaction()
+                            .replace(R.id.content, nuevoFragmento);
+                    // Commit a la transacción
+                    transaction.commit();
+                } else {
+                    Toast.makeText(getContext(), "El producto ya fue entregado", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
 
-    private void openWhatsApp(String numero, String mensaje) {
+    /*private void openWhatsApp(String numero, String mensaje) {
         try{
             PackageManager packageManager = getActivity().getPackageManager();
             Intent i = new Intent(Intent.ACTION_VIEW);
@@ -302,7 +347,7 @@ public class fragment_my_orders extends Fragment implements AdapterView.OnItemSe
             System.out.println("ERROR WHATSAPP" + e.toString());
             Toast.makeText(getContext(), "Error NO whatsapp", Toast.LENGTH_SHORT).show();
         }
-    }
+    }*/
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {

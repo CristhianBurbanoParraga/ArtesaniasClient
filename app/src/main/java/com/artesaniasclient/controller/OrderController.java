@@ -159,6 +159,25 @@ public class OrderController {
                 });
     }
 
+    public void UpdateOrderByCancellation (String idorder) {
+        db.collection("orders").document(idorder)
+                .update("state","Cancelado")
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        /*Log.d(TAG, "DocumentSnapshot successfully written!");
+                        getiCraft().set_craft_success(new Craft(), "Artesania editada exitosamente");*/
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        /*Log.w(TAG, "Error writing document", e);
+                        getiCraft().set_craft_success(null, Util.getMessageTask(e));*/
+                    }
+                });
+    }
+
     private String getMessageTask(Exception exception) {
         String message = null;
         if (exception != null) {
