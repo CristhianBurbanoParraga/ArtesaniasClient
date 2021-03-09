@@ -90,6 +90,15 @@ public class fragment_my_info extends Fragment implements IUserComunication {
         txtUserLastName.setText(user.getLastname());
         txtUserAddress.setText(user.getAddress());
         txtUserPhone.setText(user.getPhone());
+
+        if (user.getUsertype().equals("Artesano")) {
+            if (user.getSuscriptiontype().equals(Util.premiumSuscription)) {
+                btnPremium.setText("Extender Premium");
+            }
+        } else {
+            btnPremium.setVisibility(View.GONE);
+        }
+
     }
 
     @Override

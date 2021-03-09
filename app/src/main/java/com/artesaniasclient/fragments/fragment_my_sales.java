@@ -72,7 +72,7 @@ public class fragment_my_sales extends Fragment {
         return view;
     }
 
-    private void openWhatsApp(String numero,String mensaje){
+    private void openWhatsApp(String numero,String mensaje) {
         try{
             PackageManager packageManager = getActivity().getPackageManager();
             Intent i = new Intent(Intent.ACTION_VIEW);
@@ -90,7 +90,5 @@ public class fragment_my_sales extends Fragment {
             Toast.makeText(getContext(), "Error NO whatsapp", Toast.LENGTH_SHORT).show();
         }
     }
-
-
 
 }
