@@ -176,6 +176,7 @@ public class fragment_my_orders extends Fragment implements AdapterView.OnItemSe
                                     }
                                 }*/
                                 Order ord = doc.toObject(Order.class);
+                                ord.setId(doc.getId());
                                 //ord.setCraft(namecraft);
                                 orderList.add(ord);
                             }
@@ -188,27 +189,31 @@ public class fragment_my_orders extends Fragment implements AdapterView.OnItemSe
                             public void onClick(View v) {
                                 int itemSelect = rcvOrders.getChildAdapterPosition(v);
                                 Order o = orderList.get(itemSelect);
-                                String namecraft = "";
-                                for(int c = 0; c < craft.size(); c++) {
-                                    Craft craftModel = craft.get(c);
-                                    if (craftModel.getId().equals(o.getCraft())) {
-                                        namecraft = craftModel.getNamecraft();
+                                if (o.getState().equals("Pendiente")) {
+                                    String namecraft = "";
+                                    for (int c = 0; c < craft.size(); c++) {
+                                        Craft craftModel = craft.get(c);
+                                        if (craftModel.getId().equals(o.getCraft())) {
+                                            namecraft = craftModel.getNamecraft();
+                                        }
                                     }
-                                }
-                                String numberUser = "";
-                                for(int c = 0; c < users.size(); c++) {
-                                    User userModel = users.get(c);
-                                    if (userModel.getEmail().equals(o.getUsercraftsman())) {
-                                        numberUser = userModel.getPhone();
+                                    String numberUser = "";
+                                    for (int c = 0; c < users.size(); c++) {
+                                        User userModel = users.get(c);
+                                        if (userModel.getEmail().equals(o.getUsercraftsman())) {
+                                            numberUser = userModel.getPhone();
+                                        }
                                     }
+                                    openWhatsApp(numberUser, "Hola! He realizado un pedido en ARTESANÍAS ECUADOR, con el detalle:\n\n" +
+                                            "CÓDIGO PEDIDO: " + o.getId() +
+                                            "\nFECHA: " + o.getOrderdate() +
+                                            "\nARTESANÍA: " + namecraft +
+                                            "\nCANTIDAD: " + o.getQuantity() +
+                                            "\nVALOR TOTAL: " + o.getPrice() +
+                                            "\n\nCUENTA ARTESANÍAS ECUADOR:\n" + o.getUserclient());
+                                } else {
+                                    Toast.makeText(getContext(), "El producto ya fue entregado", Toast.LENGTH_SHORT).show();
                                 }
-                                openWhatsApp(numberUser, "Hola! He realizado un pedido en ARTESANÍAS ECUADOR, con el detalle:\n\n" +
-                                        "CÓDIGO PEDIDO: " + o.getId() +
-                                        "\nFECHA: " + o.getOrderdate() +
-                                        "\nARTESANÍA: " + namecraft +
-                                        "\nCANTIDAD: " + o.getQuantity() +
-                                        "\nVALOR TOTAL: " + o.getPrice() +
-                                        "\n\nCUENTA ARTESANÍAS ECUADOR:\n" + o.getUserclient());
                             }
                         });
                     }
