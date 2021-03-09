@@ -153,6 +153,7 @@ public class fragment_my_sales extends Fragment implements AdapterView.OnItemSel
     public void getAllMySales(){
         refFireStore.collection("orders")
                 .whereEqualTo("usercraftsman", Util.getUserConnect(getContext()).getEmail())
+                .whereNotEqualTo("state","Cancelado")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {

@@ -116,7 +116,7 @@ public class fragment_my_orders extends Fragment implements AdapterView.OnItemSe
         adp.add("Todos");
         adp.add("Pendiente");
         adp.add("Finalizado");
-        //adp.add("Cancelado");
+        adp.add("Cancelado");
         spinner.setAdapter(adp);
         spinner.setOnItemSelectedListener(this);
 
@@ -236,41 +236,9 @@ public class fragment_my_orders extends Fragment implements AdapterView.OnItemSe
                                             .replace(R.id.content, nuevoFragmento);
                                     // Commit a la transacción
                                     transaction.commit();
-                                    /*for (int c = 0; c < craft.size(); c++) {
-                                        Craft craftModel = craft.get(c);
-                                        if (craftModel.getId().equals(o.getCraft())) {
-                                            namecraft = craftModel.getNamecraft();
-                                        }
-                                    }
-
-                                    for (int c = 0; c < users.size(); c++) {
-                                        User userModel = users.get(c);
-                                        if (userModel.getEmail().equals(o.getUsercraftsman())) {
-                                            numberUser = userModel.getPhone();
-                                        }
-                                    }*/
-                                    /*openWhatsApp(numberUser, "Hola! He realizado un pedido en ARTESANÍAS ECUADOR, con el detalle:\n\n" +
-                                            "CÓDIGO PEDIDO: " + o.getId() +
-                                            "\nFECHA: " + o.getOrderdate() +
-                                            "\nARTESANÍA: " + namecraft +
-                                            "\nCANTIDAD: " + o.getQuantity() +
-                                            "\nVALOR TOTAL: $" + o.getPrice() +
-                                            "\n\nCUENTA ARTESANÍAS ECUADOR:\n" + o.getUserclient());*/
                                 } else {
                                     Toast.makeText(getContext(), "El producto ya fue entregado", Toast.LENGTH_SHORT).show();
                                 }
-
-                                /*bundle = new Bundle();
-                                bundle.putString("oderSelec", new Gson().toJson(o));
-                                bundle.putString("namecraft", namecraft);
-                                bundle.putString("numberUser", numberUser);
-                                // Crea el nuevo fragmento y la transacción.
-                                Fragment nuevoFragmento = new fragment_detail_order();
-                                nuevoFragmento.setArguments(bundle);
-                                FragmentTransaction transaction = getFragmentManager().beginTransaction()
-                                        .replace(R.id.content, nuevoFragmento);
-                                // Commit a la transacción
-                                transaction.commit();*/
                             }
                         });
                     }
@@ -329,25 +297,6 @@ public class fragment_my_orders extends Fragment implements AdapterView.OnItemSe
             }
         });
     }
-
-    /*private void openWhatsApp(String numero, String mensaje) {
-        try{
-            PackageManager packageManager = getActivity().getPackageManager();
-            Intent i = new Intent(Intent.ACTION_VIEW);
-            String url = "https://api.whatsapp.com/send?phone=+593 "+ numero +"&text=" + URLEncoder.encode(mensaje, "UTF-8");
-            i.setPackage("com.whatsapp");
-            i.setData(Uri.parse(url));
-            //i.putExtra(Intent.EXTRA_STREAM, Uri.parse("https://firebasestorage.googleapis.com/v0/b/artesanias-304016.appspot.com/o/images%2F36070IMG-20210207-WA0000.jpeg?alt=media&token=81b5233c-94d7-4a4e-b8bd-faade8fa3ef8"));
-            if (i.resolveActivity(packageManager) != null) {
-                startActivity(i);
-            }else {
-                Toast.makeText(getContext(), "Error NO whatsapp", Toast.LENGTH_SHORT).show();
-            }
-        } catch(Exception e) {
-            System.out.println("ERROR WHATSAPP" + e.toString());
-            Toast.makeText(getContext(), "Error NO whatsapp", Toast.LENGTH_SHORT).show();
-        }
-    }*/
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
