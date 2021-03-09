@@ -108,4 +108,17 @@ public class Company implements Serializable {
                 ", useremail='" + useremail + '\'' +
                 '}';
     }
+
+    public String DataHtml() {
+        return "<h3>" + this.businessname + "</h3>" +
+                "<ul>" +
+                "<li>id: " + id + "</li>" +
+                "<li>address: " + address + "</li>" +
+                "<li>city: " + city + "</li>" +
+                "<li>dateregistry: " + dateregistry + "</li>" +
+                "<li>isactive: " + isactive + "</li>" +
+                "<li>ruc: " + ruc + "</li>" +
+                "<li>useremail: " + useremail + "</li>" +
+                "</ul>";
+    }
 }

@@ -37,7 +37,7 @@
                     android:fontFamily="@font/alfa_slab_one"
                     android:text="@string/new_bussines"
                     android:textColor="#525966"
-                    android:textSize="25sp"
+                    android:textSize="20sp"
                     android:textStyle="bold"
                     tools:ignore="MissingConstraints"
                     tools:layout_editor_absoluteY="88dp" />

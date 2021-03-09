@@ -1,5 +1,6 @@
 package com.artesaniasclient;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -23,10 +24,14 @@ import com.artesaniasclient.fragments.fragment_my_companies;
 import com.artesaniasclient.fragments.fragment_my_info;
 import com.artesaniasclient.fragments.fragment_my_orders;
 import com.artesaniasclient.fragments.fragment_my_sales;
+import com.artesaniasclient.fragments.fragment_pasar_premium;
 import com.artesaniasclient.fragments.fragment_register_company;
 import com.artesaniasclient.model.User;
 import com.artesaniasclient.ui.login.LoginActivity;
 import com.artesaniasclient.utils.Util;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.wallet.AutoResolveHelper;
+import com.google.android.gms.wallet.PaymentData;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -149,7 +154,7 @@ public class activity_principal extends AppCompatActivity implements NavigationV
             if (user != null) {
                 txtUserFooter.setText("Usuario: " + user.getUsername());
                 if (user.getUsertype() != null && user.getUsertype().equals("Artesano")) {
-                    if(user.getSuscriptiontype().equals("Premium")) {
+                    if (user.getSuscriptiontype().equals("Premium")) {
                         imgTipoSuscripcion.setImageResource(R.drawable.icon_premium);
                     }
                     m.add(groupMenu, itemMyInfo, itemMyInfo, "Mi Información").setIcon(R.drawable.icon_my_info);
@@ -169,7 +174,7 @@ public class activity_principal extends AppCompatActivity implements NavigationV
         } else {   //en caso de no estar logeado se deshabilita el navigation view
             getSupportActionBar().setTitle("");
             imgToolbar.setImageResource(R.drawable.iconarte2);
-            imgToolbar.setPadding(5,5,5,5);
+            imgToolbar.setPadding(5, 5, 5, 5);
             imgToolbar.setTranslationX(-16);
             fragment = new fragment_crafts();
             getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
@@ -237,9 +242,13 @@ public class activity_principal extends AppCompatActivity implements NavigationV
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        for (Fragment fragment : getSupportFragmentManager().getFragments()) {
-            fragment.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            // value passed in AutoResolveHelper
+            case fragment_pasar_premium.LOAD_PAYMENT_DATA_REQUEST_CODE:
+                for (Fragment fragment : getSupportFragmentManager().getFragments()) {
+                    fragment.onActivityResult(requestCode, resultCode, data);
+                }
         }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

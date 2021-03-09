@@ -90,7 +90,7 @@ public class fragment_register_company extends Fragment implements ICompanyComun
                 Util.countCompaniesOfUser += 1;
                 passregistry_company();
             } else {
-                Toast.makeText(getContext(),"Pásate a Primium para registrar más empresas",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Pásate a Primium para registrar más empresas", Toast.LENGTH_SHORT).show();
             }
         } else {
             Util.countCompaniesOfUser += 1;
@@ -98,7 +98,7 @@ public class fragment_register_company extends Fragment implements ICompanyComun
         }
     }
 
-    private void passregistry_company () {
+    private void passregistry_company() {
         Company company = new Company();
         company.setBusinessname(txtNameBussines.getText().toString());
         company.setRuc(txtRuc.getText().toString());
@@ -128,18 +128,18 @@ public class fragment_register_company extends Fragment implements ICompanyComun
         }
     }
 
-    public void SendRegistrationRequestCompany (String toEmail, String subject, String message) {
+    public void SendRegistrationRequestCompany(String toEmail, String subject, String message) {
         // Defino mi Intent y hago uso del objeto ACTION_SEND
         Intent intent = new Intent(Intent.ACTION_SEND);
         // Defino los Strings Email, Asunto y Mensaje con la función putExtra
         intent.putExtra(Intent.EXTRA_EMAIL,
-                new String[] { toEmail });
+                new String[]{toEmail});
         intent.putExtra(Intent.EXTRA_SUBJECT, subject);
         intent.putExtra(Intent.EXTRA_TEXT, message);
         // Establezco el tipo de Intent
         intent.setType("message/rfc822");
         // Lanzo el selector de cliente de Correo
-        getActivity().startActivity(Intent.createChooser(intent,"Elije un cliente de Correo..."));
+        getActivity().startActivity(Intent.createChooser(intent, "Elije un cliente de Correo..."));
     }
 
     public void cancel_company() {
@@ -180,8 +180,8 @@ public class fragment_register_company extends Fragment implements ICompanyComun
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog = ProgressDialog.show(getContext(),"Porfavor espere...",
-                    "Enviando email...", true,false);
+            progressDialog = ProgressDialog.show(getContext(), "Porfavor espere...",
+                    "Enviando email...", true, false);
         }
 
         @Override
@@ -214,7 +214,7 @@ public class fragment_register_company extends Fragment implements ICompanyComun
                 });
                 builder.show();
             } else {
-                Toast.makeText(getContext(),"Hubo un error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Hubo un error", Toast.LENGTH_SHORT).show();
             }
         }
     }

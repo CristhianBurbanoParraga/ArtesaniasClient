@@ -1,11 +1,13 @@
 package com.artesaniasclient.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
@@ -67,5 +69,10 @@ public class fragment_my_crafts extends Fragment {
         nameCompany = view.findViewById(R.id.lblTitleCompany);
         nameCompany.setText("Empresa: " + name);
         return view;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

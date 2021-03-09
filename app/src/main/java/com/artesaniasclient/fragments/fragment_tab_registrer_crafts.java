@@ -49,7 +49,7 @@ public class fragment_tab_registrer_crafts extends Fragment implements ICraft, A
     Craft craft;
     boolean isEditCraft = false;
 
-    private static final int PICK_IMAGE = 100;
+    public static final int PICK_IMAGE = 111;
     private CraftController craftController;
     Button btnimagen;
     ImageView imagen;
