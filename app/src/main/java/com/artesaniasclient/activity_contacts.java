@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 
 import com.artesaniasclient.model.Contacts;
 
@@ -24,6 +25,7 @@ public class activity_contacts extends AppCompatActivity {
 
     RecyclerView rcvContacts;
     Toolbar toolbar;
+    ImageView imgToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +35,11 @@ public class activity_contacts extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
+        imgToolbar = findViewById(R.id.imgToolbar);
+
+        imgToolbar.setImageResource(R.drawable.iconarte2);
+        imgToolbar.setPadding(5,5,5,5);
+        imgToolbar.setTranslationX(-16);
 
         rcvContacts = findViewById(R.id.rcvContacts);
         LinearLayoutManager linear = new LinearLayoutManager(getApplicationContext());

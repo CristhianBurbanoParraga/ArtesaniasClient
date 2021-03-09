@@ -43,6 +43,7 @@ public class activity_principal extends AppCompatActivity implements NavigationV
     Fragment fragment;
     boolean fragmentTransaction;
     TextView txtUserFooter;
+    ImageView imgTipoSuscripcion;
     FirebaseFirestore db;
     private FirebaseAuth mAuth;
     User user = null;
@@ -57,6 +58,7 @@ public class activity_principal extends AppCompatActivity implements NavigationV
         Intent i = getIntent();
         //user = (User) i.getSerializableExtra("user");
         txtUserFooter = findViewById(R.id.txtUserFooter);
+        imgTipoSuscripcion = findViewById(R.id.profile_image);
 
         toolbar = findViewById(R.id.toolbar);
         imgToolbar = findViewById(R.id.imgToolbar);
@@ -147,6 +149,9 @@ public class activity_principal extends AppCompatActivity implements NavigationV
             if (user != null) {
                 txtUserFooter.setText("Usuario: " + user.getUsername());
                 if (user.getUsertype() != null && user.getUsertype().equals("Artesano")) {
+                    if(user.getSuscriptiontype().equals("Premium")) {
+                        imgTipoSuscripcion.setImageResource(R.drawable.icon_premium);
+                    }
                     m.add(groupMenu, itemMyInfo, itemMyInfo, "Mi Información").setIcon(R.drawable.icon_my_info);
                     m.add(groupMenu, itemVerCatalogo, itemVerCatalogo, "Ver Catálogo").setIcon(R.drawable.icon_catalogue);
                     m.add(groupMenu, itemCrearEmpresa, itemCrearEmpresa, "Registrar Empresa").setIcon(R.drawable.icon_addcompany);
