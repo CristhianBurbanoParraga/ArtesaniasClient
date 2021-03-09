@@ -209,7 +209,7 @@ public class fragment_my_orders extends Fragment implements AdapterView.OnItemSe
                                             "\nFECHA: " + o.getOrderdate() +
                                             "\nARTESANÍA: " + namecraft +
                                             "\nCANTIDAD: " + o.getQuantity() +
-                                            "\nVALOR TOTAL: " + o.getPrice() +
+                                            "\nVALOR TOTAL: $" + o.getPrice() +
                                             "\n\nCUENTA ARTESANÍAS ECUADOR:\n" + o.getUserclient());
                                 } else {
                                     Toast.makeText(getContext(), "El producto ya fue entregado", Toast.LENGTH_SHORT).show();

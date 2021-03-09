@@ -122,7 +122,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="10dp"
-                android:text="Para marcar una venta como realizada, debe seleccionar el item correspondiente."
+                android:text="Para marcar una venta como Finalizada, debe seleccionar el item correspondiente."
                 android:textAlignment="textStart"
                 android:textColor="#3C3B3B"
                 android:textStyle="italic" />

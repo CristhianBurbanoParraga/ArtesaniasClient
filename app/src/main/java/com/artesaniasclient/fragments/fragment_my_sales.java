@@ -13,10 +13,13 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.artesaniasclient.R;
 import com.artesaniasclient.adapter.adpMyOrders;
 import com.artesaniasclient.adapter.adpMySales;
+import com.artesaniasclient.controller.OrderController;
+import com.artesaniasclient.interfaces.IOrder;
 import com.artesaniasclient.model.Craft;
 import com.artesaniasclient.model.Order;
 import com.artesaniasclient.model.User;
@@ -35,7 +38,7 @@ import java.util.ArrayList;
  * Use the {@link fragment_my_sales#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class fragment_my_sales extends Fragment implements AdapterView.OnItemSelectedListener {
+public class fragment_my_sales extends Fragment implements AdapterView.OnItemSelectedListener, IOrder {
 
     private FirebaseFirestore refFireStore;
     private adpMySales adapter;
@@ -46,6 +49,7 @@ public class fragment_my_sales extends Fragment implements AdapterView.OnItemSel
     ArrayAdapter<CharSequence> adp;
     Spinner spinner;
     String state = "Todos";
+    OrderController orderController;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -91,6 +95,8 @@ public class fragment_my_sales extends Fragment implements AdapterView.OnItemSel
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my_sales, container, false);
+
+        orderController = new OrderController(this);
         //Vincular instancia del recyclerview
         rcvSales = (RecyclerView) view.findViewById(R.id.rcvSales);
         //Definir la forma de la lista vertical
@@ -158,6 +164,7 @@ public class fragment_my_sales extends Fragment implements AdapterView.OnItemSel
                         for (DocumentSnapshot doc : value) {
                             if (doc.getId() != null) {
                                 Order ord = doc.toObject(Order.class);
+                                ord.setId(doc.getId());
                                 orderList.add(ord);
                             }
                         }
@@ -168,8 +175,13 @@ public class fragment_my_sales extends Fragment implements AdapterView.OnItemSel
                             public void onClick(View v) {
                                 int itemSelect = rcvSales.getChildAdapterPosition(v);
                                 Order o = orderList.get(itemSelect);
-                                o.setState("Enviado");
+                                //o.setState("Enviado");
                                 //llamar mètdo update state
+                                if (o.getState().equals("Pendiente")) {
+                                    orderController.updateStateOrder(o.getId());
+                                } else {
+                                    Toast.makeText(getContext(), "La orden ya se finalizó anteriormente", Toast.LENGTH_SHORT).show();
+                                }
                             }
                         });
                     }
@@ -191,9 +203,13 @@ public class fragment_my_sales extends Fragment implements AdapterView.OnItemSel
             public void onClick(View view) {
                 int itemSelect = rcvSales.getChildAdapterPosition(view);
                 Order o = order.get(itemSelect);
-                o.setState("Finalizado");
+                //o.setState("Finalizado");
                 //llamar método update state
-
+                if (o.getState().equals("Pendiente")) {
+                    orderController.updateStateOrder(o.getId());
+                } else {
+                    Toast.makeText(getContext(), "La orden ya se finalizó anteriormente", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -206,6 +222,31 @@ public class fragment_my_sales extends Fragment implements AdapterView.OnItemSel
 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
+
+    }
+
+    @Override
+    public void get_order_success(ArrayList<Order> order, String message) {
+
+    }
+
+    @Override
+    public void add_order_success(Order order, String message) {
+
+    }
+
+    @Override
+    public void set_order_success(Order order, String message) {
+
+    }
+
+    @Override
+    public void delete_order_success(Order order, String message) {
+
+    }
+
+    @Override
+    public void get_order_by_user_success(ArrayList<Order> order, String message) {
 
     }
 }
