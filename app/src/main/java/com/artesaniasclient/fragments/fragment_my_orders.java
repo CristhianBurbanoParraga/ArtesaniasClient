@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.artesaniasclient.R;
 import com.artesaniasclient.adapter.adpCrafts;
 import com.artesaniasclient.adapter.adpMyOrders;
+import com.artesaniasclient.adapter.adpMySales;
 import com.artesaniasclient.model.Company;
 import com.artesaniasclient.model.Craft;
 import com.artesaniasclient.model.Order;
@@ -52,6 +53,9 @@ public class fragment_my_orders extends Fragment implements AdapterView.OnItemSe
     private ArrayList<Order> orderList;
     ArrayList<Craft> craft;
     ArrayList<User> users;
+    ArrayAdapter<CharSequence> adp;
+    Spinner spinner;
+    String state = "Todos";
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -105,7 +109,17 @@ public class fragment_my_orders extends Fragment implements AdapterView.OnItemSe
         orderList = new ArrayList<>();
         users = getUsers();
         craft = getCraft();
-        getAllMyOrders();
+        spinner = view.findViewById(R.id.cbbState2);
+        adp = new ArrayAdapter<CharSequence>(getContext(), android.R.layout.simple_spinner_item);
+        adp.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adp.add("Todos");
+        adp.add("Pendiente");
+        adp.add("Finalizado");
+        //adp.add("Cancelado");
+        spinner.setAdapter(adp);
+        spinner.setOnItemSelectedListener(this);
+
+        //getAllMyOrders();
         // Inflate the layout for this fragment
         return view;
     }
@@ -154,6 +168,15 @@ public class fragment_my_orders extends Fragment implements AdapterView.OnItemSe
         return list;
     }
 
+    private void getOrders(){
+        if (state.equals("Todos")){
+            getAllMyOrders();
+        }
+        else {
+            getMyOrdersByState();
+        }
+    }
+
     public void getAllMyOrders(){
         refFireStore.collection("orders")
                 .whereEqualTo("userclient", Util.getUserConnect(getContext()).getEmail())
@@ -167,14 +190,6 @@ public class fragment_my_orders extends Fragment implements AdapterView.OnItemSe
                         if(orderList != null) orderList.clear();
                         for (DocumentSnapshot doc : value) {
                             if (doc.getId() != null) {
-                                String idcraft = doc.getString("craft");
-
-                                /*for(int c = 0; c < craft.size(); c++){
-                                    Craft craftModel = craft.get(c);
-                                    if(craftModel.getId().equals(idcraft)){
-                                        namecraft = craftModel.getNamecraft();
-                                    }
-                                }*/
                                 Order ord = doc.toObject(Order.class);
                                 ord.setId(doc.getId());
                                 //ord.setCraft(namecraft);
@@ -220,6 +235,26 @@ public class fragment_my_orders extends Fragment implements AdapterView.OnItemSe
                 });
     }
 
+    private void getMyOrdersByState(){
+        ArrayList<Order> order = new ArrayList<>();
+        for (int i = 0; i < orderList.size(); i++){
+            Order ord = orderList.get(i);
+            if (orderList.get(i).getState().equals(state)){
+                order.add(ord);
+            }
+        }
+        adapter = new adpMyOrders(getContext(), order, craft);
+        rcvOrders.setAdapter(adapter);
+        adapter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int itemSelect = rcvOrders.getChildAdapterPosition(view);
+                Order o = order.get(itemSelect);
+
+            }
+        });
+    }
+
     private void openWhatsApp(String numero, String mensaje) {
         try{
             PackageManager packageManager = getActivity().getPackageManager();
@@ -241,11 +276,12 @@ public class fragment_my_orders extends Fragment implements AdapterView.OnItemSe
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
+        state = adapterView.getItemAtPosition(i).toString();
+        getOrders();
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
-
+        state = "Todos";
     }
 }

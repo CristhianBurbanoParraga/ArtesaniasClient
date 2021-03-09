@@ -179,6 +179,7 @@ public class fragment_my_sales extends Fragment implements AdapterView.OnItemSel
                                 //llamar mètdo update state
                                 if (o.getState().equals("Pendiente")) {
                                     orderController.updateStateOrder(o.getId());
+                                    spinner.setSelection(2);
                                 } else {
                                     Toast.makeText(getContext(), "La orden ya se finalizó anteriormente", Toast.LENGTH_SHORT).show();
                                 }
@@ -207,6 +208,7 @@ public class fragment_my_sales extends Fragment implements AdapterView.OnItemSel
                 //llamar método update state
                 if (o.getState().equals("Pendiente")) {
                     orderController.updateStateOrder(o.getId());
+                    spinner.setSelection(2);
                 } else {
                     Toast.makeText(getContext(), "La orden ya se finalizó anteriormente", Toast.LENGTH_SHORT).show();
                 }
