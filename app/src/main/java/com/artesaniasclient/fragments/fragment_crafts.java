@@ -144,8 +144,8 @@ public class fragment_crafts extends Fragment implements AdapterView.OnItemSelec
                             //Log.d(TAG, document.getId() + " => " + document.getData());
                             //Log.d(TAG, document.getId() + " => " + document.getData());
                         }
-                        adapter = new adpCrafts(getContext(),craftList);
-                        rcvCrafts.setAdapter(adapter);
+                        //adapter = new adpCrafts(getContext(),craftList);
+                        //rcvCrafts.setAdapter(adapter);
                     }
                 });
         return list;
@@ -188,8 +188,6 @@ public class fragment_crafts extends Fragment implements AdapterView.OnItemSelec
                             //Log.d(TAG, document.getId() + " => " + document.getData());
                         }
                         adapter = new adpCrafts(getContext(),craftList);
-                        rcvCrafts.setAdapter(adapter);
-                        adapter = new adpCrafts(getContext(), craftList);
                         rcvCrafts.setAdapter(adapter);
                         if (getArguments() != null) {
                             user = new User();

@@ -3,21 +3,50 @@ package com.artesaniasclient.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.artesaniasclient.R;
+import com.artesaniasclient.adapter.adpCrafts;
+import com.artesaniasclient.adapter.adpMyOrders;
+import com.artesaniasclient.model.Company;
+import com.artesaniasclient.model.Craft;
+import com.artesaniasclient.model.Order;
+import com.artesaniasclient.model.User;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.gson.Gson;
+
+import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link fragment_my_orders#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class fragment_my_orders extends Fragment {
+public class fragment_my_orders extends Fragment implements AdapterView.OnItemSelectedListener {
+
+    private FirebaseFirestore refFireStore;
+    private adpMyOrders adapter;
+    RecyclerView rcvOrders;
+    private ArrayList<Order> orderList;
+    ArrayList<Craft> craft;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -63,9 +92,80 @@ public class fragment_my_orders extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my_orders, container, false);
+        //Vincular instancia del recyclerview
+        rcvOrders = (RecyclerView) view.findViewById(R.id.rcvOrders);
+        //Definir la forma de la lista vertical
+        rcvOrders.setLayoutManager(new LinearLayoutManager(getContext()));
+        refFireStore = FirebaseFirestore.getInstance();
+        orderList = new ArrayList<>();
+        craft = getCraft();
+        getAllMyOrders();
         // Inflate the layout for this fragment
         return view;
     }
 
+    public ArrayList<Craft> getCraft(){
+        ArrayList<Craft> list = new ArrayList<>();
+        refFireStore.collection("crafts")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if (error != null) {
+                            System.err.println("Listen failed:" + error);
+                            return;
+                        }
+                        for (DocumentSnapshot doc : value) {
+                            if (doc.getId() != null) {
+                                Craft craft = doc.toObject(Craft.class);
+                                craft.setId(doc.getId());
+                                list.add(craft);
+                            }
+                        }
+                    }
+                });
+        return list;
+    }
 
+    public void getAllMyOrders(){
+        refFireStore.collection("orders")
+                .whereEqualTo("userclient","jgarcia24121996@gmail.com")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if (error != null) {
+                            System.err.println("Listen failed:" + error);
+                            return;
+                        }
+                        if(orderList != null) orderList.clear();
+                        for (DocumentSnapshot doc : value) {
+                            if (doc.getId() != null) {
+                                String idcraft = doc.getString("craft");
+                                String namecraft = "";
+                                /*for(int c = 0; c < craft.size(); c++){
+                                    Craft craftModel = craft.get(c);
+                                    if(craftModel.getId().equals(idcraft)){
+                                        namecraft = craftModel.getNamecraft();
+                                    }
+                                }*/
+                                Order ord = doc.toObject(Order.class);
+                                //ord.setCraft(namecraft);
+                                orderList.add(ord);
+                            }
+                            //Log.d(TAG, document.getId() + " => " + document.getData());
+                        }
+                        adapter = new adpMyOrders(getContext(), orderList, craft);
+                        rcvOrders.setAdapter(adapter);
+                    }
+                });
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
+    }
 }

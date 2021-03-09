@@ -24,11 +24,11 @@
             android:padding="8dp">
 
             <ImageView
-                android:id="@+id/imgCraft"
+                android:id="@+id/imgCraftOrder"
                 android:layout_width="135dp"
                 android:layout_height="210dp"
                 android:scaleType="fitXY"
-                android:src="@drawable/icon_photo" />
+                android:src="@drawable/img_base" />
 
             <TextView
                 android:id="@+id/lblNameCraft"
@@ -37,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="15dp"
-                android:layout_toEndOf="@+id/imgCraft"
+                android:layout_toEndOf="@+id/imgCraftOrder"
                 android:text="Nombre:"
                 android:textStyle="bold" />
 
@@ -59,7 +59,7 @@
                 android:layout_below="@+id/txtNameCraft"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
-                android:layout_toEndOf="@+id/imgCraft"
+                android:layout_toEndOf="@+id/imgCraftOrder"
                 android:text="Fecha Pedido:"
                 android:textStyle="bold" />
 
@@ -82,12 +82,12 @@
                 android:layout_below="@+id/lblDateOrder"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
-                android:layout_toEndOf="@+id/imgCraft"
+                android:layout_toEndOf="@+id/imgCraftOrder"
                 android:text="Cantidad:"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/txtCantidad"
+                android:id="@+id/txtCantidadOrder"
                 style="@style/TextAppearance.AppCompat.Body1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -102,19 +102,19 @@
                 style="@style/TextAppearance.AppCompat.Body1"
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/txtCantidad"
+                android:layout_below="@+id/txtCantidadOrder"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
-                android:layout_toEndOf="@+id/imgCraft"
+                android:layout_toEndOf="@+id/imgCraftOrder"
                 android:text="Total:"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/txtTotal"
+                android:id="@+id/txtTotalOrder"
                 style="@style/TextAppearance.AppCompat.Body1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/txtCantidad"
+                android:layout_below="@+id/txtCantidadOrder"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_toEndOf="@+id/lblTotal"
@@ -125,10 +125,10 @@
                 style="@style/TextAppearance.AppCompat.Body1"
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/txtTotal"
+                android:layout_below="@+id/txtTotalOrder"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
-                android:layout_toEndOf="@+id/imgCraft"
+                android:layout_toEndOf="@+id/imgCraftOrder"
                 android:text="Fecha Entrega:"
                 android:textStyle="bold" />
 
@@ -137,7 +137,7 @@
                 style="@style/TextAppearance.AppCompat.Body1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/txtTotal"
+                android:layout_below="@+id/txtTotalOrder"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_toEndOf="@+id/lblDeliveryDate"
@@ -151,7 +151,7 @@
                 android:layout_below="@+id/lblDeliveryDate"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
-                android:layout_toEndOf="@+id/imgCraft"
+                android:layout_toEndOf="@+id/imgCraftOrder"
                 android:text="Estado:"
                 android:textStyle="bold" />
 
