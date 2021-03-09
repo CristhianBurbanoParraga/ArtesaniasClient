@@ -51,6 +51,7 @@ public class fragment_tab_my_crafts extends Fragment implements AdapterView.OnIt
     ArrayAdapter<CharSequence> adapterCat;
     Spinner cbbCategories;
     private ArrayList<Craft> craftList;
+    private ArrayList<Craft> craftList2;
     ArrayList<Company> ac;
     ArrayAdapter<CharSequence> adp;
     String[] categories = new String[11];
@@ -65,7 +66,7 @@ public class fragment_tab_my_crafts extends Fragment implements AdapterView.OnIt
     @Override
     public void onStart() {
         super.onStart();
-        getAllMyCrafts();
+
     }
 
     @Override
@@ -134,10 +135,14 @@ public class fragment_tab_my_crafts extends Fragment implements AdapterView.OnIt
     }
 
     private void getCrafts() {
-
+        if (cat.equals("Todos"))
+            getAllMyCrafts();
+        else
+            getCraftsbyCategory();
     }
 
-    public void getAllMyCrafts() {
+    public ArrayList<Craft> getAllMyCrafts() {
+        ArrayList<Craft> list = new ArrayList<>();
         refFireStore.collection("crafts")
                 .whereEqualTo("company", id)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -152,6 +157,7 @@ public class fragment_tab_my_crafts extends Fragment implements AdapterView.OnIt
                             Craft craft = document.toObject(Craft.class);
                             craft.setId(document.getId());
                             craftList.add(craft);
+                            list.add(craft);
                         }
                         adapter = new adpMyCrafts(getContext(), craftList);
                         rcvCrafts.setAdapter(adapter);
@@ -169,6 +175,19 @@ public class fragment_tab_my_crafts extends Fragment implements AdapterView.OnIt
                         });
                     }
                 });
+        return list;
+    }
+
+    private void getCraftsbyCategory() {
+        ArrayList<Craft> list = new ArrayList<>();
+        for(int c = 0; c < craftList.size(); c++){
+            Craft craftModel = craftList.get(c);
+            if(craftModel.getCategory().equals(cat)){
+                list.add(craftModel);
+            }
+        }
+        adapter = new adpMyCrafts(getContext(), list);
+        rcvCrafts.setAdapter(adapter);
     }
 
     @Override
