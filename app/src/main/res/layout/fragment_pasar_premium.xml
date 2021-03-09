@@ -61,7 +61,7 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="10dp"
-                    android:text="@string/texto_info_pago"
+                    android:text="* Beneficios de pasarse a premium:\n- Puedes registrar un número ilimitado de artesanías, con una cuenta Free solo puedes registrar hasta 5 items.\n- Puedes registrar las empresas o tiendas de artesanías que creas conveniente para promocionar tus productos. Con un cuenta Free solo puedes tener una.\n* Costos de pasarse a premium:\n- Pagos mensuales de $6.99\n- Pagos trimestral de $17.99\n- Pagos semestrales de $38.99\n- Pagos anuales de $53.99"
                     android:textAlignment="textStart"
                     android:textColor="#3C3B3B"
                     android:textStyle="italic" />
@@ -78,82 +78,10 @@
                 android:background="@drawable/fondo2"
                 android:layout_marginTop="20dp">
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/mainnumerotarjeta"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="24dp"
-                    android:hint="@string/premium_number_card"
-                    tools:ignore="MissingConstraints">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/numerotarjeta"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/border3"
-                        android:drawableStart="@drawable/icon_number_card"
-                        android:drawablePadding="10dp"
-                        android:drawableTint="#0669b2"
-                        android:inputType="number"
-                        android:selectAllOnFocus="true" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/mainfechaexpiracion"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/mainnumerotarjeta"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginEnd="24dp"
-                    android:hint="@string/premium_date_expiration"
-                    tools:ignore="MissingConstraints">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/fechaexpiracion"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/border3"
-                        android:drawableStart="@drawable/icon_date_expiration"
-                        android:drawablePadding="10dp"
-                        android:drawableTint="#0669b2"
-                        android:inputType="date"
-                        android:selectAllOnFocus="true" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/maincvc"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/mainfechaexpiracion"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginEnd="24dp"
-                    android:hint="@string/premium_cvc"
-                    tools:ignore="MissingConstraints">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/cvc"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/border3"
-                        android:drawableStart="@drawable/icon_cvc"
-                        android:drawablePadding="10dp"
-                        android:drawableTint="#0669b2"
-                        android:inputType="number"
-                        android:selectAllOnFocus="true" />
-                </com.google.android.material.textfield.TextInputLayout>
-
                 <LinearLayout
                     android:id="@+id/mainformapago"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/maincvc"
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="15dp"
                     android:layout_marginEnd="24dp"
@@ -161,7 +89,7 @@
                     android:orientation="horizontal"
                     android:padding="5dp">
 
-                    <TextView
+                    <!--<TextView
                         android:id="@+id/lblformapago"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -174,7 +102,34 @@
                         android:id="@+id/formapago"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="14sp" />
+                        android:textSize="14sp" />-->
+
+                    <RadioGroup
+                        android:id="@+id/radioGroup"
+                        android:checkedButton="@+id/rbmensual"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <RadioButton
+                            android:id="@+id/rbmensual"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="Mensual: $6.99"/>
+                        <RadioButton
+                            android:id="@+id/rbtrimestral"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="Trimestral: $17.99"/>
+                        <RadioButton
+                            android:id="@+id/rbsemestral"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="Semestral: $38.99"/>
+                        <RadioButton
+                            android:id="@+id/rbanual"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="Anual: $53.99"/>
+                    </RadioGroup>
 
                 </LinearLayout>
 

@@ -18,6 +18,8 @@ public class User implements Serializable {
     private String suscriptiontype;
     private int countcrafts;
     private int countcompanies;
+    private String datepayment;
+    private int countmonth;
 
     public User() {
     }
@@ -26,7 +28,7 @@ public class User implements Serializable {
         this.id = id;
     }
 
-    public User(String id, String address, String dateregistry, String email, boolean isactive, String lastname, String firstname, String username, String password, String phone, String usertype, String suscriptiontype, int countcrafts, int countcompanies) {
+    public User(String id, String address, String dateregistry, String email, boolean isactive, String lastname, String firstname, String username, String password, String phone, String usertype, String suscriptiontype, int countcrafts, int countcompanies, String datepayment, int countmonth) {
         this.id = id;
         this.address = address;
         this.dateregistry = dateregistry;
@@ -41,6 +43,8 @@ public class User implements Serializable {
         this.suscriptiontype = suscriptiontype;
         this.countcrafts = countcrafts;
         this.countcompanies = countcompanies;
+        this.datepayment = datepayment;
+        this.countmonth = countmonth;
     }
 
     public String getId() {
@@ -155,6 +159,22 @@ public class User implements Serializable {
         this.countcompanies = countcompanies;
     }
 
+    public String getDatepayment() {
+        return datepayment;
+    }
+
+    public void setDatepayment(String datepayment) {
+        this.datepayment = datepayment;
+    }
+
+    public int getCountmonth() {
+        return countmonth;
+    }
+
+    public void setCountmonth(int countmonth) {
+        this.countmonth = countmonth;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -170,8 +190,10 @@ public class User implements Serializable {
                 ", phone='" + phone + '\'' +
                 ", usertype='" + usertype + '\'' +
                 ", suscriptiontype='" + suscriptiontype + '\'' +
-                ", countcrafts='" + countcrafts + '\'' +
-                ", countcompanies='" + countcompanies + '\'' +
+                ", countcrafts=" + countcrafts +
+                ", countcompanies=" + countcompanies +
+                ", datepayment='" + datepayment + '\'' +
+                ", countmonth=" + countmonth +
                 '}';
     }
 }

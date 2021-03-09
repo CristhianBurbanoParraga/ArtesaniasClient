@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.artesaniasclient.interfaces.ILogin;
 import com.artesaniasclient.interfaces.IUserComunication;
@@ -24,6 +25,10 @@ import com.google.firebase.firestore.QuerySnapshot;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 public class UserController {
 
@@ -252,6 +257,28 @@ public class UserController {
                     }
                 });
         // [END delete_document]
+    }
+
+    public void updatePaymentData (String iduser, String datepayment, int countmonth) {
+        Map<String, Object> data = new HashMap<>();
+        data.put("datepayment", datepayment);
+        data.put("countmonth", countmonth);
+        db.collection("user").document(iduser)
+                .update(data)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        /*Log.d(TAG, "DocumentSnapshot successfully written!");
+                        getiCraft().set_craft_success(new Craft(), "Artesania editada exitosamente");*/
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        /*Log.w(TAG, "Error writing document", e);
+                        getiCraft().set_craft_success(null, Util.getMessageTask(e));*/
+                    }
+                });
     }
 
     public String getMessageTask(Exception exception) {
