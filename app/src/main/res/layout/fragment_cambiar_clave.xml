@@ -99,7 +99,7 @@
                         android:drawablePadding="10dp"
                         android:drawableTint="#0669b2"
                         android:imeOptions="actionDone"
-                        android:inputType="text" />
+                        android:inputType="textPassword" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -124,7 +124,7 @@
                         android:drawablePadding="10dp"
                         android:drawableTint="#0669b2"
                         android:imeOptions="actionDone"
-                        android:inputType="text" />
+                        android:inputType="textPassword" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -149,7 +149,7 @@
                         android:drawablePadding="10dp"
                         android:drawableTint="#0669b2"
                         android:imeOptions="actionDone"
-                        android:inputType="text" />
+                        android:inputType="textPassword" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <LinearLayout

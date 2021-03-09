@@ -42,7 +42,7 @@ public class fragment_crafts extends Fragment implements AdapterView.OnItemSelec
     private FirebaseFirestore refFireStore;
     private adpCrafts adapter;
     RecyclerView rcvCrafts;
-    static String cat = "Todos";
+    String cat = "Todos";
     ArrayAdapter<CharSequence> adapterCat;
     Spinner cbbCategories;
     private ArrayList<Craft> craftList;
@@ -159,7 +159,7 @@ public class fragment_crafts extends Fragment implements AdapterView.OnItemSelec
             getCraftsbyCategory();
     }
 
-    public void getAllCrafts(){
+    private void getAllCrafts(){
         refFireStore.collection("crafts")
                 .whereNotEqualTo("quantity",0)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -169,7 +169,7 @@ public class fragment_crafts extends Fragment implements AdapterView.OnItemSelec
                             System.err.println("Listen failed:" + error);
                             return;
                         }
-                        if(craftList != null) craftList.clear();
+                        //if(craftList != null) craftList.clear();
                         for (DocumentSnapshot doc : value) {
                             if (doc.getId() != null) {
                                 String idcompany = doc.getString("company");
@@ -189,6 +189,8 @@ public class fragment_crafts extends Fragment implements AdapterView.OnItemSelec
                         }
                         adapter = new adpCrafts(getContext(),craftList);
                         rcvCrafts.setAdapter(adapter);
+                        /*adapter = new adpCrafts(getContext(), craftList);
+                        rcvCrafts.setAdapter(adapter);*/
                         if (getArguments() != null) {
                             user = new User();
                             datos = getArguments().getString("datos");
@@ -229,9 +231,9 @@ public class fragment_crafts extends Fragment implements AdapterView.OnItemSelec
                                         @Nullable FirebaseFirestoreException error) {
                         if (error != null) {
                             System.err.println("Listen failed:" + error);
-                            return;
                         }
-                        if(craftList != null) craftList.clear();
+                        else {
+                        //craftList.clear();
                         for (DocumentSnapshot doc : value) {
                             if (doc.getId() != null) {
                                 String idcompany = doc.getString("company");
@@ -247,7 +249,7 @@ public class fragment_crafts extends Fragment implements AdapterView.OnItemSelec
                                 craft.setCompany(company);
                                 craftList.add(craft);
                             }
-                        }
+                        }}
                         adapter = new adpCrafts(getContext(), craftList);
                         rcvCrafts.setAdapter(adapter);
                         if (getArguments() != null) {
